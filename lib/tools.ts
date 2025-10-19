@@ -146,8 +146,8 @@ export const TOOLS: Tool[] = [
     name: "Netflix Premium",
     tagline: "Unlimited HD/4K streaming.",
     description: "OTP based login",
-    officialUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIDXy72kD2QgdKwN0gJA0wshjOWu6qNdpp6Q&s",
-    image: "/tools/netflix.png",
+    officialUrl: "https://www.netflix.com",
+    image: "https://www.logoai.com/uploads/articles/2025/04/23/banner-1712644978-1745388914.jpg",
     marketPrice: 649,
     ourPrice: 149
   },
