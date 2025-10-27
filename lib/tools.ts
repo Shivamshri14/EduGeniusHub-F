@@ -7,6 +7,7 @@ export type Tool = {
   image: string;
   marketPrice: number;
   ourPrice: number;
+  category: 'report' | 'account' | 'ott';
 };
 
 export type ComboTool = {
@@ -29,7 +30,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://turnitin.com",
     image: "/tools/plag.png",
     marketPrice: 100,
-    ourPrice: 40
+    ourPrice: 40,
+    category: 'report'
   },
   {
     id: "turnitin-ai",
@@ -39,7 +41,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://turnitin.com",
     image: "/tools/ai.png",
     marketPrice: 150,
-    ourPrice: 50
+    ourPrice: 50,
+    category: 'report'
   },
   {
     id: "turnitin-combo",
@@ -49,7 +52,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://turnitin.com",
     image: "/tools/plagai.png",
     marketPrice: 200,
-    ourPrice: 80
+    ourPrice: 80,
+    category: 'report'
   },
   {
     id: "drillbit",
@@ -59,7 +63,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://drillbitplagiarism.com",
     image: "/tools/drillbit.jpg",
     marketPrice: 500,
-    ourPrice: 199
+    ourPrice: 199,
+    category: 'report'
   },
   {
     id: "turnitin-student",
@@ -69,17 +74,19 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.turnitin.com",
     image: "/tools/turnitin.jpg",
     marketPrice: 499,
-    ourPrice: 199
+    ourPrice: 199,
+    category: 'account'
   },
   {
     id: "turnitin-instructor",
     name: " 𝗧𝘂𝗿𝗻𝗶𝘁𝗶𝗻𝗗𝗲𝘁𝗲𝗰𝘁 / 𝗜𝗻𝘀𝘁𝗿𝘂𝗰𝘁𝗼𝗿 𝗔𝗰𝗰𝗼𝘂𝗻𝘁",
     tagline: "Plagiarism + AI report.",
-    description: " API-based Account – Connected directly to Turnitin’s official server just Different interface but same Turnitin report",
+    description: " API-based Account – Connected directly to Turnitin's official server just Different interface but same Turnitin report",
     officialUrl: "https://www.turndetect.com",
     image: "/tools/turndetect.jpeg",
     marketPrice: 499,
-    ourPrice: 249
+    ourPrice: 249,
+    category: 'account'
   },
   {
     id: "quillbot-premium",
@@ -89,7 +96,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://quillbot.com",
     image: "https://cdn-iddod.nitrocdn.com/pfdvReMUBzCUteBdCpoKYlDKsvtOTIJl/assets/images/optimized/rev-c127345/creatorwala.in/wp-content/uploads/2023/02/quillbot_1-8.png",
     marketPrice: 499,
-    ourPrice: 149
+    ourPrice: 149,
+    category: 'account'
   },
   {
     id: "grammarly-premium",
@@ -99,7 +107,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.grammarly.com",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtjY30W4pwsQahrIg_Pq8y3mFjLfGq_PKITQ&s",
     marketPrice: 499,
-    ourPrice: 299
+    ourPrice: 299,
+    category: 'account'
   },
   {
     id: "chatgpt-plus",
@@ -109,7 +118,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://chat.openai.com",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRscoFVJSrm9By0t5KD4zdRr0DBpb-oOidVUg&s",
     marketPrice: 999,
-    ourPrice: 299
+    ourPrice: 299,
+    category: 'account'
   },
   {
     id: "stealthwriter",
@@ -119,7 +129,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://app.stealthwriter.ai/auth/login",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOyNrycW5jlNDMGTW8TZ5unF25TZGjZGtMZg&s",
     marketPrice: 1500,
-    ourPrice: 999
+    ourPrice: 999,
+    category: 'account'
   },
   {
     id: "writehuman-ai",
@@ -129,7 +140,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://writehuman.ai/",
     image: "https://media.theresanaiforthat.com/writehuman.png",
     marketPrice: 1499,
-    ourPrice: 349
+    ourPrice: 349,
+    category: 'account'
   },
   {
     id: "perplexity-ai",
@@ -139,7 +151,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.perplexity.ai",
     image: "https://1000logos.net/wp-content/uploads/2024/08/Perplexity-Logo.png",
     marketPrice: 2000,
-    ourPrice: 799
+    ourPrice: 799,
+    category: 'account'
   },
   {
     id: "netflix-premium",
@@ -149,7 +162,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.netflix.com",
     image: "https://www.logoai.com/uploads/articles/2025/04/23/banner-1712644978-1745388914.jpg",
     marketPrice: 649,
-    ourPrice: 149
+    ourPrice: 149,
+    category: 'ott'
   },
   {
     id: "prime-video",
@@ -159,7 +173,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.primevideo.com",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXyLNwBktHQkq8BFxyOXLwmVMhCD2s3gbmYw&s",
     marketPrice: 499,
-    ourPrice: 49
+    ourPrice: 49,
+    category: 'ott'
   },
   {
     id: "zee5-premium",
@@ -169,7 +184,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.zee5.com",
     image: "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/zee5-logo-hd.png",
     marketPrice: 499,
-    ourPrice: 299
+    ourPrice: 299,
+    category: 'ott'
   },
   {
     id: "sonyliv-premium",
@@ -179,7 +195,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.sonyliv.com",
     image: "https://www.bizasialive.com/wp-content/uploads/2020/05/899ec721-sonylivnew001.jpg",
     marketPrice: 499,
-    ourPrice: 299
+    ourPrice: 299,
+    category: 'ott'
   },
   {
     id: "jenni-ai",
@@ -189,7 +206,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://app.jenni.ai/",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3UxmWxJPAKz272Dp3FxLnC2Z_w0cBORMM_w&s",
     marketPrice: 2000,
-    ourPrice: 449
+    ourPrice: 449,
+    category: 'account'
   },
   {
     id: "canva-pro",
@@ -199,9 +217,10 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://www.canva.com",
     image: "https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxo4K81Ei7WzcnqEk8W.MgwZFE_jBn46Q0eZmYS1jqh9hsP2yct.ANJrdxy.La13GX7IADGcPOztqti6H6DAjzvg-&format=source",
     marketPrice: 1500,
-    ourPrice: 99
+    ourPrice: 99,
+    category: 'account'
   },
-    {
+  {
     id: "request-new-tool",
     name: "Request a New Tool",
     tagline: "Tell us what you need.",
@@ -209,7 +228,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "#",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFOXhn7CwrVEhvT-lFg3YNbLWHoEEUpXZvIg&s",
     marketPrice: 0,
-    ourPrice: 0
+    ourPrice: 0,
+    category: 'account'
   },
 ];
 

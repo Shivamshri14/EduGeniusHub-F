@@ -15,6 +15,10 @@ export const metadata = {
 };
 
 export default function ToolsPage() {
+  const reportTools = TOOLS.filter(tool => tool.category === 'report');
+  const accountTools = TOOLS.filter(tool => tool.category === 'account');
+  const ottTools = TOOLS.filter(tool => tool.category === 'ott');
+
   return (
     <>
       <Navbar />
@@ -31,10 +35,57 @@ export default function ToolsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {TOOLS.map((tool) => (
-                <ToolCard key={tool.id} tool={tool} />
-              ))}
+            <div className="space-y-16">
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                    Reports
+                  </h2>
+                  <p className="text-slate-600 dark:text-slate-400">
+                    Plagiarism & AI Detection Reports
+                  </p>
+                  <div className="h-1 w-24 bg-blue-600 mt-3 rounded-full"></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {reportTools.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                    Accounts & Subscriptions
+                  </h2>
+                  <p className="text-slate-600 dark:text-slate-400">
+                    Premium Tools & Software Access
+                  </p>
+                  <div className="h-1 w-24 bg-green-600 mt-3 rounded-full"></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {accountTools.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                    OTT Platforms
+                  </h2>
+                  <p className="text-slate-600 dark:text-slate-400">
+                    Streaming Services & Entertainment
+                  </p>
+                  <div className="h-1 w-24 bg-orange-600 mt-3 rounded-full"></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {ottTools.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
