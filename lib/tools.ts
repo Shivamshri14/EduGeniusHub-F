@@ -94,7 +94,7 @@ export const TOOLS: Tool[] = [
     tagline: "Paraphrase, summarize, write faster.",
     description: "Premium rewriting modes, summarizer, and grammar tools.",
     officialUrl: "https://quillbot.com",
-    image: "https://cdn-iddod.nitrocdn.com/pfdvReMUBzCUteBdCpoKYlDKsvtOTIJl/assets/images/optimized/rev-c127345/creatorwala.in/wp-content/uploads/2023/02/quillbot_1-8.png",
+    image: "https://www.01net.com/en/app/uploads/2023/11/How-to-Unblock-Quillbot.jpg",
     marketPrice: 499,
     ourPrice: 149,
     category: 'account'
@@ -149,7 +149,7 @@ export const TOOLS: Tool[] = [
     tagline: "Instant factual answers with sources.",
     description: "Ask anything and get precise answers with citations.",
     officialUrl: "https://www.perplexity.ai",
-    image: "https://1000logos.net/wp-content/uploads/2024/08/Perplexity-Logo.png",
+    image: "https://brytesoft.com/media/catalog/product/p/e/perplexity_pro.png",
     marketPrice: 2000,
     ourPrice: 799,
     category: 'account'
