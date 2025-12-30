@@ -93,3 +93,55 @@ export function saveCombos(combos: ComboTool[]): void {
     localStorage.setItem(STORAGE_KEYS.COMBOS, JSON.stringify(combos));
   }
 }
+
+export function addTool(tool: Omit<Tool, 'id'>): Tool {
+  const tools = getTools();
+  const newTool: Tool = {
+    ...tool,
+    id: `tool-${Date.now()}`,
+  };
+  tools.push(newTool);
+  saveTools(tools);
+  return newTool;
+}
+
+export function updateTool(id: string, updates: Partial<Tool>): void {
+  const tools = getTools();
+  const index = tools.findIndex(t => t.id === id);
+  if (index !== -1) {
+    tools[index] = { ...tools[index], ...updates };
+    saveTools(tools);
+  }
+}
+
+export function deleteTool(id: string): void {
+  const tools = getTools();
+  const filtered = tools.filter(t => t.id !== id);
+  saveTools(filtered);
+}
+
+export function addCombo(combo: Omit<ComboTool, 'id'>): ComboTool {
+  const combos = getCombos();
+  const newCombo: ComboTool = {
+    ...combo,
+    id: `combo-${Date.now()}`,
+  };
+  combos.push(newCombo);
+  saveCombos(combos);
+  return newCombo;
+}
+
+export function updateCombo(id: string, updates: Partial<ComboTool>): void {
+  const combos = getCombos();
+  const index = combos.findIndex(c => c.id === id);
+  if (index !== -1) {
+    combos[index] = { ...combos[index], ...updates };
+    saveCombos(combos);
+  }
+}
+
+export function deleteCombo(id: string): void {
+  const combos = getCombos();
+  const filtered = combos.filter(c => c.id !== id);
+  saveCombos(filtered);
+}
