@@ -18,7 +18,7 @@ import {
   addCombo,
   updateCombo,
   deleteCombo,
-} from "@/lib/admin-storage";
+} from "@/lib/storage";
 import {
   getSubscriptionStatus,
   getStatusColor,
@@ -97,12 +97,10 @@ export default function AdminPage() {
     }
   }, []);
 
-  const loadData = async () => {
+  const loadData = () => {
     setCustomers(getCustomers());
-    const toolsData = await getTools();
-    const combosData = await getCombos();
-    setTools(toolsData);
-    setCombos(combosData);
+    setTools(getTools());
+    setCombos(getCombos());
   };
 
   const handlePinSubmit = (e: React.FormEvent) => {
@@ -197,29 +195,29 @@ export default function AdminPage() {
     setShowToolModal(true);
   };
 
-  const handleDeleteTool = async (id: string) => {
+  const handleDeleteTool = (id: string) => {
     if (confirm("Are you sure you want to delete this tool?")) {
-      const result = await deleteTool(id);
+      const result = deleteTool(id);
       if (result.success) {
-        await loadData();
+        loadData();
       } else {
         alert(`Error deleting tool: ${result.error}`);
       }
     }
   };
 
-  const handleToolSubmit = async (e: React.FormEvent) => {
+  const handleToolSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     let result;
     if (editingTool) {
-      result = await updateTool(editingTool.id, toolForm);
+      result = updateTool(editingTool.id, toolForm);
     } else {
-      result = await addTool(toolForm);
+      result = addTool(toolForm);
     }
 
     if (result.success) {
       setShowToolModal(false);
-      await loadData();
+      loadData();
     } else {
       alert(`Error: ${result.error}`);
     }
@@ -253,18 +251,18 @@ export default function AdminPage() {
     setShowComboModal(true);
   };
 
-  const handleDeleteCombo = async (id: string) => {
+  const handleDeleteCombo = (id: string) => {
     if (confirm("Are you sure you want to delete this combo?")) {
-      const result = await deleteCombo(id);
+      const result = deleteCombo(id);
       if (result.success) {
-        await loadData();
+        loadData();
       } else {
         alert(`Error deleting combo: ${result.error}`);
       }
     }
   };
 
-  const handleComboSubmit = async (e: React.FormEvent) => {
+  const handleComboSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const comboData = {
       ...comboForm,
@@ -273,14 +271,14 @@ export default function AdminPage() {
 
     let result;
     if (editingCombo) {
-      result = await updateCombo(editingCombo.id, comboData);
+      result = updateCombo(editingCombo.id, comboData);
     } else {
-      result = await addCombo(comboData);
+      result = addCombo(comboData);
     }
 
     if (result.success) {
       setShowComboModal(false);
-      await loadData();
+      loadData();
     } else {
       alert(`Error: ${result.error}`);
     }

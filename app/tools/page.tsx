@@ -1,23 +1,28 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/marketing/Navbar";
 import { Footer } from "@/components/marketing/Footer";
 import { Breadcrumbs } from "@/components/marketing/Breadcrumbs";
 import { WhatsAppBar } from "@/components/marketing/WhatsAppBar";
 import { ToolCard } from "@/components/marketing/ToolCard";
-import { TOOLS } from "@/lib/tools";
+import { getTools } from "@/lib/storage";
+import { Tool } from "@/lib/tools";
 import { SITE } from "@/lib/config";
 
-export const metadata = {
-  icons: {
-    icon: '/file.ico', // use root path for files in public/ (public/file.ico)
-  },
-  title: `${SITE.brand}`,
-  description: "Browse all premium subscription tools available at student-friendly prices.",
-};
-
 export default function ToolsPage() {
-  const reportTools = TOOLS.filter(tool => tool.category === 'report');
-  const accountTools = TOOLS.filter(tool => tool.category === 'account');
-  const ottTools = TOOLS.filter(tool => tool.category === 'ott');
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [reportTools, setReportTools] = useState<Tool[]>([]);
+  const [accountTools, setAccountTools] = useState<Tool[]>([]);
+  const [ottTools, setOttTools] = useState<Tool[]>([]);
+
+  useEffect(() => {
+    const allTools = getTools();
+    setTools(allTools);
+    setReportTools(allTools.filter(tool => tool.category === 'report'));
+    setAccountTools(allTools.filter(tool => tool.category === 'account'));
+    setOttTools(allTools.filter(tool => tool.category === 'ott'));
+  }, []);
 
   return (
     <>
@@ -31,7 +36,7 @@ export default function ToolsPage() {
                 All Premium Tools
               </h1>
               <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400">
-                Browse our complete collection of {TOOLS.length} premium subscription tools
+                Browse our complete collection of {tools.length} premium subscription tools
               </p>
             </div>
 

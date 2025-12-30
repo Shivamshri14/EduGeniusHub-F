@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/config";
-import { getTools } from "@/lib/admin-storage";
-import { Tool } from "@/lib/types";
+import { getTools } from "@/lib/storage";
+import { Tool } from "@/lib/tools";
 import { waDirectLink } from "@/lib/whatsapp";
 import { FeaturedTools } from "@/components/marketing/FeaturedTools";
 import { MessageCircle, CheckCircle, Zap, Users, Package } from "lucide-react";
@@ -15,12 +15,9 @@ export default function MarketingHomePage() {
   const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
 
   useEffect(() => {
-    const loadTools = async () => {
-      const allTools = await getTools();
-      setTools(allTools);
-      setFeaturedTools(allTools.slice(0, 5));
-    };
-    loadTools();
+    const allTools = getTools();
+    setTools(allTools);
+    setFeaturedTools(allTools.slice(0, 5));
   }, []);
 
   return (

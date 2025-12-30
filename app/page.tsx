@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/marketing/Navbar";
 import { Footer } from "@/components/marketing/Footer";
 import { Breadcrumbs } from "@/components/marketing/Breadcrumbs";
@@ -6,21 +9,24 @@ import { ComboCard } from "@/components/marketing/ComboCard";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/config";
-import { TOOLS, COMBO_TOOLS } from "@/lib/tools";
+import { getTools, getCombos } from "@/lib/storage";
+import { Tool, ComboTool } from "@/lib/tools";
 import { waDirectLink } from "@/lib/whatsapp";
 import { FeaturedTools } from "@/components/marketing/FeaturedTools";
 import { MessageCircle, CheckCircle, Zap, Users, Package, Star, Instagram, Shield, HeartHandshake, Sparkles, Code, FileText, Pencil, AlertCircle, icons } from "lucide-react";
 
-export const metadata = {
-  icons: {
-    icon: '/file.ico', // use root path for files in public/ (public/file.ico)
-  },
-  title: `${SITE.brand} - Premium Tools. Managed by Professionals.`,
-  description: "Access premium subscription tools for students and professionals. Fast delivery, trusted service, simple support.",
-};
-
 export default function HomePage() {
-  const featuredTools = TOOLS.slice(0, 5);
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [combos, setCombos] = useState<ComboTool[]>([]);
+  const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
+
+  useEffect(() => {
+    const allTools = getTools();
+    const allCombos = getCombos();
+    setTools(allTools);
+    setCombos(allCombos);
+    setFeaturedTools(allTools.slice(0, 5));
+  }, []);
 
   return (
     <>
@@ -150,14 +156,14 @@ export default function HomePage() {
               </p>
             </div>
 
-            <FeaturedTools tools={featuredTools} />
+            {featuredTools.length > 0 && <FeaturedTools tools={featuredTools} />}
             <div className="text-center mt-10 sm:mt-12">
               <Link
                 href="/tools"
                 className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors font-semibold text-base sm:text-lg shadow-lg"
               >
                 <Package size={24} />
-                <span>View All {TOOLS.length} Tools</span>
+                <span>View All {tools.length} Tools</span>
               </Link>
             </div>
           </div>
@@ -184,7 +190,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
-              {COMBO_TOOLS.slice(0, 4).map((combo) => (
+              {combos.slice(0, 4).map((combo) => (
                 <ComboCard key={combo.id} combo={combo} />
               ))}
             </div>
@@ -353,8 +359,6 @@ export default function HomePage() {
                       height={660}
                       className="mx-auto mb-2 rounded-lg object-cover"
                     />
-                    {/* <p className="text-slate-400 dark:text-slate-600 text-xs font-medium">Add Review Screenshot Here</p>
-                    <p className="text-slate-500 dark:text-slate-500 text-xs mt-1">Save to /public/reviews/review1.jpg</p> */}
                   </div>
                 </div>
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed italic mb-4">
@@ -378,8 +382,6 @@ export default function HomePage() {
                       height={660}
                       className="mx-auto mb-2 rounded-lg object-cover"
                     />
-                    {/* <p className="text-slate-400 dark:text-slate-600 text-xs font-medium">Add Review Screenshot Here</p>
-                    <p className="text-slate-500 dark:text-slate-500 text-xs mt-1">Save to /public/reviews/review1.jpg</p> */}
                   </div>
                 </div>
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed italic mb-4">
@@ -403,8 +405,6 @@ export default function HomePage() {
                       height={660}
                       className="mx-auto mb-2 rounded-lg object-cover"
                     />
-                    {/* <p className="text-slate-400 dark:text-slate-600 text-xs font-medium">Add Review Screenshot Here</p>
-                    <p className="text-slate-500 dark:text-slate-500 text-xs mt-1">Save to /public/reviews/review1.jpg</p> */}
                   </div>
                 </div>
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed italic mb-4">

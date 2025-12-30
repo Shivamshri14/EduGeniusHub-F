@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getTools } from "@/lib/admin-storage";
-import { Tool } from "@/lib/types";
+import { getTools } from "@/lib/storage";
+import { Tool } from "@/lib/tools";
 import { ToolCard } from "@/components/marketing/ToolCard";
 import { Search } from "lucide-react";
 
@@ -10,11 +10,8 @@ export default function ToolsPage() {
   const [tools, setTools] = useState<Tool[]>([]);
 
   useEffect(() => {
-    const loadTools = async () => {
-      const allTools = await getTools();
-      setTools(allTools);
-    };
-    loadTools();
+    const allTools = getTools();
+    setTools(allTools);
   }, []);
 
   return (
