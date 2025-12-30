@@ -97,10 +97,12 @@ export default function AdminPage() {
     }
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
     setCustomers(getCustomers());
-    setTools(getTools());
-    setCombos(getCombos());
+    const toolsData = await getTools();
+    const combosData = await getCombos();
+    setTools(toolsData);
+    setCombos(combosData);
   };
 
   const handlePinSubmit = (e: React.FormEvent) => {
@@ -195,22 +197,32 @@ export default function AdminPage() {
     setShowToolModal(true);
   };
 
-  const handleDeleteTool = (id: string) => {
+  const handleDeleteTool = async (id: string) => {
     if (confirm("Are you sure you want to delete this tool?")) {
-      deleteTool(id);
-      loadData();
+      const result = await deleteTool(id);
+      if (result.success) {
+        await loadData();
+      } else {
+        alert(`Error deleting tool: ${result.error}`);
+      }
     }
   };
 
-  const handleToolSubmit = (e: React.FormEvent) => {
+  const handleToolSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    let result;
     if (editingTool) {
-      updateTool(editingTool.id, toolForm);
+      result = await updateTool(editingTool.id, toolForm);
     } else {
-      addTool(toolForm);
+      result = await addTool(toolForm);
     }
-    setShowToolModal(false);
-    loadData();
+
+    if (result.success) {
+      setShowToolModal(false);
+      await loadData();
+    } else {
+      alert(`Error: ${result.error}`);
+    }
   };
 
   const handleAddCombo = () => {
@@ -241,26 +253,37 @@ export default function AdminPage() {
     setShowComboModal(true);
   };
 
-  const handleDeleteCombo = (id: string) => {
+  const handleDeleteCombo = async (id: string) => {
     if (confirm("Are you sure you want to delete this combo?")) {
-      deleteCombo(id);
-      loadData();
+      const result = await deleteCombo(id);
+      if (result.success) {
+        await loadData();
+      } else {
+        alert(`Error deleting combo: ${result.error}`);
+      }
     }
   };
 
-  const handleComboSubmit = (e: React.FormEvent) => {
+  const handleComboSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const comboData = {
       ...comboForm,
       tools: comboForm.tools.split(",").map((t) => t.trim()),
     };
+
+    let result;
     if (editingCombo) {
-      updateCombo(editingCombo.id, comboData);
+      result = await updateCombo(editingCombo.id, comboData);
     } else {
-      addCombo(comboData);
+      result = await addCombo(comboData);
     }
-    setShowComboModal(false);
-    loadData();
+
+    if (result.success) {
+      setShowComboModal(false);
+      await loadData();
+    } else {
+      alert(`Error: ${result.error}`);
+    }
   };
 
   if (showPinModal) {

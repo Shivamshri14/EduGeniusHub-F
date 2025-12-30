@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getTools } from "@/lib/admin-storage";
-import { Tool } from "@/lib/tools";
+import { Tool } from "@/lib/types";
 import { ToolCard } from "@/components/marketing/ToolCard";
 import { Search } from "lucide-react";
 
@@ -10,7 +10,11 @@ export default function ToolsPage() {
   const [tools, setTools] = useState<Tool[]>([]);
 
   useEffect(() => {
-    setTools(getTools());
+    const loadTools = async () => {
+      const allTools = await getTools();
+      setTools(allTools);
+    };
+    loadTools();
   }, []);
 
   return (

@@ -1,11 +1,10 @@
 import { Customer } from './admin-types';
-import { TOOLS, COMBO_TOOLS, Tool, ComboTool } from './tools';
+import { Tool, ComboTool } from './types';
+import * as toolsDb from './tools-db';
 
 const ADMIN_PIN = '1234';
 const STORAGE_KEYS = {
   CUSTOMERS: 'edugeniushub_customers',
-  TOOLS: 'edugeniushub_tools',
-  COMBOS: 'edugeniushub_combos',
   AUTH: 'edugeniushub_auth',
 };
 
@@ -70,78 +69,34 @@ export function deleteCustomer(id: string): void {
   saveCustomers(filtered);
 }
 
-export function getTools(): Tool[] {
-  if (typeof window === 'undefined') return TOOLS;
-  const data = localStorage.getItem(STORAGE_KEYS.TOOLS);
-  return data ? JSON.parse(data) : TOOLS;
+export async function getTools(): Promise<Tool[]> {
+  return await toolsDb.getAllTools();
 }
 
-export function saveTools(tools: Tool[]): void {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.TOOLS, JSON.stringify(tools));
-  }
+export async function getCombos(): Promise<ComboTool[]> {
+  return await toolsDb.getAllCombos();
 }
 
-export function getCombos(): ComboTool[] {
-  if (typeof window === 'undefined') return COMBO_TOOLS;
-  const data = localStorage.getItem(STORAGE_KEYS.COMBOS);
-  return data ? JSON.parse(data) : COMBO_TOOLS;
+export async function addTool(tool: Omit<Tool, 'id'>): Promise<{ success: boolean; error?: string }> {
+  return await toolsDb.addTool(tool);
 }
 
-export function saveCombos(combos: ComboTool[]): void {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.COMBOS, JSON.stringify(combos));
-  }
+export async function updateTool(id: string, updates: Partial<Tool>): Promise<{ success: boolean; error?: string }> {
+  return await toolsDb.updateTool(id, updates);
 }
 
-export function addTool(tool: Omit<Tool, 'id'>): Tool {
-  const tools = getTools();
-  const newTool: Tool = {
-    ...tool,
-    id: `tool-${Date.now()}`,
-  };
-  tools.push(newTool);
-  saveTools(tools);
-  return newTool;
+export async function deleteTool(id: string): Promise<{ success: boolean; error?: string }> {
+  return await toolsDb.deleteTool(id);
 }
 
-export function updateTool(id: string, updates: Partial<Tool>): void {
-  const tools = getTools();
-  const index = tools.findIndex(t => t.id === id);
-  if (index !== -1) {
-    tools[index] = { ...tools[index], ...updates };
-    saveTools(tools);
-  }
+export async function addCombo(combo: Omit<ComboTool, 'id'>): Promise<{ success: boolean; error?: string }> {
+  return await toolsDb.addCombo(combo);
 }
 
-export function deleteTool(id: string): void {
-  const tools = getTools();
-  const filtered = tools.filter(t => t.id !== id);
-  saveTools(filtered);
+export async function updateCombo(id: string, updates: Partial<ComboTool>): Promise<{ success: boolean; error?: string }> {
+  return await toolsDb.updateCombo(id, updates);
 }
 
-export function addCombo(combo: Omit<ComboTool, 'id'>): ComboTool {
-  const combos = getCombos();
-  const newCombo: ComboTool = {
-    ...combo,
-    id: `combo-${Date.now()}`,
-  };
-  combos.push(newCombo);
-  saveCombos(combos);
-  return newCombo;
-}
-
-export function updateCombo(id: string, updates: Partial<ComboTool>): void {
-  const combos = getCombos();
-  const index = combos.findIndex(c => c.id === id);
-  if (index !== -1) {
-    combos[index] = { ...combos[index], ...updates };
-    saveCombos(combos);
-  }
-}
-
-export function deleteCombo(id: string): void {
-  const combos = getCombos();
-  const filtered = combos.filter(c => c.id !== id);
-  saveCombos(filtered);
+export async function deleteCombo(id: string): Promise<{ success: boolean; error?: string }> {
+  return await toolsDb.deleteCombo(id);
 }
