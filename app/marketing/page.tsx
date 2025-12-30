@@ -102,6 +102,12 @@ export default function MarketingHomePage() {
               Popular tools our customers love
             </p>
           </div>
+
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8 rounded-r-lg max-w-4xl mx-auto">
+            <p className="text-sm text-yellow-800 text-center">
+              <strong>Note:</strong> Prices are subject to change and may vary from time to time. Please contact us on WhatsApp for current pricing.
+            </p>
+          </div>
           <FeaturedTools tools={featuredTools} />
           <div className="text-center mt-12">
             <Link

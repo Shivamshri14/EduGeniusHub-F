@@ -50,7 +50,7 @@ export function ToolCard({ tool }: ToolCardProps) {
 
           <div className="flex flex-col sm:flex-row gap-2">
             <a
-              href={waDirectLink(tool.name)}
+              href={waDirectLink(tool.name, tool.ourPrice)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm shadow-sm"
@@ -117,7 +117,7 @@ export function ToolCard({ tool }: ToolCardProps) {
 
                   <div className="flex flex-col gap-3 mb-6">
                     <a
-                      href={waDirectLink(tool.name)}
+                      href={waDirectLink(tool.name, tool.ourPrice)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold shadow-lg"

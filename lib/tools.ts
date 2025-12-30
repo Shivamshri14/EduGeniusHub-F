@@ -78,17 +78,6 @@ export const TOOLS: Tool[] = [
     category: 'account'
   },
   {
-    id: "turnitin-instructor",
-    name: " 𝗧𝘂𝗿𝗻𝗶𝘁𝗶𝗻𝗗𝗲𝘁𝗲𝗰𝘁 / 𝗜𝗻𝘀𝘁𝗿𝘂𝗰𝘁𝗼𝗿 𝗔𝗰𝗰𝗼𝘂𝗻𝘁",
-    tagline: "Plagiarism + AI report.",
-    description: " API-based Account – Connected directly to Turnitin's official server just Different interface but same Turnitin report",
-    officialUrl: "https://www.turndetect.com",
-    image: "/tools/turndetect.jpeg",
-    marketPrice: 499,
-    ourPrice: 249,
-    category: 'account'
-  },
-  {
     id: "quillbot-premium",
     name: "QuillBot Premium",
     tagline: "Paraphrase, summarize, write faster.",
