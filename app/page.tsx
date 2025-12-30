@@ -143,6 +143,13 @@ export default function HomePage() {
                 Popular tools our customers love
               </p>
             </div>
+
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 mb-8 rounded-r-lg max-w-4xl mx-auto">
+              <p className="text-sm text-yellow-800 dark:text-yellow-200 text-center">
+                <strong>Note:</strong> Prices are subject to change and may vary from time to time. Please contact us on WhatsApp for current pricing.
+              </p>
+            </div>
+
             <FeaturedTools tools={featuredTools} />
             <div className="text-center mt-10 sm:mt-12">
               <Link
@@ -169,6 +176,13 @@ export default function HomePage() {
                 Get multiple tools together and save big on your favorite subscriptions
               </p>
             </div>
+
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 mb-8 rounded-r-lg max-w-4xl mx-auto">
+              <p className="text-sm text-yellow-800 dark:text-yellow-200 text-center">
+                <strong>Note:</strong> Prices are subject to change and may vary from time to time. Please contact us on WhatsApp for current pricing.
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
               {COMBO_TOOLS.slice(0, 4).map((combo) => (
                 <ComboCard key={combo.id} combo={combo} />
