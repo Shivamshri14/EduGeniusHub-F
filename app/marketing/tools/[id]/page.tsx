@@ -1,33 +1,52 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { TOOLS } from "@/lib/tools";
+import { getTools, getToolById } from "@/lib/sanity";
 import { SITE } from "@/lib/config";
 import { waDirectLink } from "@/lib/whatsapp";
 import { MessageCircle, ExternalLink, CheckCircle } from "lucide-react";
 
 export async function generateStaticParams() {
-  return TOOLS.map((tool) => ({
-    id: tool.id,
-  }));
+  try {
+    const tools = await getTools();
+    if (!tools || tools.length === 0) {
+      return [{ id: 'placeholder' }];
+    }
+    return tools.map((tool: any) => ({
+      id: tool.id,
+    }));
+  } catch (error) {
+    return [{ id: 'placeholder' }];
+  }
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const tool = TOOLS.find((t) => t.id === params.id);
+  try {
+    const tool = await getToolById(params.id);
 
-  if (!tool) {
+    if (!tool) {
+      return {
+        title: `Tool Not Found - ${SITE.brand}`,
+      };
+    }
+
+    return {
+      title: `${tool.name} - ${SITE.brand}`,
+      description: tool.description,
+    };
+  } catch (error) {
     return {
       title: `Tool Not Found - ${SITE.brand}`,
     };
   }
-
-  return {
-    title: `${tool.name} - ${SITE.brand}`,
-    description: tool.description,
-  };
 }
 
-export default function ToolDetailPage({ params }: { params: { id: string } }) {
-  const tool = TOOLS.find((t) => t.id === params.id);
+export default async function ToolDetailPage({ params }: { params: { id: string } }) {
+  let tool;
+  try {
+    tool = await getToolById(params.id);
+  } catch (error) {
+    notFound();
+  }
 
   if (!tool) {
     notFound();
