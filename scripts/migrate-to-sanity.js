@@ -1,5 +1,8 @@
-import { createClient } from "@sanity/client";
-import { TOOLS, COMBO_TOOLS } from "../lib/tools-data.js";
+import { createClient } from '@sanity/client';
+import dotenv from 'dotenv';
+import { TOOLS, COMBO_TOOLS } from './tools-data.js';
+
+dotenv.config();
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,

@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client';
+import { TOOLS, COMBO_TOOLS } from './tools-data';
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder';
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
@@ -16,8 +17,8 @@ export const sanityClient = isSanityConfigured ? createClient({
 
 export async function getTools() {
   if (!sanityClient) {
-    console.warn('Sanity is not configured. Please set up your Sanity credentials in .env');
-    return [];
+    console.warn('Sanity is not configured. Using local fallback data.');
+    return TOOLS;
   }
   return sanityClient.fetch(`
     *[_type == "tool" && active == true] | order(_createdAt desc) {
@@ -38,8 +39,8 @@ export async function getTools() {
 
 export async function getToolById(id: string) {
   if (!sanityClient) {
-    console.warn('Sanity is not configured');
-    return null;
+    console.warn('Sanity is not configured. Using local fallback data.');
+    return TOOLS.find(tool => tool.id === id) || null;
   }
   return sanityClient.fetch(`
     *[_type == "tool" && slug.current == $id][0] {
@@ -60,8 +61,8 @@ export async function getToolById(id: string) {
 
 export async function getCombos() {
   if (!sanityClient) {
-    console.warn('Sanity is not configured');
-    return [];
+    console.warn('Sanity is not configured. Using local fallback data.');
+    return COMBO_TOOLS;
   }
   return sanityClient.fetch(`
     *[_type == "combo" && active == true] | order(_createdAt desc) {
@@ -81,8 +82,8 @@ export async function getCombos() {
 
 export async function getComboById(id: string) {
   if (!sanityClient) {
-    console.warn('Sanity is not configured');
-    return null;
+    console.warn('Sanity is not configured. Using local fallback data.');
+    return COMBO_TOOLS.find(combo => combo.id === id) || null;
   }
   return sanityClient.fetch(`
     *[_type == "combo" && slug.current == $id][0] {

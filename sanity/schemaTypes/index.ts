@@ -1,4 +1,4 @@
-import tool from './tool'
-import combo from './combo'
+import tool from '../schemas/tool.js'
+import comboTool from '../schemas/comboTool.js'
 
-export const schemaTypes = [tool, combo]
+export const schemaTypes = [tool, comboTool]
