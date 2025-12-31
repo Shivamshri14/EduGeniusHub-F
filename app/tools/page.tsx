@@ -3,23 +3,12 @@ import { Footer } from "@/components/marketing/Footer";
 import { Breadcrumbs } from "@/components/marketing/Breadcrumbs";
 import { WhatsAppBar } from "@/components/marketing/WhatsAppBar";
 import { ToolCard } from "@/components/marketing/ToolCard";
-import { sanityClient } from "@/lib/sanity";
+import { getTools } from "@/lib/sanity";
 
-export const revalidate = 0; // 🔥 IMPORTANT
-
-const toolsQuery = `
-*[_type == "tool" && !(_id in path("drafts.**"))]{
-  _id,
-  title,
-  tagline,
-  price,
-  category,
-  imageUrl
-}
-`;
+export const revalidate = 0;
 
 export default async function ToolsPage() {
-  const tools = await sanityClient.fetch(toolsQuery);
+  const tools = await getTools();
 
   const reportTools = tools.filter((t: any) => t.category === "report");
   const accountTools = tools.filter((t: any) => t.category === "account");

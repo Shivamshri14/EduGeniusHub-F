@@ -7,7 +7,7 @@ import { FeaturedTools } from "@/components/marketing/FeaturedTools";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/config";
-import { sanityClient } from "@/lib/sanity";
+import { getTools, getCombos } from "@/lib/sanity";
 import { waDirectLink } from "@/lib/whatsapp";
 import {
   MessageCircle, CheckCircle, Zap, Users, Package, Star,
@@ -17,38 +17,10 @@ import {
 
 export const revalidate = 0;
 
-/* ---------------- SANITY QUERIES ---------------- */
-
-const toolsQuery = `
-*[_type == "tool" && !(_id in path("drafts.**"))] | order(_createdAt desc)[0..7]{
-  _id,
-  title,
-  tagline,
-  price,
-  imageUrl,
-  category
-}
-`;
-
-const combosQuery = `
-*[_type == "combo" && !(_id in path("drafts.**"))]{
-  _id,
-  title,
-  description,
-  price,
-  imageUrl,
-  tools[]->{
-    _id,
-    title
-  }
-}
-`;
-
-/* ---------------- PAGE ---------------- */
-
 export default async function HomePage() {
-  const tools = await sanityClient.fetch(toolsQuery);
-  const combos = await sanityClient.fetch(combosQuery);
+  const allTools = await getTools();
+  const tools = allTools.slice(0, 8);
+  const combos = await getCombos();
 
   return (
     <>
