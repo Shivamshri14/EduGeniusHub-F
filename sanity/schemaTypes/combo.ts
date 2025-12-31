@@ -40,12 +40,9 @@ export default {
       validation: (Rule: any) => Rule.required(),
     },
     {
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
+      name: 'imageUrl',
+      title: 'Image URL',
+      type: 'url',
       validation: (Rule: any) => Rule.required(),
     },
     {
@@ -71,7 +68,6 @@ export default {
     select: {
       title: 'name',
       subtitle: 'tagline',
-      media: 'image',
     },
   },
 };

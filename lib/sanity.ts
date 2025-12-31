@@ -1,5 +1,4 @@
 import { createClient } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url';
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder';
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
@@ -14,12 +13,6 @@ export const sanityClient = isSanityConfigured ? createClient({
   token: process.env.SANITY_API_TOKEN,
 }) : null;
 
-const builder = sanityClient ? imageUrlBuilder(sanityClient) : null;
-
-export function urlFor(source: any) {
-  return builder ? builder.image(source) : null;
-}
-
 export async function getTools() {
   if (!sanityClient) {
     console.warn('Sanity is not configured. Please set up your Sanity credentials in .env');
@@ -33,7 +26,7 @@ export async function getTools() {
       tagline,
       description,
       officialUrl,
-      "image": image.asset->url,
+      "image": imageUrl,
       marketPrice,
       ourPrice,
       category,
@@ -55,7 +48,7 @@ export async function getToolById(id: string) {
       tagline,
       description,
       officialUrl,
-      "image": image.asset->url,
+      "image": imageUrl,
       marketPrice,
       ourPrice,
       category,
@@ -77,7 +70,7 @@ export async function getCombos() {
       tagline,
       description,
       tools,
-      "image": image.asset->url,
+      "image": imageUrl,
       marketPrice,
       ourPrice,
       active
@@ -98,7 +91,7 @@ export async function getComboById(id: string) {
       tagline,
       description,
       tools,
-      "image": image.asset->url,
+      "image": imageUrl,
       marketPrice,
       ourPrice,
       active
