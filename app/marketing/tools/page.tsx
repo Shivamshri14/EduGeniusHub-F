@@ -1,28 +1,11 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { getTools } from "@/lib/sanity";
-import { Tool } from "@/lib/tools";
 import { ToolCard } from "@/components/marketing/ToolCard";
 import { Search } from "lucide-react";
 
-export default function ToolsPage() {
-  const [tools, setTools] = useState<Tool[]>([]);
-  const [loading, setLoading] = useState(true);
+export const revalidate = 0;
 
-  useEffect(() => {
-    async function fetchTools() {
-      try {
-        const allTools = await getTools();
-        setTools(allTools);
-      } catch (error) {
-        console.error('Failed to fetch tools:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchTools();
-  }, []);
+export default async function ToolsPage() {
+  const tools = await getTools();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -47,12 +30,7 @@ export default function ToolsPage() {
             </p>
           </div>
 
-          {loading ? (
-            <div className="text-center py-20">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-slate-600">Loading tools...</p>
-            </div>
-          ) : tools.length > 0 ? (
+          {tools.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {tools.map((tool) => (
                 <ToolCard key={tool.id} tool={tool} />
@@ -62,7 +40,7 @@ export default function ToolsPage() {
             <div className="text-center py-20">
               <Search size={64} className="text-slate-300 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-slate-900 mb-2">No Tools Available</h3>
-              <p className="text-slate-600">Check back soon for new tools!</p>
+              <p className="text-slate-600">Add tools in Sanity Studio at /sanity</p>
             </div>
           )}
         </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { waDirectLink } from "@/lib/whatsapp";
 import { MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
-import type { Tool } from "@/lib/tools";
+import type { Tool } from "@/lib/sanity-types";
 
 interface FeaturedToolsProps {
   tools: Tool[];

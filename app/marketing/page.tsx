@@ -1,34 +1,16 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/config";
 import { getTools } from "@/lib/sanity";
-import { Tool } from "@/lib/tools";
 import { waDirectLink } from "@/lib/whatsapp";
 import { FeaturedTools } from "@/components/marketing/FeaturedTools";
 import { MessageCircle, CheckCircle, Zap, Users, Package } from "lucide-react";
 
-export default function MarketingHomePage() {
-  const [tools, setTools] = useState<Tool[]>([]);
-  const [featuredTools, setFeaturedTools] = useState<Tool[]>([]);
-  const [loading, setLoading] = useState(true);
+export const revalidate = 0;
 
-  useEffect(() => {
-    async function fetchTools() {
-      try {
-        const allTools = await getTools();
-        setTools(allTools);
-        setFeaturedTools(allTools.slice(0, 5));
-      } catch (error) {
-        console.error('Failed to fetch tools:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchTools();
-  }, []);
+export default async function MarketingHomePage() {
+  const tools = await getTools();
+  const featuredTools = tools.slice(0, 5);
 
   return (
     <div className="min-h-screen bg-white">
@@ -124,16 +106,11 @@ export default function MarketingHomePage() {
               <strong>Note:</strong> Prices are subject to change and may vary from time to time. Please contact us on WhatsApp for current pricing.
             </p>
           </div>
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-slate-600">Loading tools...</p>
-            </div>
-          ) : featuredTools.length > 0 ? (
+          {featuredTools.length > 0 ? (
             <FeaturedTools tools={featuredTools} />
           ) : (
             <div className="text-center py-12">
-              <p className="text-slate-600">No tools available yet.</p>
+              <p className="text-slate-600">No tools available yet. Add tools in Sanity Studio at /sanity</p>
             </div>
           )}
           <div className="text-center mt-12">

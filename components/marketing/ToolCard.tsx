@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { waDirectLink } from "@/lib/whatsapp";
 import { MessageCircle, ExternalLink, CheckCircle, X } from "lucide-react";
-import type { Tool } from "@/lib/tools";
+import type { Tool } from "@/lib/sanity-types";
 
 interface ToolCardProps {
   tool: Tool;

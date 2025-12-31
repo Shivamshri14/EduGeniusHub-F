@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { waDirectLink } from "@/lib/whatsapp";
 import { MessageCircle, CheckCircle } from "lucide-react";
-import type { ComboTool } from "@/lib/tools";
+import type { ComboTool } from "@/lib/sanity-types";
 
 interface ComboCardProps {
   combo: ComboTool;
