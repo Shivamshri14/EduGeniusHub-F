@@ -6,12 +6,13 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 const isSanityConfigured = projectId !== 'placeholder' && projectId !== 'your_project_id_here' && projectId !== '';
 
 export const sanityClient = isSanityConfigured ? createClient({
-  projectId,
-  dataset,
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: "production",
+  apiVersion: "2024-01-01",
   useCdn: false,
   token: process.env.SANITY_API_TOKEN,
 }) : null;
+
 
 export async function getTools() {
   if (!sanityClient) {
