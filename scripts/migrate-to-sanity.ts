@@ -1,33 +1,10 @@
-export type PlanType = 'Month' | 'Year';
-export type AccountType = 'private' | 'shared';
+import { createClient } from '@sanity/client';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-export type Tool = {
-  id: string;
-  name: string;
-  tagline: string;
-  description: string;
-  officialUrl: string;
-  image: string;
-  marketPrice: number;
-  ourPrice: number;
-  category: 'report' | 'account' | 'ott';
-  planType: PlanType;
-  accountType: AccountType;
-};
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-export type ComboTool = {
-  id: string;
-  name: string;
-  tagline: string;
-  description: string;
-  tools: string[];
-  image: string;
-  marketPrice: number;
-  ourPrice: number;
-  planType: PlanType;
-};
-
-export const TOOLS: Tool[] = [
+const TOOLS = [
   {
     id: "turnitin-plag",
     name: "Turnitin Plagiarism Report",
@@ -37,23 +14,19 @@ export const TOOLS: Tool[] = [
     image: "/tools/plag.png",
     marketPrice: 100,
     ourPrice: 40,
-    category: 'report',
-    planType: 'Month',
-    accountType: 'private'
+    category: 'report'
   },
-  // {
-  //   id: "turnitin-ai",
-  //   name: "Turnitin Ai Report",
-  //   tagline: "AI detection reports.",
-  //   description: "Generate AI detection of documents.",
-  //   officialUrl: "https://turnitin.com",
-  //   image: "/tools/ai.png",
-  //   marketPrice: 250,
-  //   ourPrice: 150,
-  //   category: 'report',
-  //   planType: 'Month',
-  //   accountType: 'private'
-  // },
+  {
+    id: "turnitin-ai",
+    name: "Turnitin Ai Report",
+    tagline: "AI detection reports.",
+    description: "Generate AI detection of documents.",
+    officialUrl: "https://turnitin.com",
+    image: "/tools/ai.png",
+    marketPrice: 150,
+    ourPrice: 50,
+    category: 'report'
+  },
   {
     id: "turnitin-combo",
     name: "Turnitin Plagiarism and Ai Report",
@@ -61,11 +34,9 @@ export const TOOLS: Tool[] = [
     description: "Generate plagiarism/AI detection of documents.",
     officialUrl: "https://turnitin.com",
     image: "/tools/plagai.png",
-    marketPrice: 250,
-    ourPrice: 150,
-    category: 'report',
-    planType: 'Month',
-    accountType: 'private'
+    marketPrice: 200,
+    ourPrice: 80,
+    category: 'report'
   },
   {
     id: "drillbit",
@@ -75,10 +46,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://drillbitplagiarism.com",
     image: "/tools/drillbit.jpg",
     marketPrice: 500,
-    ourPrice: 299,
-    category: 'report',
-    planType: 'Month',
-    accountType: 'private'
+    ourPrice: 199,
+    category: 'report'
   },
   {
     id: "turnitin-student",
@@ -87,25 +56,10 @@ export const TOOLS: Tool[] = [
     description: "Student account only for Plagisarism/Similarity checks. Simple and reliable for academic work.",
     officialUrl: "https://www.turnitin.com",
     image: "/tools/turnitin.jpg",
-    marketPrice: 1499,
-    ourPrice: 799,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'private'
+    marketPrice: 499,
+    ourPrice: 199,
+    category: 'account'
   },
-  // {
-  //   id: "turnitin-instructor",
-  //   name: " 𝗧𝘂𝗿𝗻𝗶𝘁𝗶𝗻𝗗𝗲𝘁𝗲𝗰𝘁 / 𝗜𝗻𝘀𝘁𝗿𝘂𝗰𝘁𝗼𝗿 𝗔𝗰𝗰𝗼𝘂𝗻𝘁",
-  //   tagline: "Plagiarism + AI report.",
-  //   description: " API-based Account – Connected directly to Turnitin's official server just Different interface but same Turnitin report",
-  //   officialUrl: "https://www.turndetect.com",
-  //   image: "/tools/turndetect.jpeg",
-  //   marketPrice: 499,
-  //   ourPrice: 249,
-  //   category: 'account',
-  //   planType: 'Month',
-  //   accountType: 'shared'
-  // },
   {
     id: "quillbot-premium",
     name: "QuillBot Premium",
@@ -115,9 +69,7 @@ export const TOOLS: Tool[] = [
     image: "https://www.01net.com/en/app/uploads/2023/11/How-to-Unblock-Quillbot.jpg",
     marketPrice: 499,
     ourPrice: 149,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "grammarly-premium",
@@ -128,9 +80,7 @@ export const TOOLS: Tool[] = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtjY30W4pwsQahrIg_Pq8y3mFjLfGq_PKITQ&s",
     marketPrice: 499,
     ourPrice: 299,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "chatgpt-plus",
@@ -141,9 +91,7 @@ export const TOOLS: Tool[] = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRscoFVJSrm9By0t5KD4zdRr0DBpb-oOidVUg&s",
     marketPrice: 999,
     ourPrice: 299,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "stealthwriter",
@@ -154,9 +102,7 @@ export const TOOLS: Tool[] = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOyNrycW5jlNDMGTW8TZ5unF25TZGjZGtMZg&s",
     marketPrice: 1500,
     ourPrice: 999,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "writehuman-ai",
@@ -166,10 +112,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://writehuman.ai/",
     image: "https://media.theresanaiforthat.com/writehuman.png",
     marketPrice: 1499,
-    ourPrice: 449,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'shared'
+    ourPrice: 349,
+    category: 'account'
   },
   {
     id: "perplexity-ai",
@@ -180,9 +124,7 @@ export const TOOLS: Tool[] = [
     image: "https://brytesoft.com/media/catalog/product/p/e/perplexity_pro.png",
     marketPrice: 2000,
     ourPrice: 799,
-    category: 'account',
-    planType: 'Year',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "netflix-premium",
@@ -193,9 +135,7 @@ export const TOOLS: Tool[] = [
     image: "https://www.logoai.com/uploads/articles/2025/04/23/banner-1712644978-1745388914.jpg",
     marketPrice: 649,
     ourPrice: 149,
-    category: 'ott',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'ott'
   },
   {
     id: "prime-video",
@@ -206,9 +146,7 @@ export const TOOLS: Tool[] = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXyLNwBktHQkq8BFxyOXLwmVMhCD2s3gbmYw&s",
     marketPrice: 499,
     ourPrice: 49,
-    category: 'ott',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'ott'
   },
   {
     id: "zee5-premium",
@@ -219,9 +157,7 @@ export const TOOLS: Tool[] = [
     image: "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/zee5-logo-hd.png",
     marketPrice: 499,
     ourPrice: 299,
-    category: 'ott',
-    planType: 'Year',
-    accountType: 'private'
+    category: 'ott'
   },
   {
     id: "sonyliv-premium",
@@ -232,9 +168,7 @@ export const TOOLS: Tool[] = [
     image: "https://www.bizasialive.com/wp-content/uploads/2020/05/899ec721-sonylivnew001.jpg",
     marketPrice: 499,
     ourPrice: 299,
-    category: 'ott',
-    planType: 'Year',
-    accountType: 'private'
+    category: 'ott'
   },
   {
     id: "jenni-ai",
@@ -245,9 +179,7 @@ export const TOOLS: Tool[] = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3UxmWxJPAKz272Dp3FxLnC2Z_w0cBORMM_w&s",
     marketPrice: 2000,
     ourPrice: 449,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "canva-pro",
@@ -258,9 +190,7 @@ export const TOOLS: Tool[] = [
     image: "https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxo4K81Ei7WzcnqEk8W.MgwZFE_jBn46Q0eZmYS1jqh9hsP2yct.ANJrdxy.La13GX7IADGcPOztqti6H6DAjzvg-&format=source",
     marketPrice: 1500,
     ourPrice: 99,
-    category: 'account',
-    planType: 'Year',
-    accountType: 'shared'
+    category: 'account'
   },
   {
     id: "request-new-tool",
@@ -271,13 +201,11 @@ export const TOOLS: Tool[] = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFOXhn7CwrVEhvT-lFg3YNbLWHoEEUpXZvIg&s",
     marketPrice: 0,
     ourPrice: 0,
-    category: 'account',
-    planType: 'Month',
-    accountType: 'private'
+    category: 'account'
   },
 ];
 
-export const COMBO_TOOLS: ComboTool[] = [
+const COMBO_TOOLS = [
   {
     id: "student-essentials",
     name: "Student Essentials Combo",
@@ -286,8 +214,7 @@ export const COMBO_TOOLS: ComboTool[] = [
     tools: ["Turnitin-instructor", "QuillBot Premium", "Grammarly Premium"],
     image: "https://t4.ftcdn.net/jpg/05/36/10/23/360_F_536102364_DwSdM6aQ6nuS4wOGsZN3dncYZ0I0VKYP.jpg",
     marketPrice: 2000,
-    ourPrice: 999,
-    planType: 'Month'
+    ourPrice: 599
   },
   {
     id: "ai-writer-pro",
@@ -297,8 +224,7 @@ export const COMBO_TOOLS: ComboTool[] = [
     tools: ["ChatGPT Pro", "StealthWriter", "Perplexity AI"],
     image: "https://t4.ftcdn.net/jpg/05/36/10/23/360_F_536102364_DwSdM6aQ6nuS4wOGsZN3dncYZ0I0VKYP.jpg",
     marketPrice: 5500,
-    ourPrice: 2499,
-    planType: 'Month'
+    ourPrice: 2499
   },
   {
     id: "entertainment-bundle",
@@ -308,8 +234,7 @@ export const COMBO_TOOLS: ComboTool[] = [
     tools: ["Netflix Premium", "Amazon Prime Video"],
     image: "https://t4.ftcdn.net/jpg/05/36/10/23/360_F_536102364_DwSdM6aQ6nuS4wOGsZN3dncYZ0I0VKYP.jpg",
     marketPrice: 499,
-    ourPrice: 199,
-    planType: 'Month'
+    ourPrice: 199
   },
   {
     id: "complete-package",
@@ -319,7 +244,139 @@ export const COMBO_TOOLS: ComboTool[] = [
     tools: ["Customise as needed"],
     image: "https://t4.ftcdn.net/jpg/05/36/10/23/360_F_536102364_DwSdM6aQ6nuS4wOGsZN3dncYZ0I0VKYP.jpg",
     marketPrice: 12000,
-    ourPrice: 1999,
-    planType: 'Month'
+    ourPrice: 1999
   }
 ];
+
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-12-31',
+  useCdn: false,
+  token: process.env.SANITY_API_TOKEN,
+});
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+async function migrateTools() {
+  console.log('\n🚀 Starting Tools Migration...\n');
+
+  for (const tool of TOOLS) {
+    try {
+      const slug = slugify(tool.id);
+
+      const existing = await client.fetch(
+        `*[_type == "tool" && slug.current == $slug][0]`,
+        { slug }
+      );
+
+      if (existing) {
+        console.log(`⏭️  Skipping "${tool.name}" - already exists`);
+        continue;
+      }
+
+      const doc = {
+        _type: 'tool',
+        name: tool.name,
+        slug: {
+          _type: 'slug',
+          current: slug,
+        },
+        tagline: tool.tagline,
+        description: tool.description,
+        officialUrl: tool.officialUrl,
+        imageUrl: tool.image,
+        marketPrice: tool.marketPrice,
+        ourPrice: tool.ourPrice,
+        category: tool.category,
+        active: true,
+      };
+
+      await client.create(doc);
+      console.log(`✅ Created tool: ${tool.name}`);
+    } catch (error) {
+      console.error(`❌ Error creating tool "${tool.name}":`, error);
+    }
+  }
+
+  console.log('\n✨ Tools migration complete!\n');
+}
+
+async function migrateCombos() {
+  console.log('\n🚀 Starting Combos Migration...\n');
+
+  for (const combo of COMBO_TOOLS) {
+    try {
+      const slug = slugify(combo.id);
+
+      const existing = await client.fetch(
+        `*[_type == "combo" && slug.current == $slug][0]`,
+        { slug }
+      );
+
+      if (existing) {
+        console.log(`⏭️  Skipping "${combo.name}" - already exists`);
+        continue;
+      }
+
+      const doc = {
+        _type: 'combo',
+        name: combo.name,
+        slug: {
+          _type: 'slug',
+          current: slug,
+        },
+        tagline: combo.tagline,
+        description: combo.description,
+        tools: combo.tools,
+        imageUrl: combo.image,
+        marketPrice: combo.marketPrice,
+        ourPrice: combo.ourPrice,
+        active: true,
+      };
+
+      await client.create(doc);
+      console.log(`✅ Created combo: ${combo.name}`);
+    } catch (error) {
+      console.error(`❌ Error creating combo "${combo.name}":`, error);
+    }
+  }
+
+  console.log('\n✨ Combos migration complete!\n');
+}
+
+async function main() {
+  try {
+    console.log('🔍 Checking Sanity configuration...');
+
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === 'your_project_id_here') {
+      throw new Error('NEXT_PUBLIC_SANITY_PROJECT_ID is not configured in .env file');
+    }
+
+    if (!process.env.SANITY_API_TOKEN || process.env.SANITY_API_TOKEN === 'your_token_here') {
+      throw new Error('SANITY_API_TOKEN is not configured in .env file');
+    }
+
+    console.log('✅ Sanity configuration valid\n');
+
+    await migrateTools();
+    await migrateCombos();
+
+    console.log('\n🎉 Migration completed successfully!');
+    console.log('\n📝 Next steps:');
+    console.log('   1. Visit your Sanity Studio at http://localhost:3000/sanity');
+    console.log('   2. Verify all tools and combos were created correctly');
+    console.log('   3. Edit and publish any draft documents\n');
+  } catch (error) {
+    console.error('\n❌ Migration failed:', error);
+    process.exit(1);
+  }
+}
+
+main();

@@ -1,18 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/config";
-import { TOOLS } from "@/lib/tools";
+import { getTools } from "@/lib/sanity";
 import { waDirectLink } from "@/lib/whatsapp";
 import { FeaturedTools } from "@/components/marketing/FeaturedTools";
 import { MessageCircle, CheckCircle, Zap, Users, Package } from "lucide-react";
 
-export const metadata = {
-  title: `${SITE.brand} - Premium Tools. Managed by Professionals.`,
-  description: "Access premium subscription tools for students and professionals. Fast delivery, trusted service, simple support.",
-};
+export const revalidate = 0;
 
-export default function MarketingHomePage() {
-  const featuredTools = TOOLS.slice(0, 5);
+export default async function MarketingHomePage() {
+  const tools = await getTools();
+  const featuredTools = tools.slice(0, 5);
 
   return (
     <div className="min-h-screen bg-white">
@@ -102,13 +100,25 @@ export default function MarketingHomePage() {
               Popular tools our customers love
             </p>
           </div>
-          <FeaturedTools tools={featuredTools} />
+
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8 rounded-r-lg max-w-4xl mx-auto">
+            <p className="text-sm text-yellow-800 text-center">
+              <strong>Note:</strong> Prices are subject to change and may vary from time to time. Please contact us on WhatsApp for current pricing.
+            </p>
+          </div>
+          {featuredTools.length > 0 ? (
+            <FeaturedTools tools={featuredTools} />
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-slate-600">No tools available yet. Add tools in Sanity Studio at /sanity</p>
+            </div>
+          )}
           <div className="text-center mt-12">
             <Link
               href="/tools"
               className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl hover:bg-slate-800 transition-colors font-semibold text-lg shadow-lg"
             >
-              <span>View All {TOOLS.length} Tools</span>
+              <span>View All {tools.length} Tools</span>
             </Link>
           </div>
         </div>
