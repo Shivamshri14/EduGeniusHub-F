@@ -3,16 +3,15 @@ import { Footer } from "@/components/marketing/Footer";
 import { Breadcrumbs } from "@/components/marketing/Breadcrumbs";
 import { WhatsAppBar } from "@/components/marketing/WhatsAppBar";
 import { ToolCard } from "@/components/marketing/ToolCard";
-import { getTools } from "@/lib/sanity";
+
+import { TOOLS } from "@/lib/tools";
 
 export const revalidate = 0;
 
-export default async function ToolsPage() {
-  const tools = await getTools();
-
-  const reportTools = tools.filter((t: any) => t.category === "report");
-  const accountTools = tools.filter((t: any) => t.category === "account");
-  const ottTools = tools.filter((t: any) => t.category === "ott");
+export default function ToolsPage() {
+  const reportTools = TOOLS.filter((t) => t.category === "report");
+  const accountTools = TOOLS.filter((t) => t.category === "account");
+  const ottTools = TOOLS.filter((t) => t.category === "ott");
 
   return (
     <>
@@ -28,30 +27,42 @@ export default async function ToolsPage() {
                 All Premium Tools
               </h1>
               <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400">
-                Browse our complete collection of {tools.length} premium subscription tools
+                Browse our complete collection of {TOOLS.length} premium subscription tools
               </p>
             </div>
 
             <div className="space-y-16">
 
               {/* REPORTS */}
-              <Section title="Reports" subtitle="Plagiarism & AI Detection Reports" color="bg-blue-600">
-                {reportTools.map((tool: any) => (
-                  <ToolCard key={tool._id} tool={tool} />
+              <Section
+                title="Reports"
+                subtitle="Plagiarism & AI Detection Reports"
+                color="bg-blue-600"
+              >
+                {reportTools.map((tool) => (
+                  <ToolCard key={tool.id} tool={tool} />
                 ))}
               </Section>
 
               {/* ACCOUNTS */}
-              <Section title="Accounts & Subscriptions" subtitle="Premium Tools & Software Access" color="bg-green-600">
-                {accountTools.map((tool: any) => (
-                  <ToolCard key={tool._id} tool={tool} />
+              <Section
+                title="Accounts & Subscriptions"
+                subtitle="Premium Tools & Software Access"
+                color="bg-green-600"
+              >
+                {accountTools.map((tool) => (
+                  <ToolCard key={tool.id} tool={tool} />
                 ))}
               </Section>
 
               {/* OTT */}
-              <Section title="OTT Platforms" subtitle="Streaming Services & Entertainment" color="bg-orange-600">
-                {ottTools.map((tool: any) => (
-                  <ToolCard key={tool._id} tool={tool} />
+              <Section
+                title="OTT Platforms"
+                subtitle="Streaming Services & Entertainment"
+                color="bg-orange-600"
+              >
+                {ottTools.map((tool) => (
+                  <ToolCard key={tool.id} tool={tool} />
                 ))}
               </Section>
 
@@ -67,7 +78,17 @@ export default async function ToolsPage() {
 }
 
 /* ---------- Helper ---------- */
-function Section({ title, subtitle, color, children }: any) {
+function Section({
+  title,
+  subtitle,
+  color,
+  children,
+}: {
+  title: string;
+  subtitle: string;
+  color: string;
+  children: React.ReactNode;
+}) {
   return (
     <div>
       <div className="mb-8">
@@ -77,6 +98,7 @@ function Section({ title, subtitle, color, children }: any) {
         <p className="text-slate-600 dark:text-slate-400">{subtitle}</p>
         <div className={`h-1 w-24 ${color} mt-3 rounded-full`} />
       </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {children}
       </div>

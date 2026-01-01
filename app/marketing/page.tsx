@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/config";
-import { getTools } from "@/lib/sanity";
+import { getTools } from "@/lib/tools";
 import { waDirectLink } from "@/lib/whatsapp";
 import { FeaturedTools } from "@/components/marketing/FeaturedTools";
 import { MessageCircle, CheckCircle, Zap, Users, Package } from "lucide-react";

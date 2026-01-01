@@ -1,4 +1,6 @@
-import { getTools } from "@/lib/sanity";
+
+import { getTools } from "@/lib/tools";
+
 import { ToolCard } from "@/components/marketing/ToolCard";
 import { Search } from "lucide-react";
 

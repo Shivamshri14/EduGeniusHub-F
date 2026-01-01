@@ -323,3 +323,13 @@ export const COMBO_TOOLS: ComboTool[] = [
     planType: 'Month'
   }
 ];
+
+export async function getTools(): Promise<Tool[]> {
+  // This returns the static list for now. Swap with a real data source if needed.
+  return TOOLS;
+}
+
+export async function getToolById(id: string): Promise<Tool | ComboTool | undefined> {
+  return TOOLS.find((t) => t.id === id) || COMBO_TOOLS.find((c) => c.id === id);
+}
+
