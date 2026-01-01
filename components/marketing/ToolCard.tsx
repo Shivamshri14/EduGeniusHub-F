@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { waDirectLink } from "@/lib/whatsapp";
-import { MessageCircle, ExternalLink, CheckCircle, X } from "lucide-react";
+import { ExternalLink, CheckCircle, X } from "lucide-react";
 import type { Tool } from "@/lib/tools";
+import { AccountBadge } from "./AccountBadge";
+import { PriceDisplay } from "./PriceDisplay";
+import { WhatsAppButton } from "./WhatsAppButton";
 
 interface ToolCardProps {
   tool: Tool;
@@ -38,26 +41,23 @@ export function ToolCard({ tool }: ToolCardProps) {
               {tool.name}
             </h3>
           </button>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{tool.tagline}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{tool.tagline}</p>
+          <AccountBadge accountType={tool.accountType} className="mb-4" />
 
-          <div className="mb-4">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-green-600 dark:text-green-400">₹{tool.ourPrice}</span>
-              <span className="text-lg text-slate-400 dark:text-slate-500 line-through">₹{tool.marketPrice}</span>
-            </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">You save ₹{tool.marketPrice - tool.ourPrice}!</p>
-          </div>
+          <PriceDisplay
+            current={tool.ourPrice}
+            original={tool.marketPrice}
+            planType={tool.planType}
+            size="md"
+          />
 
           <div className="flex flex-col sm:flex-row gap-2">
-            <a
+            <WhatsAppButton
               href={waDirectLink(tool.name)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm shadow-sm"
-            >
-              <MessageCircle size={16} />
-              <span>Enquire on WhatsApp</span>
-            </a>
+              label="Enquire on WhatsApp"
+              fullWidth
+              className="text-sm py-2.5"
+            />
             <a
               href={tool.officialUrl}
               target="_blank"
@@ -97,34 +97,34 @@ export function ToolCard({ tool }: ToolCardProps) {
                 </div>
 
                 <div>
-                  <p className="text-xl text-blue-600 dark:text-blue-400 mb-4 font-semibold">
+                  <AccountBadge accountType={tool.accountType} className="mb-4" />
+                  <p className="text-xl text-blue-600 dark:text-blue-400 mb-2 font-semibold">
                     {tool.tagline}
                   </p>
                   <p className="text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
                     {tool.description}
                   </p>
 
-                  <div className="mb-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-3xl font-bold text-green-600 dark:text-green-400">₹{tool.ourPrice}</span>
-                      <span className="text-xl text-slate-400 dark:text-slate-500 line-through">₹{tool.marketPrice}</span>
-                      <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                        {discount}% OFF
-                      </span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">You save ₹{tool.marketPrice - tool.ourPrice}!</p>
+                  <div className="mb-6 space-y-3">
+                    <PriceDisplay
+                      current={tool.ourPrice}
+                      original={tool.marketPrice}
+                      planType={tool.planType}
+                      size="lg"
+                    />
+                    <span className="inline-flex w-fit items-center rounded-full bg-red-500 px-3 py-1 text-sm font-bold text-white">
+                      {discount}% OFF
+                    </span>
                   </div>
 
                   <div className="flex flex-col gap-3 mb-6">
-                    <a
+                    <WhatsAppButton
                       href={waDirectLink(tool.name)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold shadow-lg"
-                    >
-                      <MessageCircle size={20} />
-                      <span>Enquire on WhatsApp</span>
-                    </a>
+                      label="Enquire on WhatsApp"
+                      className="py-3 text-base rounded-xl"
+                      fullWidth
+                      iconSize={20}
+                    />
                     <a
                       href={tool.officialUrl}
                       target="_blank"

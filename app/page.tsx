@@ -9,6 +9,7 @@ import { SITE } from "@/lib/config";
 import { TOOLS, COMBO_TOOLS } from "@/lib/tools";
 import { waDirectLink } from "@/lib/whatsapp";
 import { FeaturedTools } from "@/components/marketing/FeaturedTools";
+import { WhatsAppButton } from "@/components/marketing/WhatsAppButton";
 import { MessageCircle, CheckCircle, Zap, Users, Package, Star, Instagram, Shield, HeartHandshake, Sparkles, Code, FileText, Pencil, AlertCircle, icons } from "lucide-react";
 
 export const metadata = {
@@ -21,12 +22,45 @@ export const metadata = {
 
 export default function HomePage() {
   const featuredTools = TOOLS.slice(0, 5);
+  const offerText = "Flat 40% OFF – Today Only!";
+  const stockLeft = 7;
 
   return (
     <>
       <Navbar />
       <Breadcrumbs />
       <div className="min-h-screen bg-white dark:bg-slate-900">
+        {/* <section className="border-b border-orange-200 bg-gradient-to-r from-orange-50 via-amber-50 to-red-50 dark:from-orange-900/20 dark:via-amber-900/10 dark:to-red-900/20">
+          <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-orange-600 animate-flash">
+                🔥 Limited-Time Offer!
+              </p>
+              <h2 className="mt-2 text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
+                {offerText}
+              </h2>
+              <p className="mt-2 text-base text-slate-700 dark:text-slate-300">
+                Grab the best-selling combo today and save more on premium tools. Offer refreshes daily—change the text in code to update instantly.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm font-semibold">
+                <span className="rounded-full bg-red-600 px-3 py-1 text-white shadow-md">
+                  Few Stocks Left
+                </span>
+                <span className="text-red-700 dark:text-red-300">
+                  Only {stockLeft} spot{stockLeft === 1 ? '' : 's'} remaining
+                </span>
+              </div>
+            </div>
+            <WhatsAppButton
+              href={waDirectLink("Limited-Time Offer Inquiry")}
+              label="Grab Offer Now"
+              variant="gradient"
+              className="w-full py-3 text-base sm:w-auto sm:px-8"
+              iconSize={22}
+            />
+          </div>
+        </section> */}
+
         <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 text-white overflow-hidden">
           <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">

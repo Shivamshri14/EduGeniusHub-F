@@ -3,8 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { waDirectLink } from "@/lib/whatsapp";
-import { MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Tool } from "@/lib/tools";
+import { AccountBadge } from "./AccountBadge";
+import { PriceDisplay } from "./PriceDisplay";
+import { WhatsAppButton } from "./WhatsAppButton";
 
 interface FeaturedToolsProps {
   tools: Tool[];
@@ -37,17 +40,22 @@ export function FeaturedTools({ tools }: FeaturedToolsProps) {
       <div className="p-6 sm:p-8">
         <h3 className="font-bold text-2xl text-slate-900 mb-2">{currentTool.name}</h3>
         <p className="text-lg text-blue-600 mb-3">{currentTool.tagline}</p>
-        <p className="text-slate-600 mb-6 leading-relaxed">{currentTool.description}</p>
+        <AccountBadge accountType={currentTool.accountType} className="mb-4" />
+        <p className="text-slate-600 mb-4 leading-relaxed">{currentTool.description}</p>
+        <PriceDisplay
+          current={currentTool.ourPrice}
+          original={currentTool.marketPrice}
+          planType={currentTool.planType}
+          size="md"
+          className="mb-6"
+        />
 
-        <a
+        <WhatsAppButton
           href={waDirectLink(currentTool.name)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-sm w-full sm:w-auto"
-        >
-          <MessageCircle size={20} />
-          <span>Enquire on WhatsApp</span>
-        </a>
+          label="Enquire on WhatsApp"
+          className="w-full sm:w-auto px-6 py-3"
+          iconSize={20}
+        />
       </div>
 
       <div className="absolute top-1/2 -translate-y-1/2 left-4 right-4 flex items-center justify-between pointer-events-none">

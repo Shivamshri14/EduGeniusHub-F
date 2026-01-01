@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { waDirectLink } from "@/lib/whatsapp";
-import { MessageCircle, CheckCircle } from "lucide-react";
+import { waComboInquiryLink } from "@/lib/whatsapp";
+import { CheckCircle } from "lucide-react";
 import type { ComboTool } from "@/lib/tools";
+import { PriceDisplay } from "./PriceDisplay";
+import { WhatsAppButton } from "./WhatsAppButton";
 
 interface ComboCardProps {
   combo: ComboTool;
@@ -46,25 +48,22 @@ export function ComboCard({ combo }: ComboCardProps) {
           ))}
         </div>
 
-        <div className="mb-4 bg-white dark:bg-slate-800 p-4 rounded-lg border-2 border-purple-200 dark:border-purple-700">
-          <div className="flex items-center gap-3 mb-1">
-            <span className="text-3xl font-bold text-green-600 dark:text-green-400">₹{combo.ourPrice}</span>
-            <span className="text-xl text-slate-400 dark:text-slate-500 line-through">₹{combo.marketPrice}</span>
-          </div>
-          <p className="text-sm text-green-600 dark:text-green-400 font-semibold">
-            🎉 You save ₹{combo.marketPrice - combo.ourPrice}!
-          </p>
+        <div className="mb-4 rounded-lg border-2 border-purple-200 bg-white p-4 dark:border-purple-700 dark:bg-slate-800">
+          <PriceDisplay
+            current={combo.ourPrice}
+            original={combo.marketPrice}
+            planType={combo.planType}
+            size="lg"
+          />
         </div>
 
-        <a
-          href={waDirectLink(combo.name)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all font-semibold shadow-md hover:shadow-lg"
-        >
-          <MessageCircle size={18} />
-          <span>Get This Combo</span>
-        </a>
+        <WhatsAppButton
+          href={waComboInquiryLink(combo)}
+          label="Get This Combo"
+          fullWidth
+          variant="gradient"
+          className="py-3"
+        />
       </div>
     </div>
   );
