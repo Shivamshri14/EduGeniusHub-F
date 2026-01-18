@@ -5,7 +5,7 @@ import { Users, Bell, Gift, MessageCircle } from "lucide-react";
 
 export default function CommunitySection() {
   return (
-    <section className="py-16">
+    <section className="">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Card className="overflow-hidden border-blue-600/30 bg-gradient-to-br from-blue-900/30 via-cyan-900/20 to-blue-900/30">
           <CardContent className="p-8 md:p-12">

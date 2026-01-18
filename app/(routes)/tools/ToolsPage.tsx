@@ -65,7 +65,7 @@ export default function ToolsPage() {
         </div>
       </div>
 
-      <div className="py-16">
+      <div className="">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold text-foreground">

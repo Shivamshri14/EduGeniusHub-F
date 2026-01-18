@@ -11,7 +11,7 @@ export default function ReviewsGallery() {
   if (reviews.length === 0) return null;
 
   return (
-    <section className="py-16 bg-[#1a2332]">
+    <section className=" bg-[#1a2332]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold text-white">

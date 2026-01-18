@@ -7,7 +7,7 @@ import { buildWhatsAppLink } from "@/utils/whatsappMessageBuilder";
 
 export default function CustomRequirements() {
   return (
-    <section className="py-16 bg-background">
+    <section className="bg-background">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <Card className="overflow-hidden border-2 border-orange-500/50 bg-gradient-to-br from-orange-500/10 to-red-500/10 dark:from-orange-900/20 dark:to-red-900/20">
           <CardContent className="p-8 text-center">

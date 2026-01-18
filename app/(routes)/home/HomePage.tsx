@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1525] via-[#0f2a35] to-[#1a2332] dark:from-[#0a1525] dark:via-[#0f2a35] dark:to-[#1a2332] py-20 sm:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1525] via-[#0f2a35] to-[#1a2332] dark:from-[#0a1525] dark:via-[#0f2a35] dark:to-[#1a2332] py-10 sm:py-32">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent"></div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

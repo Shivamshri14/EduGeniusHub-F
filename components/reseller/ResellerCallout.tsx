@@ -10,7 +10,7 @@ export default function ResellerCallout() {
   const whatsappLink = buildWhatsAppLink(buildResellerMessage());
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-8 bg-background">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <Card className="overflow-hidden border-2 border-blue-500/50 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-900/30 dark:to-cyan-900/30">
           <CardContent className="p-8 text-center">

@@ -13,7 +13,7 @@ export default function DealOfDaySection() {
   if (deals.length === 0) return null;
 
   return (
-    <section className="py-16">
+    <section className="">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 text-center">
           <div className="mb-2 flex items-center justify-center gap-2">
