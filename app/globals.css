@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 160 60% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 160 60% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 60% 15%;
+    --primary: 165 82% 51%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 160 60% 15%;
+    --muted: 160 20% 96%;
+    --muted-foreground: 160 15% 45%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 160 60% 15%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 160 20% 90%;
+    --input: 160 20% 90%;
+    --ring: 165 82% 51%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 215 35% 12%;
+    --foreground: 0 0% 98%;
+    --card: 215 30% 16%;
+    --card-foreground: 0 0% 98%;
+    --popover: 215 30% 16%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 165 82% 51%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 160 60% 15%;
+    --muted: 215 25% 22%;
+    --muted-foreground: 215 10% 65%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 160 60% 15%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 25% 20%;
+    --input: 215 25% 20%;
+    --ring: 165 82% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent;
+  }
+}
