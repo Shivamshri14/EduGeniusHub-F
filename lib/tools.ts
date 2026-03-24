@@ -44,10 +44,8 @@ export const TOOLS: Tool[] = [
     officialUrl: "https://turnitin.com",
     image: DEFAULT_IMAGE,
     marketPrice: 100,
-    ourPrice: 40,
+    ourPrice: 60,
     category: "report",
-    planType: "Monthly",
-    accountType: "private",
     display: true,
   },
   {
@@ -60,8 +58,6 @@ export const TOOLS: Tool[] = [
     marketPrice: 250,
     ourPrice: 120,
     category: "report",
-    planType: "Monthly",
-    accountType: "private",
     display: true,
   },
   {
@@ -92,7 +88,7 @@ export const TOOLS: Tool[] = [
     category: "account",
     planType: "Monthly",
     accountType: "private",
-    display: true,
+    display: false
   },
   {
     id: "quillbot-premium",
@@ -148,7 +144,7 @@ export const TOOLS: Tool[] = [
     ourPrice: 999,
     category: "account",
     planType: "Monthly",
-    accountType: "private",
+    accountType: "shared",
     durationValue: 1,
     durationType: "months",
     display: true,
