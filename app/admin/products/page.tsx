@@ -100,7 +100,7 @@ export default function AdminProducts() {
           <h1 className="text-2xl font-black">Products</h1>
           <p className="text-muted-foreground text-sm mt-0.5">{products.length} total products</p>
         </div>
-        <Button onClick={openNew} className="bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold rounded-xl gap-2">
+        <Button onClick={openNew} className="bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold rounded-xl gap-2">
           <Plus className="w-4 h-4" /> Add Product
         </Button>
       </div>
@@ -125,7 +125,7 @@ export default function AdminProducts() {
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-sm truncate">{product.name}</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{product.category}</span>
-                    {product.is_featured && <Star className="w-3.5 h-3.5 text-[#FFD60A] fill-[#FFD60A]" />}
+                    {product.is_featured && <Star className="w-3.5 h-3.5 text-[#F4B400] fill-[#F4B400]" />}
                   </div>
                   <div className="text-xs text-muted-foreground mt-0.5">₹{product.price} · {product.delivery_time}</div>
                 </div>
@@ -142,7 +142,7 @@ export default function AdminProducts() {
                     className="p-2 rounded-lg hover:bg-muted transition-colors"
                     title="Toggle featured"
                   >
-                    <Star className={cn('w-4 h-4', product.is_featured ? 'text-[#FFD60A] fill-[#FFD60A]' : 'text-muted-foreground')} />
+                    <Star className={cn('w-4 h-4', product.is_featured ? 'text-[#F4B400] fill-[#F4B400]' : 'text-muted-foreground')} />
                   </button>
                   <button
                     onClick={() => openEdit(product)}
@@ -226,7 +226,7 @@ export default function AdminProducts() {
                       type="checkbox"
                       checked={!!(editing as any)[key]}
                       onChange={(e) => setEditing({ ...editing, [key]: e.target.checked })}
-                      className="w-4 h-4 rounded accent-[#FFD60A]"
+                      className="w-4 h-4 rounded accent-[#F4B400]"
                     />
                     <span className="text-sm">{label}</span>
                   </label>
@@ -236,7 +236,7 @@ export default function AdminProducts() {
             <div className="flex gap-3 pt-2">
               <Button variant="outline" className="flex-1 rounded-xl" onClick={() => setModalOpen(false)}>Cancel</Button>
               <Button
-                className="flex-1 bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold rounded-xl"
+                className="flex-1 bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold rounded-xl"
                 onClick={handleSave}
                 disabled={saving}
               >

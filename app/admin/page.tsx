@@ -56,7 +56,7 @@ export default function AdminDashboard() {
     { label: "Paid", value: stats.paidLeads, icon: TrendingUp, href: '/admin/leads', color: 'bg-green-500/10 text-green-500' },
     { label: "Delivered", value: stats.deliveredLeads, icon: CheckCircle, href: '/admin/leads', color: 'bg-emerald-500/10 text-emerald-500' },
     { label: "Customers", value: stats.totalCustomers, icon: Users, href: '/admin/customers', color: 'bg-pink-500/10 text-pink-500' },
-    { label: "Today's Leads", value: stats.todayLeads, icon: Clock, href: '/admin/leads', color: 'bg-[#FFD60A]/10 text-yellow-600 dark:text-[#FFD60A]' },
+    { label: "Today's Leads", value: stats.todayLeads, icon: Clock, href: '/admin/leads', color: 'bg-[#F4B400]/10 text-yellow-600 dark:text-[#F4B400]' },
   ];
 
   const statusColors: Record<string, string> = {

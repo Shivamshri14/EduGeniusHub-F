@@ -6,12 +6,22 @@ import ConditionalFooter from '@/components/navigation/ConditionalFooter';
 import ConditionalWhatsApp from '@/components/whatsapp/ConditionalWhatsApp';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from 'sonner';
+import VisitorTrackerInit from '@/components/VisitorTrackerInit';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'EduGenius Hub - Premium Digital Products at Student Prices',
-  description: 'Get Turnitin reports, ChatGPT, Netflix and more at the lowest prices. Trusted by 5000+ students.',
+  description: 'Get Turnitin reports, ChatGPT, Netflix and more at the lowest prices. Trusted by 5000+ students. Instant delivery via WhatsApp.',
+  keywords: 'Turnitin report, ChatGPT, Netflix, QuillBot, student tools, premium accounts, EduGenius Hub',
+  openGraph: {
+    title: 'EduGenius Hub - Premium Digital Products at Student Prices',
+    description: 'Get Turnitin reports, AI tools, OTT subscriptions at student prices. Trusted by 5000+ students.',
+    url: 'https://www.edugeniushub.com',
+    siteName: 'EduGenius Hub',
+    locale: 'en_IN',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -19,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <VisitorTrackerInit />
           <SiteNavbar />
           {children}
           <ConditionalFooter />

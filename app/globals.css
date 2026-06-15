@@ -5,61 +5,61 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 40% 7%;
+    --foreground: 222 47% 7%;
     --card: 0 0% 100%;
-    --card-foreground: 220 40% 7%;
+    --card-foreground: 222 47% 7%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 7%;
-    --primary: 220 56% 14%;
+    --popover-foreground: 222 47% 7%;
+    --primary: 218 62% 15%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 50% 17%;
+    --secondary: 218 50% 18%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 220 20% 96%;
-    --muted-foreground: 220 15% 45%;
-    --accent: 47 100% 51%;
-    --accent-foreground: 220 40% 7%;
+    --muted: 220 20% 97%;
+    --muted-foreground: 220 15% 46%;
+    --accent: 44 100% 50%;
+    --accent-foreground: 218 62% 15%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 20% 90%;
-    --input: 220 20% 90%;
-    --ring: 220 56% 14%;
-    --radius: 1rem;
-    --success: 142 71% 45%;
+    --border: 220 18% 91%;
+    --input: 220 18% 91%;
+    --ring: 218 62% 15%;
+    --radius: 0.875rem;
+    --success: 142 72% 40%;
     --warning: 25 95% 53%;
-    --chart-1: 220 56% 14%;
-    --chart-2: 47 100% 51%;
-    --chart-3: 142 71% 45%;
+    --chart-1: 218 62% 15%;
+    --chart-2: 44 100% 50%;
+    --chart-3: 142 72% 40%;
     --chart-4: 25 95% 53%;
     --chart-5: 0 84% 60%;
   }
 
   .dark {
-    --background: 220 40% 7%;
-    --foreground: 0 0% 98%;
-    --card: 220 38% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 220 38% 10%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 47 100% 51%;
-    --primary-foreground: 220 40% 7%;
-    --secondary: 220 30% 16%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 220 30% 14%;
-    --muted-foreground: 220 15% 60%;
-    --accent: 47 100% 51%;
-    --accent-foreground: 220 40% 7%;
+    --background: 218 55% 6%;
+    --foreground: 0 0% 97%;
+    --card: 218 50% 9%;
+    --card-foreground: 0 0% 97%;
+    --popover: 218 50% 9%;
+    --popover-foreground: 0 0% 97%;
+    --primary: 44 100% 50%;
+    --primary-foreground: 218 55% 6%;
+    --secondary: 218 35% 14%;
+    --secondary-foreground: 0 0% 97%;
+    --muted: 218 35% 13%;
+    --muted-foreground: 220 15% 58%;
+    --accent: 44 100% 50%;
+    --accent-foreground: 218 55% 6%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 25% 18%;
-    --input: 220 25% 18%;
-    --ring: 47 100% 51%;
-    --success: 142 71% 45%;
+    --border: 218 30% 17%;
+    --input: 218 30% 17%;
+    --ring: 44 100% 50%;
+    --success: 142 72% 40%;
     --warning: 25 95% 53%;
-    --chart-1: 47 100% 51%;
-    --chart-2: 142 71% 45%;
+    --chart-1: 44 100% 50%;
+    --chart-2: 142 72% 40%;
     --chart-3: 25 95% 53%;
     --chart-4: 0 84% 60%;
-    --chart-5: 220 56% 60%;
+    --chart-5: 218 56% 60%;
   }
 }
 
@@ -69,19 +69,25 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1.6;
   }
   html {
     scroll-behavior: smooth;
   }
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
   }
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+  h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
   ::selection {
-    background: rgba(255, 214, 10, 0.2);
+    background: rgba(244, 180, 0, 0.25);
   }
 }
 
@@ -97,6 +103,44 @@
     display: none;
   }
   .card-hover {
-    @apply transition-all duration-200 hover:-translate-y-1;
+    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-lg;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-[#F4B400] to-[#FFD60A] bg-clip-text text-transparent;
+  }
+  .surface {
+    @apply bg-card border border-border rounded-2xl;
+  }
+  .section-pad {
+    @apply py-16 md:py-24;
+  }
+  .container-max {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  /* Smooth animated counter pulse */
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-count {
+    animation: count-up 0.6s ease-out forwards;
+  }
+  /* Fade-in-up */
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+  /* Shimmer skeleton */
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--border)) 50%, hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
   }
 }

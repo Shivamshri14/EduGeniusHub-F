@@ -71,7 +71,7 @@ export default function AdminCustomers() {
           <h1 className="text-2xl font-black">Customers</h1>
           <p className="text-muted-foreground text-sm mt-0.5">{customers.length} total customers</p>
         </div>
-        <Button onClick={openNew} className="bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold rounded-xl gap-2">
+        <Button onClick={openNew} className="bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold rounded-xl gap-2">
           <Plus className="w-4 h-4" /> Add Customer
         </Button>
       </div>
@@ -92,7 +92,7 @@ export default function AdminCustomers() {
           <div className="divide-y divide-border">
             {filtered.map((customer) => (
               <div key={customer.id} className="flex items-center gap-3 px-5 py-4">
-                <div className="w-9 h-9 rounded-full bg-[#FFD60A]/20 border border-[#FFD60A]/30 flex items-center justify-center font-bold text-sm text-[#FFD60A] shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[#F4B400]/20 border border-[#F4B400]/30 flex items-center justify-center font-bold text-sm text-[#F4B400] shrink-0">
                   {customer.name.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -148,7 +148,7 @@ export default function AdminCustomers() {
             </div>
             <div className="flex gap-3">
               <Button variant="outline" className="flex-1 rounded-xl" onClick={() => setModalOpen(false)}>Cancel</Button>
-              <Button className="flex-1 bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold rounded-xl" onClick={handleSave} disabled={saving}>
+              <Button className="flex-1 bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold rounded-xl" onClick={handleSave} disabled={saving}>
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save'}
               </Button>
             </div>

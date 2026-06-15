@@ -141,7 +141,7 @@ export default function RequestAccessModal({ open, onClose, product, products = 
             {product && (
               <div className="p-3 rounded-xl bg-muted flex items-center justify-between">
                 <span className="text-sm font-medium">{product.name}</span>
-                <span className="text-sm font-bold text-accent-foreground dark:text-accent">₹{product.price}</span>
+                <span className="text-sm font-bold text-[#F4B400]">₹{product.price}</span>
               </div>
             )}
 
@@ -172,7 +172,7 @@ export default function RequestAccessModal({ open, onClose, product, products = 
 
             <Button
               type="submit"
-              className="w-full bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold py-3 rounded-xl text-base"
+              className="w-full bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold py-3 rounded-xl text-base"
               disabled={loading}
             >
               {loading ? (

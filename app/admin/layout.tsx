@@ -11,6 +11,7 @@ const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Products', href: '/admin/products', icon: Package },
   { label: 'Leads', href: '/admin/leads', icon: ClipboardList },
+  { label: 'CRM', href: '/admin/crm', icon: Users },
   { label: 'Customers', href: '/admin/customers', icon: Users },
   { label: 'Orders', href: '/admin/orders', icon: ShoppingCart },
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
@@ -47,16 +48,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   if (authed === null) {
-    return <div className="min-h-screen bg-[#0B1220]" />;
+    return <div className="min-h-screen bg-[#0B1F3A]" />;
   }
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-[#0B1220] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#0B1F3A] flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="flex items-center gap-2 justify-center mb-8">
-            <div className="w-10 h-10 rounded-xl bg-[#FFD60A] flex items-center justify-center">
-              <Zap className="w-5 h-5 text-[#0B1220]" fill="currentColor" />
+            <div className="w-10 h-10 rounded-xl bg-[#F4B400] flex items-center justify-center">
+              <Zap className="w-5 h-5 text-[#0B1F3A]" fill="currentColor" />
             </div>
             <span className="text-white font-bold text-xl">Admin Panel</span>
           </div>
@@ -69,7 +70,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#FFD60A]/50 text-sm"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#F4B400]/50 text-sm"
                   placeholder="Enter admin password"
                   autoFocus
                 />
@@ -77,7 +78,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {error && <p className="text-red-400 text-sm">{error}</p>}
               <button
                 type="submit"
-                className="w-full bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold py-3 rounded-xl transition-colors"
+                className="w-full bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold py-3 rounded-xl transition-colors"
               >
                 Sign In
               </button>
@@ -91,11 +92,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-muted/20 flex">
       {/* Sidebar Desktop */}
-      <aside className="hidden md:flex w-60 flex-col bg-[#0B1220] text-white min-h-screen fixed left-0 top-0 bottom-0 z-40">
+      <aside className="hidden md:flex w-60 flex-col bg-[#0B1F3A] text-white min-h-screen fixed left-0 top-0 bottom-0 z-40">
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#FFD60A] flex items-center justify-center">
-              <Zap className="w-4 h-4 text-[#0B1220]" fill="currentColor" />
+            <div className="w-8 h-8 rounded-lg bg-[#F4B400] flex items-center justify-center">
+              <Zap className="w-4 h-4 text-[#0B1F3A]" fill="currentColor" />
             </div>
             <div>
               <div className="font-bold text-sm">EduGenius Hub</div>
@@ -111,7 +112,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link key={item.href} href={item.href}>
                 <div className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                  active ? 'bg-[#FFD60A] text-[#0B1220]' : 'text-gray-400 hover:text-white hover:bg-white/10'
+                  active ? 'bg-[#F4B400] text-[#0B1F3A]' : 'text-gray-400 hover:text-white hover:bg-white/10'
                 )}>
                   <Icon className="w-4 h-4" />
                   {item.label}
@@ -140,11 +141,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-50 flex">
           <div className="fixed inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
-          <aside className="relative w-64 bg-[#0B1220] text-white flex flex-col">
+          <aside className="relative w-64 bg-[#0B1F3A] text-white flex flex-col">
             <div className="p-5 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#FFD60A] flex items-center justify-center">
-                  <Zap className="w-3.5 h-3.5 text-[#0B1220]" fill="currentColor" />
+                <div className="w-7 h-7 rounded-lg bg-[#F4B400] flex items-center justify-center">
+                  <Zap className="w-3.5 h-3.5 text-[#0B1F3A]" fill="currentColor" />
                 </div>
                 <span className="font-bold text-sm">Admin Panel</span>
               </div>
@@ -160,7 +161,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <Link key={item.href} href={item.href} onClick={() => setSidebarOpen(false)}>
                     <div className={cn(
                       'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                      active ? 'bg-[#FFD60A] text-[#0B1220]' : 'text-gray-400 hover:text-white hover:bg-white/10'
+                      active ? 'bg-[#F4B400] text-[#0B1F3A]' : 'text-gray-400 hover:text-white hover:bg-white/10'
                     )}>
                       <Icon className="w-4 h-4" />
                       {item.label}

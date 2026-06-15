@@ -75,7 +75,7 @@ export default function AdminSettings() {
           })}
         </div>
         <Button
-          className="mt-5 bg-[#FFD60A] hover:bg-[#e6c000] text-[#0B1220] font-bold rounded-xl gap-2"
+          className="mt-5 bg-[#F4B400] hover:bg-[#d9a200] text-[#0B1F3A] font-bold rounded-xl gap-2"
           onClick={saveStats}
           disabled={saving}
         >
