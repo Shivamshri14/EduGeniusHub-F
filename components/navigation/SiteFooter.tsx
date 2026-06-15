@@ -1,82 +1,95 @@
-import Link from "next/link";
-import { MessageCircle, Instagram } from "lucide-react";
-import { SITE } from "@/lib/catalog";
-import { buildWhatsAppLink } from "@/utils/whatsappMessageBuilder";
+import Link from 'next/link';
+import { Zap, Instagram, MessageCircle } from 'lucide-react';
 
 export default function SiteFooter() {
-
   return (
-    <footer className="border-t border-white/10 bg-black">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-3">
-          <div>
-            <h3 className="mb-4 text-lg font-bold text-white">
-              {SITE.brand}
-            </h3>
-            <p className="text-sm text-gray-400">
-              Premium tools and reports at the lowest prices. Trusted by
-              thousands of students and professionals.
+    <footer className="bg-[#0B1220] text-white">
+      <div className="max-w-6xl mx-auto px-4 py-16">
+        <div className="grid gap-10 md:grid-cols-4">
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-[#FFD60A] flex items-center justify-center">
+                <Zap className="w-4 h-4 text-[#0B1220]" fill="currentColor" />
+              </div>
+              <span className="font-bold text-base">
+                EduGenius <span className="text-[#FFD60A]">Hub</span>
+              </span>
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Premium digital products at student prices. Turnitin reports, AI tools, OTT subscriptions and more.
             </p>
           </div>
 
           <div>
-            <h3 className="mb-4 text-lg font-bold text-white">Quick Links</h3>
+            <h4 className="font-semibold text-sm mb-4 text-gray-300 uppercase tracking-wider">Products</h4>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/"
-                  className="text-sm text-gray-400 hover:text-white"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools"
-                  className="text-sm text-gray-400 hover:text-white"
-                >
-                  Tools
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-sm text-gray-400 hover:text-white"
-                >
-                  Contact
-                </Link>
-              </li>
+              {[
+                { label: 'Turnitin Reports', href: '/products?category=reports' },
+                { label: 'AI Tools', href: '/products?category=ai_tools' },
+                { label: 'OTT Subscriptions', href: '/products?category=ott' },
+                { label: 'Student Accounts', href: '/products?category=accounts' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="mb-4 text-lg font-bold text-white">Connect With Us</h3>
+            <h4 className="font-semibold text-sm mb-4 text-gray-300 uppercase tracking-wider">Company</h4>
+            <ul className="space-y-2">
+              {[
+                { label: 'Home', href: '/home' },
+                { label: 'All Products', href: '/products' },
+                { label: 'Contact', href: '/contact' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-sm mb-4 text-gray-300 uppercase tracking-wider">Contact</h4>
             <div className="space-y-3">
               <a
-                href={buildWhatsAppLink()}
+                href="https://wa.me/918766253356"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
-                <MessageCircle className="h-4 w-4" />
-                Chat on WhatsApp
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                WhatsApp Support
               </a>
               <a
-                href={SITE.instagramUrl}
+                href="https://instagram.com/edugeniushub"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
-                <Instagram className="h-4 w-4" />
-                Follow on Instagram
+                <Instagram className="w-4 h-4 text-pink-400" />
+                @edugeniushub
               </a>
+            </div>
+            <div className="mt-6 p-3 rounded-xl bg-white/5 border border-white/10">
+              <p className="text-xs text-gray-400">Average reply time</p>
+              <p className="text-sm font-semibold text-[#FFD60A]">Under 5 minutes</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-8 text-center">
-          <p className="text-sm text-gray-400">
-            2024 {SITE.brand}. All rights reserved.
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-gray-500">
+            &copy; {new Date().getFullYear()} EduGenius Hub. All rights reserved.
+          </p>
+          <p className="text-xs text-gray-600">
+            www.edugeniushub.com
           </p>
         </div>
       </div>
