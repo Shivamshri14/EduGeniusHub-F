@@ -1,128 +1,90 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import {
-  FileText, GraduationCap, Bot, Tv, Flame, ArrowRight, Star,
-  ChevronDown, Shield, Zap, Clock, TrendingUp, Users, Package,
-  Headphones, CheckCircle, MessageCircle, Phone, Sparkles
-} from 'lucide-react';
+import { FileText, ArrowRight, Star, ChevronDown, Shield, Zap, Clock, TrendingUp, Users, Package, Headphones, CircleCheck as CheckCircle, MessageCircle, Phone, Sparkles, Flame } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { supabase, type Product, type Testimonial, type Faq } from '@/lib/supabase';
+import { cn } from '@/lib/utils';
 import ProductCard from '@/components/ProductCard';
 import RequestAccessModal from '@/components/RequestAccessModal';
-import { cn } from '@/lib/utils';
+import { getFeaturedProducts, type LocalProduct } from '@/lib/localProducts';
+import { TESTIMONIALS, TRUST_STATS } from '@/lib/testimonials';
+import { FAQS } from '@/lib/faqs';
+
+// Cast local product to the Product shape ProductCard expects
+import type { Product } from '@/lib/supabase';
 
 const WA_NUMBER = '918766253356';
 
 const categories = [
-  { id: 'reports', label: 'Reports', emoji: '📑', desc: 'Turnitin, Drillbit', color: 'from-blue-600 to-blue-800', href: '/products?category=reports' },
-  { id: 'accounts', label: 'Student Accounts', emoji: '🎓', desc: 'Premium Access', color: 'from-violet-600 to-violet-800', href: '/products?category=accounts' },
-  { id: 'ai_tools', label: 'AI Tools', emoji: '🤖', desc: 'ChatGPT, Perplexity', color: 'from-emerald-600 to-emerald-800', href: '/products?category=ai_tools' },
-  { id: 'ott', label: 'OTT', emoji: '🎬', desc: 'Netflix, Prime & more', color: 'from-pink-600 to-rose-700', href: '/products?category=ott' },
-  { id: 'deals', label: 'Combo Deals', emoji: '📦', desc: 'Bundle & save more', color: 'from-orange-600 to-red-700', href: '/products' },
-  { id: 'best', label: 'Best Sellers', emoji: '🔥', desc: 'Most popular picks', color: 'from-amber-500 to-orange-600', href: '/products' },
+  { id: 'reports',  label: 'Reports',         emoji: '📑', desc: 'Turnitin, Drillbit',   color: 'from-blue-600 to-blue-800',       href: '/products?category=reports' },
+  { id: 'accounts', label: 'Student Accounts', emoji: '🎓', desc: 'Premium Access',      color: 'from-violet-600 to-violet-800',   href: '/products?category=ai_tools' },
+  { id: 'ai_tools', label: 'AI Tools',         emoji: '🤖', desc: 'ChatGPT, Perplexity', color: 'from-emerald-600 to-emerald-800', href: '/products?category=ai_tools' },
+  { id: 'ott',      label: 'OTT',              emoji: '🎬', desc: 'Netflix, Prime & more',color: 'from-pink-600 to-rose-700',       href: '/products?category=ott' },
+  { id: 'deals',    label: 'Combo Deals',       emoji: '📦', desc: 'Bundle & save more',  color: 'from-orange-600 to-red-700',      href: '/products' },
+  { id: 'best',     label: 'Best Sellers',      emoji: '🔥', desc: 'Most popular picks',  color: 'from-amber-500 to-orange-600',    href: '/products' },
 ];
 
 const steps = [
-  { step: '01', title: 'Choose Product', desc: 'Browse and pick the tool or report you need.', Icon: Package },
-  { step: '02', title: 'Pay Securely', desc: 'Multiple payment options, 100% safe and fast.', Icon: Shield },
-  { step: '03', title: 'Get Instant Access', desc: 'Delivered to your WhatsApp within minutes.', Icon: Zap },
+  { step: '01', title: 'Choose Product',    desc: 'Browse and pick the tool or report you need.',    Icon: Package },
+  { step: '02', title: 'Pay Securely',      desc: 'Multiple payment options, 100% safe and fast.',   Icon: Shield },
+  { step: '03', title: 'Get Instant Access',desc: 'Delivered to your WhatsApp within minutes.',       Icon: Zap },
 ];
 
-type TrustStats = {
-  students_served: string;
-  reports_delivered: string;
-  active_customers: string;
-  avg_response_time: string;
-};
+const trustItems = [
+  { value: TRUST_STATS.reports_delivered, label: 'Reports Delivered',     Icon: FileText },
+  { value: TRUST_STATS.students_served,   label: 'Students Served',       Icon: Users },
+  { value: TRUST_STATS.satisfaction,      label: 'Customer Satisfaction', Icon: TrendingUp },
+  { value: TRUST_STATS.response_time,     label: 'WhatsApp Support',      Icon: Headphones },
+];
 
-function AnimatedCounter({ target, suffix = '' }: { target: string; suffix?: string }) {
+function AnimatedCounter({ target }: { target: string }) {
   const [display, setDisplay] = useState('0');
-  const ref = useRef<HTMLSpanElement>(null);
-
   useEffect(() => {
     const num = parseInt(target.replace(/[^0-9]/g, ''));
     if (!num) { setDisplay(target); return; }
-    const dur = 1400;
     const steps = 40;
     const inc = num / steps;
     let cur = 0;
     const timer = setInterval(() => {
       cur += inc;
       if (cur >= num) { setDisplay(target); clearInterval(timer); }
-      else setDisplay(Math.floor(cur).toLocaleString('en-IN') + (target.includes('+') ? '+' : '') + suffix);
-    }, dur / steps);
+      else setDisplay(Math.floor(cur).toLocaleString('en-IN') + (target.includes('+') ? '+' : '') + (target.includes('%') ? '%' : ''));
+    }, 1400 / steps);
     return () => clearInterval(timer);
-  }, [target, suffix]);
-
-  return <span ref={ref}>{display}</span>;
+  }, [target]);
+  return <>{display}</>;
 }
 
 export default function HomePage() {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [faqs, setFaqs] = useState<Faq[]>([]);
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [trustStats, setTrustStats] = useState<TrustStats>({
-    students_served: '5000+',
-    reports_delivered: '12000+',
-    active_customers: '800+',
-    avg_response_time: '< 2 mins',
-  });
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [requestOpen, setRequestOpen] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const load = async () => {
-      const [productsRes, testimonialsRes, faqsRes, settingsRes] = await Promise.all([
-        supabase.from('products').select('*').eq('is_hidden', false).order('sort_order'),
-        supabase.from('testimonials').select('*').eq('is_active', true).order('sort_order'),
-        supabase.from('faqs').select('*').eq('is_active', true).order('sort_order'),
-        supabase.from('site_settings').select('*').eq('key', 'trust_stats').single(),
-      ]);
-      if (productsRes.data) {
-        setAllProducts(productsRes.data);
-        setFeaturedProducts(productsRes.data.filter((p: Product) => p.is_featured));
-      }
-      if (testimonialsRes.data) setTestimonials(testimonialsRes.data);
-      if (faqsRes.data) setFaqs(faqsRes.data);
-      if (settingsRes.data?.value) setTrustStats(settingsRes.data.value as TrustStats);
-    };
-    load();
-  }, []);
+  const featuredProducts = getFeaturedProducts() as unknown as Product[];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setStatsVisible(true); },
-      { threshold: 0.3 }
+      { threshold: 0.25 }
     );
     if (statsRef.current) observer.observe(statsRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const trustItems = [
-    { value: trustStats.reports_delivered, label: 'Reports Delivered', Icon: FileText },
-    { value: trustStats.students_served, label: 'Students Served', Icon: Users },
-    { value: '99%', label: 'Customer Satisfaction', Icon: TrendingUp },
-    { value: trustStats.avg_response_time, label: 'WhatsApp Support', Icon: Headphones },
-  ];
-
-  const waMessage = encodeURIComponent(`Hi EduGenius Hub 👋\n\nI'd like to know more about your products.\n\nPlease guide me.`);
+  const waMessage = encodeURIComponent(
+    `Hi EduGenius Hub 👋\n\nI'd like to know more about your products.\n\nPlease guide me.`
+  );
 
   return (
     <main className="min-h-screen">
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex items-center bg-[#0B1F3A] overflow-hidden pt-16">
-        {/* Background gradients */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0d2448] via-[#0B1F3A] to-[#07121f]" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#F4B400]/4 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage:'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)',backgroundSize:'60px 60px'}} />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 w-full">
           <div className="text-center mb-14">
@@ -130,12 +92,10 @@ export default function HomePage() {
               <Zap className="w-3 h-3" />
               Premium Digital Products at Student Prices
             </div>
-
             <h1 className="text-[clamp(2.5rem,7vw,5rem)] font-black text-white leading-[1.05] tracking-tight mb-5">
               What do you<br />
               <span className="text-[#F4B400]">need today?</span>
             </h1>
-
             <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto leading-relaxed">
               Academic Reports, AI Tools, Premium Accounts &amp; OTT Subscriptions — all in one place.
             </p>
@@ -143,15 +103,12 @@ export default function HomePage() {
 
           {/* Category grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto mb-12">
-            {categories.map((cat, i) => (
+            {categories.map((cat) => (
               <Link key={cat.id} href={cat.href}>
-                <div
-                  className={cn(
-                    'group relative rounded-2xl p-4 bg-gradient-to-br text-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/50 h-full min-h-[110px] flex flex-col',
-                    cat.color
-                  )}
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
+                <div className={cn(
+                  'group relative rounded-2xl p-4 bg-gradient-to-br text-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/50 h-full min-h-[110px] flex flex-col',
+                  cat.color
+                )}>
                   <div className="text-3xl mb-2">{cat.emoji}</div>
                   <h3 className="font-bold text-sm leading-tight mb-0.5">{cat.label}</h3>
                   <p className="text-xs opacity-65 flex-1 leading-tight">{cat.desc}</p>
@@ -161,7 +118,6 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               onClick={() => setRequestOpen(true)}
@@ -171,22 +127,18 @@ export default function HomePage() {
               Request a Product
             </Button>
             <a href={`https://wa.me/${WA_NUMBER}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="outline"
-                className="w-full border-white/20 text-white bg-white/5 hover:bg-white/12 px-8 py-4 rounded-xl text-base h-auto hover:scale-105 transition-all"
-              >
+              <Button variant="outline" className="w-full border-white/20 text-white bg-white/5 hover:bg-white/12 px-8 py-4 rounded-xl text-base h-auto hover:scale-105 transition-all">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Chat on WhatsApp
               </Button>
             </a>
           </div>
 
-          {/* Trust badges */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             {[
-              { Icon: Zap, text: 'Instant Delivery' },
+              { Icon: Zap,    text: 'Instant Delivery' },
               { Icon: Shield, text: 'Verified & Secure' },
-              { Icon: Clock, text: '24/7 Support' },
+              { Icon: Clock,  text: '24/7 Support' },
             ].map(({ Icon, text }) => (
               <div key={text} className="flex items-center gap-1.5 text-gray-400 text-xs">
                 <Icon className="w-3.5 h-3.5 text-[#F4B400]" />
@@ -201,14 +153,10 @@ export default function HomePage() {
       <section ref={statsRef} className="py-16 px-4 bg-[#0B1F3A]">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {trustItems.map((item, i) => {
+            {trustItems.map((item) => {
               const Icon = item.Icon;
               return (
-                <div
-                  key={item.label}
-                  className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center hover:bg-white/8 hover:border-white/15 transition-all"
-                  style={{ animationDelay: `${i * 80}ms` }}
-                >
+                <div key={item.label} className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center hover:bg-white/8 hover:border-white/15 transition-all">
                   <Icon className="w-5 h-5 text-[#F4B400] mx-auto mb-3" />
                   <div className="text-2xl md:text-3xl font-black text-white mb-1">
                     {statsVisible ? <AnimatedCounter target={item.value} /> : '—'}
@@ -286,74 +234,70 @@ export default function HomePage() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      {testimonials.length > 0 && (
-        <section className="py-20 px-4 bg-background">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-0.5 mb-4">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-[#F4B400] text-[#F4B400]" />
-                ))}
-              </div>
-              <h2 className="text-3xl font-black mb-2">Trusted by Thousands</h2>
-              <p className="text-muted-foreground text-sm">Real reviews from real students</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-5">
-              {testimonials.slice(0, 6).map((t) => (
-                <div key={t.id} className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg hover:-translate-y-0.5 hover:border-[#F4B400]/20 transition-all duration-200">
-                  <div className="flex items-center gap-0.5 mb-4">
-                    {Array.from({ length: t.rating }).map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#F4B400] text-[#F4B400]" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#F4B400]/20 border border-[#F4B400]/30 flex items-center justify-center font-bold text-sm text-[#F4B400]">
-                      {t.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-sm">{t.name}</div>
-                      {t.role && <div className="text-xs text-muted-foreground">{t.role}</div>}
-                    </div>
-                  </div>
-                </div>
+      <section className="py-20 px-4 bg-background">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-0.5 mb-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-5 h-5 fill-[#F4B400] text-[#F4B400]" />
               ))}
             </div>
+            <h2 className="text-3xl font-black mb-2">Trusted by Thousands</h2>
+            <p className="text-muted-foreground text-sm">Real reviews from real students</p>
           </div>
-        </section>
-      )}
+          <div className="grid md:grid-cols-3 gap-5">
+            {TESTIMONIALS.map((t) => (
+              <div key={t.id} className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg hover:-translate-y-0.5 hover:border-[#F4B400]/20 transition-all duration-200">
+                <div className="flex items-center gap-0.5 mb-4">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#F4B400] text-[#F4B400]" />
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#F4B400]/20 border border-[#F4B400]/30 flex items-center justify-center font-bold text-sm text-[#F4B400]">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm">{t.name}</div>
+                    {t.role && <div className="text-xs text-muted-foreground">{t.role}</div>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── FAQ ── */}
-      {faqs.length > 0 && (
-        <section className="py-20 px-4 bg-muted/40">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-black mb-2">Frequently Asked</h2>
-              <p className="text-muted-foreground text-sm">Everything you need to know</p>
-            </div>
-            <div className="space-y-2.5">
-              {faqs.map((faq) => (
-                <div key={faq.id} className="bg-card border border-border rounded-2xl overflow-hidden hover:border-[#F4B400]/20 transition-colors">
-                  <button
-                    className="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-sm hover:bg-muted/40 transition-colors"
-                    onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
-                  >
-                    <span>{faq.question}</span>
-                    <ChevronDown className={cn('w-4 h-4 text-muted-foreground transition-transform flex-shrink-0 ml-4', openFaq === faq.id && 'rotate-180')} />
-                  </button>
-                  {openFaq === faq.id && (
-                    <div className="px-6 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border pt-4">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+      <section className="py-20 px-4 bg-muted/40">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-black mb-2">Frequently Asked</h2>
+            <p className="text-muted-foreground text-sm">Everything you need to know</p>
           </div>
-        </section>
-      )}
+          <div className="space-y-2.5">
+            {FAQS.map((faq) => (
+              <div key={faq.id} className="bg-card border border-border rounded-2xl overflow-hidden hover:border-[#F4B400]/20 transition-colors">
+                <button
+                  className="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-sm hover:bg-muted/40 transition-colors"
+                  onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
+                >
+                  <span>{faq.question}</span>
+                  <ChevronDown className={cn('w-4 h-4 text-muted-foreground transition-transform flex-shrink-0 ml-4', openFaq === faq.id && 'rotate-180')} />
+                </button>
+                {openFaq === faq.id && (
+                  <div className="px-6 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border pt-4">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── COMMUNITY CTA ── */}
       <section className="py-20 px-4 bg-[#0B1F3A]">
@@ -402,10 +346,7 @@ export default function HomePage() {
               Request a Product
             </Button>
             <a href={`https://wa.me/${WA_NUMBER}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="outline"
-                className="w-full border-[#0B1F3A]/25 text-[#0B1F3A] bg-[#0B1F3A]/5 hover:bg-[#0B1F3A]/12 px-8 py-4 rounded-xl text-base font-bold h-auto"
-              >
+              <Button variant="outline" className="w-full border-[#0B1F3A]/25 text-[#0B1F3A] bg-[#0B1F3A]/5 hover:bg-[#0B1F3A]/12 px-8 py-4 rounded-xl text-base font-bold h-auto">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Chat First
               </Button>
@@ -414,11 +355,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <RequestAccessModal
-        open={requestOpen}
-        onClose={() => setRequestOpen(false)}
-        products={allProducts}
-      />
+      <RequestAccessModal open={requestOpen} onClose={() => setRequestOpen(false)} />
     </main>
   );
 }

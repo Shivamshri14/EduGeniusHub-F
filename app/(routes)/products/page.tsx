@@ -1,59 +1,40 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { supabase, type Product } from '@/lib/supabase';
 import ProductCard from '@/components/ProductCard';
+import { getLocalProducts } from '@/lib/localProducts';
 import { cn } from '@/lib/utils';
+import type { Product } from '@/lib/supabase';
 
 const categoryFilters = [
-  { id: 'all', label: 'All' },
-  { id: 'reports', label: '📑 Reports' },
-  { id: 'accounts', label: '🎓 Accounts' },
+  { id: 'all',      label: 'All' },
+  { id: 'reports',  label: '📑 Reports' },
   { id: 'ai_tools', label: '🤖 AI Tools' },
-  { id: 'ott', label: '🎬 OTT' },
+  { id: 'ott',      label: '🎬 OTT' },
 ];
+
+const ALL_PRODUCTS = getLocalProducts();
 
 function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category') ?? 'all';
 
-  const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState(categoryParam);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setActiveCategory(categoryParam);
-  }, [categoryParam]);
-
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      const { data } = await supabase
-        .from('products')
-        .select('*')
-        .eq('is_hidden', false)
-        .order('sort_order');
-      if (data) setProducts(data);
-      setLoading(false);
-    };
-    load();
-  }, []);
-
-  const filtered = products.filter((p) => {
+  const filtered = ALL_PRODUCTS.filter((p) => {
     const matchCat = activeCategory === 'all' || p.category === activeCategory;
-    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.description?.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = !search ||
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      (p.description ?? '').toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
 
   return (
     <div>
-      {/* Filters */}
       <div className="flex flex-col gap-4 mb-8">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -87,19 +68,7 @@ function ProductsContent() {
         </div>
       </div>
 
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="rounded-2xl border border-border bg-card p-5 animate-pulse">
-              <div className="w-12 h-12 bg-muted rounded-xl mb-4" />
-              <div className="h-4 bg-muted rounded mb-2 w-3/4" />
-              <div className="h-3 bg-muted rounded mb-1 w-full" />
-              <div className="h-3 bg-muted rounded mb-6 w-2/3" />
-              <div className="h-10 bg-muted rounded-xl" />
-            </div>
-          ))}
-        </div>
-      ) : filtered.length === 0 ? (
+      {filtered.length === 0 ? (
         <div className="text-center py-20 text-muted-foreground">
           <Search className="w-12 h-12 mx-auto mb-4 opacity-30" />
           <p className="text-lg font-medium">No products found</p>
@@ -108,7 +77,7 @@ function ProductsContent() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product as unknown as Product} />
           ))}
         </div>
       )}
