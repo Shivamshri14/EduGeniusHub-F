@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Phone } from 'lucide-react';
+import { Phone, X, MessageCircle, Send, Check } from 'lucide-react';
+import { getSupportStatus } from '@/utils/support';
 
-const WA_URL = 'https://wa.me/918766253356';
 const CALL_PHONE = 'tel:+918766253356';
 
-const WA_SVG = (
+const WA_ICON = (
   <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
   </svg>
@@ -14,45 +14,109 @@ const WA_SVG = (
 
 export default function WhatsAppFloatingButton() {
   const [visible, setVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [status, setStatus] = useState({
+    isOnline: true,
+    text: 'Online Now',
+    badgeColor: 'bg-green-500',
+    timeText: 'Fulfillment in 5–15 mins'
+  });
 
   useEffect(() => {
+    setStatus(getSupportStatus());
     const t = setTimeout(() => setVisible(true), 800);
-    return () => clearTimeout(t);
+    const interval = setInterval(() => setStatus(getSupportStatus()), 60000);
+    return () => {
+      clearTimeout(t);
+      clearInterval(interval);
+    };
   }, []);
 
   if (!visible) return null;
 
-  return (
-    <div className="fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-2.5">
-      {/* Call button */}
-      <a
-        href={CALL_PHONE}
-        className="flex items-center gap-2.5 bg-[#0B1F3A] hover:bg-[#122d58] text-white shadow-xl shadow-[#0B1F3A]/30 transition-all duration-200 hover:scale-105 rounded-2xl px-4 py-2.5 border border-white/10"
-        aria-label="Call now"
-      >
-        <span className="w-8 h-8 rounded-xl bg-blue-500/20 flex items-center justify-center">
-          <Phone className="w-4 h-4 text-blue-300" />
-        </span>
-        <div className="hidden sm:block">
-          <p className="text-xs font-bold leading-tight">Call Now</p>
-          <p className="text-[10px] text-gray-300 leading-tight">+91 87662 53356</p>
-        </div>
-      </a>
+  const triggerChat = (msg: string) => {
+    window.open(`https://wa.me/918766253356?text=${encodeURIComponent(msg)}`, '_blank');
+    setIsOpen(false);
+  };
 
-      {/* WhatsApp button */}
-      <a
-        href={WA_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white shadow-xl shadow-[#25D366]/35 transition-all duration-200 hover:scale-105 rounded-2xl px-4 py-2.5"
-        aria-label="Chat on WhatsApp"
-      >
-        {WA_SVG}
-        <div className="hidden sm:block">
-          <p className="text-xs font-bold leading-tight">Chat Now</p>
-          <p className="text-[10px] opacity-85 leading-tight">Avg reply &lt; 2 mins</p>
+  const supportOptions = [
+    { label: '📑 Buy Plagiarism Report', text: 'Hi, I want a Turnitin report. I am attaching my document file (.pdf/.docx) to this chat.' },
+    { label: '🎓 Get Student Account', text: 'Hi, I want a Quillbot account (shared). Please share the login credentials.' },
+    { label: '🎬 Buy Netflix / Prime Sub', text: 'Hi, I want Netflix Premium. Please set up a profile for me.' },
+    { label: '❓ General Inquiry', text: 'Hello EduGenius Hub, I have a query.' },
+  ];
+
+  return (
+    <div className="fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-3">
+      {/* Interactive Support Widget */}
+      {isOpen && (
+        <div className="bg-[#121212] border border-white/10 text-white rounded-2xl w-[90vw] sm:w-[340px] shadow-2xl overflow-hidden transition-all duration-300 animate-fade-in-up">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-zinc-800 to-zinc-950 p-4 relative flex items-center gap-3 border-b border-white/5">
+            <div className="relative shrink-0">
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-white shadow-sm border border-white/10 text-base">
+                R
+              </div>
+              <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#121212] ${status.isOnline ? 'bg-green-500' : 'bg-amber-500'}`} />
+            </div>
+            <div>
+              <h4 className="font-bold text-sm leading-tight text-white">Rahul</h4>
+              <p className="text-[10px] text-gray-400 leading-tight">EduGenius Support Manager</p>
+              <p className="text-[10px] text-emerald-400 font-semibold leading-tight mt-0.5 flex items-center gap-1">
+                {status.isOnline ? '🟢 Online' : '🕒 Offline'} · {status.isOnline ? 'Replies in < 2 mins' : 'Delayed replies'}
+              </p>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+            >
+              <X className="w-4.5 h-4.5" />
+            </button>
+          </div>
+
+          {/* Body */}
+          <div className="p-4 bg-[#121212]/98 space-y-3">
+            <div className="rounded-xl bg-white/5 border border-white/8 p-3 text-xs leading-relaxed text-gray-300">
+              <p className="font-medium text-white mb-1">Hey there! 👋</p>
+              <p>How can I help you get tools or reports today? Select an option below to start chat on WhatsApp:</p>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="space-y-1.5 pt-1">
+              {supportOptions.map((opt) => (
+                <button
+                  key={opt.label}
+                  onClick={() => triggerChat(opt.text)}
+                  className="w-full text-left bg-white/5 hover:bg-white/12 border border-white/8 hover:border-white/15 px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between group transition-all"
+                >
+                  <span>{opt.label}</span>
+                  <Send className="w-3 h-3 text-white opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                </button>
+              ))}
+            </div>
+
+            {/* Support timing badge */}
+            <div className="text-[10px] text-center text-gray-400 border-t border-white/8 pt-3 mt-1 leading-normal">
+              {status.timeText}
+            </div>
+          </div>
         </div>
-      </a>
+      )}
+
+      {/* Trigger Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`flex items-center gap-2.5 shadow-xl transition-all duration-300 hover:scale-105 rounded-2xl px-4 py-2.5 text-white ${
+          isOpen ? 'bg-[#EF4444] hover:bg-[#dc2626] shadow-[#EF4444]/35' : 'bg-[#25D366] hover:bg-[#1ebe5d] shadow-[#25D366]/35'
+        }`}
+        aria-label={isOpen ? 'Close support chat' : 'Open support chat'}
+      >
+        {isOpen ? <X className="w-5 h-5" /> : WA_ICON}
+        <div className="hidden sm:block text-left">
+          <p className="text-xs font-bold leading-tight">{isOpen ? 'Close Chat' : 'Support Chat'}</p>
+          <p className="text-[10px] opacity-85 leading-tight">{isOpen ? 'Back to page' : 'Replies in < 2 mins'}</p>
+        </div>
+      </button>
     </div>
   );
 }

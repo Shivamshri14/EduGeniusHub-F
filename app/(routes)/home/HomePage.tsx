@@ -10,9 +10,12 @@ import RequestAccessModal from '@/components/RequestAccessModal';
 import { getFeaturedProducts, type LocalProduct } from '@/lib/localProducts';
 import { TESTIMONIALS, TRUST_STATS } from '@/lib/testimonials';
 import { FAQS } from '@/lib/faqs';
+import { SITE } from '@/lib/config';
+import ReviewsSection from '@/components/reviews/ReviewsSection';
+import ServicesSection from '@/components/services/ServicesSection';
 
 // Cast local product to the Product shape ProductCard expects
-import type { Product } from '@/lib/supabase';
+import type { Product } from '@/lib/types';
 
 const WA_NUMBER = '918766253356';
 
@@ -21,7 +24,6 @@ const categories = [
   { id: 'accounts', label: 'Student Accounts', emoji: '🎓', desc: 'Premium Access',      color: 'from-violet-600 to-violet-800',   href: '/products?category=ai_tools' },
   { id: 'ai_tools', label: 'AI Tools',         emoji: '🤖', desc: 'ChatGPT, Perplexity', color: 'from-emerald-600 to-emerald-800', href: '/products?category=ai_tools' },
   { id: 'ott',      label: 'OTT',              emoji: '🎬', desc: 'Netflix, Prime & more',color: 'from-pink-600 to-rose-700',       href: '/products?category=ott' },
-  { id: 'deals',    label: 'Combo Deals',       emoji: '📦', desc: 'Bundle & save more',  color: 'from-orange-600 to-red-700',      href: '/products' },
   { id: 'best',     label: 'Best Sellers',      emoji: '🔥', desc: 'Most popular picks',  color: 'from-amber-500 to-orange-600',    href: '/products' },
 ];
 
@@ -102,7 +104,7 @@ export default function HomePage() {
           </div>
 
           {/* Category grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto mb-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-12">
             {categories.map((cat) => (
               <Link key={cat.id} href={cat.href}>
                 <div className={cn(
@@ -233,43 +235,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="py-20 px-4 bg-background">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-0.5 mb-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-[#F4B400] text-[#F4B400]" />
-              ))}
-            </div>
-            <h2 className="text-3xl font-black mb-2">Trusted by Thousands</h2>
-            <p className="text-muted-foreground text-sm">Real reviews from real students</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.id} className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg hover:-translate-y-0.5 hover:border-[#F4B400]/20 transition-all duration-200">
-                <div className="flex items-center gap-0.5 mb-4">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-[#F4B400] text-[#F4B400]" />
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#F4B400]/20 border border-[#F4B400]/30 flex items-center justify-center font-bold text-sm text-[#F4B400]">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm">{t.name}</div>
-                    {t.role && <div className="text-xs text-muted-foreground">{t.role}</div>}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── SERVICES SECTION ── */}
+      <ServicesSection />
+
+      {/* ── TESTIMONIALS (REAL SCREENSHOTS) ── */}
+      <ReviewsSection />
 
       {/* ── FAQ ── */}
       <section className="py-20 px-4 bg-muted/40">
@@ -309,22 +279,15 @@ export default function HomePage() {
           <p className="text-gray-400 mb-8 text-base leading-relaxed max-w-md mx-auto">
             Connect with 5000+ students, get exclusive deals, and stay updated with the latest tools.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-xs mx-auto">
             <a
-              href={`https://wa.me/${WA_NUMBER}?text=${waMessage}`}
+              href={SITE.whatsappCommunityUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 text-sm"
+              className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 text-sm w-full"
             >
               <MessageCircle className="w-4 h-4" />
               Join WhatsApp Community
-            </a>
-            <a
-              href="tel:+918766253356"
-              className="inline-flex items-center justify-center gap-2 bg-white/8 hover:bg-white/14 border border-white/15 text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:scale-105 text-sm"
-            >
-              <Phone className="w-4 h-4 text-blue-300" />
-              Call Now
             </a>
           </div>
         </div>

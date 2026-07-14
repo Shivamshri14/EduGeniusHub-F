@@ -63,7 +63,7 @@ export default function ContactPage() {
           <div className="mb-16 text-center">
             <h1 className="mb-4 text-5xl font-bold text-foreground">Contact Us</h1>
             <p className="text-lg text-muted-foreground">
-              We're here to help! Reach out to us through any of these channels.
+              We&apos;re here to help! Reach out to us through any of these channels.
             </p>
           </div>
 
@@ -103,7 +103,7 @@ export default function ContactPage() {
                   Follow us for updates and offers
                 </p>
                 <p className="mb-1 text-xl font-semibold text-pink-600 dark:text-pink-400">
-                  @edugeniushub
+                  @edugenius.hub1
                 </p>
                 <a
                   href={SITE.instagramUrl}

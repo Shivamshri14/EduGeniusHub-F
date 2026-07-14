@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { type Product } from '@/lib/supabase';
+import { type Product } from '@/lib/types';
 import { CircleCheck as CheckCircle, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -45,7 +45,18 @@ export default function RequestAccessModal({ open, onClose, product, products = 
     if (!name.trim() || !phone.trim()) { toast.error('Name and phone are required'); return; }
 
     const productName = selectedProduct || product?.name || 'Not specified';
-    const message = `Hi EduGenius Hub 👋\n\n*New Request*\n\n*Name:* ${name}\n*Phone:* ${phone}${email ? `\n*Email:* ${email}` : ''}\n*Product:* ${productName}\n*Duration:* ${duration}${notes ? `\n*Notes:* ${notes}` : ''}\n\nPlease guide me.`;
+    const category = product?.category || '';
+
+    let detailsMsg = '';
+    if (category === 'reports') {
+      detailsMsg = `I want a Turnitin report. I am attaching my document file (.pdf/.docx) to this chat.`;
+    } else if (category === 'ott') {
+      detailsMsg = `I want ${productName}. Please set up a profile for me.`;
+    } else {
+      detailsMsg = `I want a ${productName} account. Please share the login credentials.`;
+    }
+
+    const message = `Hi EduGenius Hub 👋\n\n*New Request*\n\n*Name:* ${name}\n*Phone:* ${phone}${email ? `\n*Email:* ${email}` : ''}\n*Product:* ${productName}\n*Duration:* ${duration}${notes ? `\n*Notes:* ${notes}` : ''}\n\n${detailsMsg}`;
     const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 
     setDone(true);

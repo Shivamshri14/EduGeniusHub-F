@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Zap, Clock, TrendingUp, CircleCheck as CheckCircle, CircleAlert as AlertCircle, X, MessageCircle, ExternalLink, Star, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { type Product } from '@/lib/supabase';
+import { type Product } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import RequestAccessModal from '@/components/RequestAccessModal';
+import { getSupportStatus } from '@/utils/support';
 
 const WA_NUMBER = '918766253356';
 
@@ -36,9 +37,26 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
     ? Math.round(((product.market_price - product.price) / product.market_price) * 100)
     : null;
 
-  const waMsg = encodeURIComponent(
-    `Hi EduGenius Hub 👋\n\nI want to order:\n\n*Product:* ${product.name}\n*Price:* ₹${product.price}${product.plan_type ? ' / ' + product.plan_type.toLowerCase() : ''}\n\nPlease guide me.`
-  );
+  const getWhatsAppMessage = (p: Product) => {
+    if (p.category === 'reports') {
+      return `Hi EduGenius Hub 👋\n\nI want a Turnitin report. I am attaching my document file (.pdf/.docx) to this chat.`;
+    }
+    if (p.category === 'ott') {
+      return `Hi EduGenius Hub 👋\n\nI want ${p.name}. Please set up a profile for me.`;
+    }
+    return `Hi EduGenius Hub 👋\n\nI want a ${p.name} account. Please share the login credentials.`;
+  };
+
+  const waMsg = encodeURIComponent(getWhatsAppMessage(product));
+  const [support, setSupport] = useState({
+    isOnline: true,
+    badgeColor: 'bg-green-500',
+    timeText: 'Fulfillment in 5–15 mins'
+  });
+
+  useEffect(() => {
+    setSupport(getSupportStatus());
+  }, []);
 
   return (
     <>
@@ -71,10 +89,20 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
             <div className="flex items-end justify-between p-4 rounded-xl bg-muted/50 border border-border">
               <div>
                 <p className="text-xs text-muted-foreground mb-1">Our Price</p>
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-1.5 flex-wrap">
                   <span className="text-3xl font-black">₹{product.price}</span>
                   {product.plan_type && (
                     <span className="text-xs text-muted-foreground">/{product.plan_type.toLowerCase()}</span>
+                  )}
+                  {product.plan_type?.toLowerCase() === 'yearly' && (
+                    <span className="text-xs font-bold text-[#F4B400] ml-1">
+                      (Just ₹{(product.price / 365).toFixed(1)} / day)
+                    </span>
+                  )}
+                  {product.plan_type?.toLowerCase() === 'monthly' && (
+                    <span className="text-xs font-bold text-[#F4B400] ml-1">
+                      (Just ₹{(product.price / 30).toFixed(1)} / day)
+                    </span>
                   )}
                 </div>
                 {product.market_price && (
@@ -86,9 +114,9 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <Clock className="w-3.5 h-3.5" />
-                <span>{product.delivery_time}</span>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
+                <span className={`w-2 h-2 rounded-full ${support.badgeColor} animate-pulse`} />
+                <span>{support.timeText}</span>
               </div>
             </div>
 
@@ -156,6 +184,15 @@ export default function ProductCard({ product }: Props) {
   const cat = categoryStyle[product.category] ?? { gradient: 'from-muted/40 to-muted/20', emoji: '📦', label: '' };
   const badge = product.badge ? badgeConfig[product.badge] : null;
   const BadgeIcon = badge?.Icon;
+  const [support, setSupport] = useState({
+    isOnline: true,
+    badgeColor: 'bg-green-500',
+    timeText: 'Fulfillment in 5–15 mins'
+  });
+
+  useEffect(() => {
+    setSupport(getSupportStatus());
+  }, []);
   const discount = product.market_price
     ? Math.round(((product.market_price - product.price) / product.market_price) * 100)
     : null;
@@ -192,12 +229,22 @@ export default function ProductCard({ product }: Props) {
         <div className="mt-auto">
           <div className="flex items-end justify-between mb-4">
             <div>
-              <div className="flex items-baseline gap-1">
+              <div className="flex items-baseline gap-1 flex-wrap">
                 <span className="text-2xl font-black">₹{product.price}</span>
                 {product.plan_type && (
                   <span className="text-xs text-muted-foreground">/{product.plan_type.toLowerCase()}</span>
                 )}
               </div>
+              {product.plan_type?.toLowerCase() === 'yearly' && (
+                <div className="text-[10px] font-bold text-[#F4B400] mt-0.5 leading-none">
+                  (Just ₹{(product.price / 365).toFixed(1)} / day)
+                </div>
+              )}
+              {product.plan_type?.toLowerCase() === 'monthly' && (
+                <div className="text-[10px] font-bold text-[#F4B400] mt-0.5 leading-none">
+                  (Just ₹{(product.price / 30).toFixed(1)} / day)
+                </div>
+              )}
               {product.market_price && (
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="text-xs text-muted-foreground line-through">₹{product.market_price}</span>
@@ -207,9 +254,9 @@ export default function ProductCard({ product }: Props) {
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <Clock className="w-3 h-3" />
-              <span>{product.delivery_time}</span>
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
+              <span className={`w-1.5 h-1.5 rounded-full ${support.badgeColor} animate-pulse`} />
+              <span>{support.isOnline ? 'Active' : 'Morning Delivery'}</span>
             </div>
           </div>
 

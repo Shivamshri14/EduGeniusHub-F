@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import ProductCard from '@/components/ProductCard';
 import { getLocalProducts } from '@/lib/localProducts';
 import { cn } from '@/lib/utils';
-import type { Product } from '@/lib/supabase';
+import type { Product } from '@/lib/types';
 
 const categoryFilters = [
   { id: 'all',      label: 'All' },

@@ -49,7 +49,7 @@ export const TOOLS: Tool[] = [
     category: "report",
     display: true,
   },
-    {
+  {
     id: "turnitin-ai",
     name: "Turnitin Ai Report",
     tagline: "AI detection reports.",
@@ -187,7 +187,7 @@ export const TOOLS: Tool[] = [
     accountType: "private",
     display: true,
   },
-    {
+  {
     id: "paperpal",
     name: "Paperpal Premium",
     tagline: "AI writing and proofreading.",
@@ -245,7 +245,7 @@ export const TOOLS: Tool[] = [
     accountType: "private",
     display: true,
   },
-    {
+  {
     id: "zee5-premium",
     name: "ZEE5 Premium (1 Year / 5 Screens)",
     tagline: "Movies, TV shows & originals.",
@@ -277,7 +277,29 @@ export const TOOLS: Tool[] = [
     accountType: "private",
     display: true,
   },
-  
+  {
+    id: "dummy-template-tool",
+    name: "Dummy Template Tool (Options List)",
+    tagline: "Template tagline explaining the tool's benefit.",
+    description: "Template description detailing what is included.",
+    officialUrl: "https://example.com",
+    image: DEFAULT_IMAGE,
+    marketPrice: 999,
+    ourPrice: 299,
+    // CATEGORY OPTIONS: "report" | "account" | "ott"
+    category: "account",
+    // PLAN TYPE OPTIONS: "Monthly" | "Yearly"
+    planType: "Monthly",
+    // ACCOUNT TYPE OPTIONS: "shared" | "private" | "mail access"
+    accountType: "shared",
+    durationValue: 1,
+    // DURATION TYPE OPTIONS: "months" | "years"
+    durationType: "months",
+    display: false,
+    // BADGES (Mapped in lib/localProducts.ts):
+    // Add badge name to BADGE_MAP in lib/localProducts.ts matching the id "dummy-template-tool"
+    // Available Badges: 'best_seller' | 'instant_delivery' | 'available_now' | 'limited_slots'
+  }
 ];
 
 export const COMBO_TOOLS: ComboTool[] = [

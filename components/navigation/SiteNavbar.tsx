@@ -50,16 +50,8 @@ export default function SiteNavbar() {
     >
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/home" className="flex items-center gap-2 shrink-0 group">
-          <div className="w-8 h-8 rounded-xl bg-[#F4B400] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-            <Zap className="w-4 h-4 text-[#0B1F3A]" fill="currentColor" />
-          </div>
-          <span className={cn(
-            'font-black text-[15px] tracking-tight transition-colors',
-            scrolled || !isHero ? 'text-foreground' : 'text-white'
-          )}>
-            EduGenius <span className="text-[#F4B400]">Hub</span>
-          </span>
+        <Link href="/home" className="flex items-center shrink-0 group">
+          <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-auto rounded-xl object-contain shadow-md hover:scale-105 transition-transform" />
         </Link>
 
         {/* Desktop Nav */}

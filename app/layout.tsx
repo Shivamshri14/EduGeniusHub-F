@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import SiteNavbar from '@/components/navigation/SiteNavbar';
 import ConditionalFooter from '@/components/navigation/ConditionalFooter';
 import ConditionalWhatsApp from '@/components/whatsapp/ConditionalWhatsApp';
+import LiveActivityNotification from '@/components/whatsapp/LiveActivityNotification';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from 'sonner';
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <ConditionalFooter />
           <ConditionalWhatsApp />
+          <LiveActivityNotification />
           <Toaster position="bottom-right" richColors />
         </ThemeProvider>
       </body>
