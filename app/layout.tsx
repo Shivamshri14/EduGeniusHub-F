@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   title: 'EduGenius Hub - Premium Digital Products at Student Prices',
   description: 'Get Turnitin reports, ChatGPT, Netflix and more at the lowest prices. Trusted by 5000+ students. Instant delivery via WhatsApp.',
   keywords: 'Turnitin report, ChatGPT, Netflix, QuillBot, student tools, premium accounts, EduGenius Hub',
+  icons: {
+    icon: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
   openGraph: {
     title: 'EduGenius Hub - Premium Digital Products at Student Prices',
     description: 'Get Turnitin reports, AI tools, OTT subscriptions at student prices. Trusted by 5000+ students.',
