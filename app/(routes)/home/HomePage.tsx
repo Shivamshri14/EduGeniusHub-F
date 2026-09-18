@@ -64,7 +64,20 @@ export default function HomePage() {
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
 
-  const featuredProducts = getFeaturedProducts() as unknown as Product[];
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>(
+    () => getFeaturedProducts() as unknown as Product[]
+  );
+
+  useEffect(() => {
+    fetch('/api/products?featured=true')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.products && data.products.length > 0) {
+          setFeaturedProducts(data.products);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

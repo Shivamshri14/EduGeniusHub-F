@@ -1,9 +1,20 @@
+export type ProductCategory = 'reports' | 'accounts' | 'ai_tools' | 'ott' | 'services';
+
+export type ProductPlan = {
+  name: string;
+  price: number;
+  original_price?: number | null;
+  duration?: string | null;
+  limits?: string | null;
+  details?: string | null;
+};
+
 export type Product = {
   id: string;
   name: string;
   slug: string;
   description: string | null;
-  category: 'reports' | 'accounts' | 'ai_tools' | 'ott';
+  category: ProductCategory;
   price: number;
   market_price: number | null;
   image_url: string | null;
@@ -15,8 +26,13 @@ export type Product = {
   plan_type: string;
   account_type: string | null;
   sort_order: number;
-  created_at: string;
-  updated_at: string;
+  features?: string[];
+  plans?: ProductPlan[];
+  how_it_works?: string[];
+  important_notes?: string[];
+  stock_status?: 'in_stock' | 'limited' | 'out_of_stock';
+  created_at?: string;
+  updated_at?: string;
 };
 
 export type Lead = {

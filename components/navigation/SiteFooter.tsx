@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Zap, MessageCircle, Instagram, Phone, Mail, ExternalLink } from 'lucide-react';
+import { Zap, MessageCircle, Instagram, Phone, Mail, ExternalLink, Lock } from 'lucide-react';
 
 const WA_URL = 'https://wa.me/918766253356';
 const IG_URL = 'https://www.instagram.com/turnitin__plagiarism';
@@ -70,6 +70,7 @@ export default function SiteFooter() {
                 { label: 'All Products', href: '/products' },
                 { label: 'Contact Us', href: '/contact' },
                 { label: 'Community', href: WA_COMMUNITY, external: true },
+                { label: '🔐 Admin Login', href: '/admin' },
               ].map((link) => (
                 <li key={link.label}>
                   {'external' in link && link.external ? (
@@ -148,9 +149,17 @@ export default function SiteFooter() {
           <p className="text-sm text-gray-500">
             &copy; {new Date().getFullYear()} EduGenius Hub. All rights reserved.
           </p>
-          <p className="text-xs text-gray-600">
-            www.edugeniushub.com
-          </p>
+          <div className="flex items-center gap-4 text-xs text-gray-400">
+            <span>www.edugeniushub.com</span>
+            <span>•</span>
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-[#F4B400] hover:border-[#F4B400]/40 transition-all font-bold text-xs shadow-sm"
+            >
+              <Lock className="w-3.5 h-3.5 text-[#F4B400]" />
+              <span>Admin Login</span>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
