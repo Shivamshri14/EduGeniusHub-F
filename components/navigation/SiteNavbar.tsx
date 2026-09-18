@@ -7,6 +7,7 @@ import { Menu, X, Zap, Search } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import NoticeBanner from '@/components/notices/NoticeBanner';
 
 const navLinks = [
   { label: 'Home', href: '/home' },
@@ -48,6 +49,7 @@ export default function SiteNavbar() {
           : 'bg-transparent'
       )}
     >
+      <NoticeBanner />
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/home" className="flex items-center shrink-0 group">

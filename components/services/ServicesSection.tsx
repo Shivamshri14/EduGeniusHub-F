@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { activeServices, customRequirement } from '@/lib/catalog';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,12 +9,26 @@ import { buildWhatsAppLink, buildServiceMessage } from '@/utils/whatsappMessageB
 import { CheckCircle2, Code, FileText, Sparkles, ArrowRight } from 'lucide-react';
 
 export default function ServicesSection() {
-  const services = activeServices();
-  const allServices = customRequirement.active
-    ? [...services, customRequirement]
-    : services;
+  const [allServices, setAllServices] = useState<any[]>(() => {
+    const staticList = activeServices();
+    return customRequirement.active ? [...staticList, customRequirement] : staticList;
+  });
+
+  useEffect(() => {
+    fetch('/api/services')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.services) && data.services.length > 0) {
+          setAllServices(data.services);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load services from DB:', err);
+      });
+  }, []);
 
   if (allServices.length === 0) return null;
+
 
   const serviceIcons: { [key: string]: any } = {
     'academic-writing': FileText,

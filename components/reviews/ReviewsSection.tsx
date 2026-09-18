@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
@@ -8,9 +9,30 @@ import { Button } from "@/components/ui/button";
 import { activeReviews } from "@/lib/catalog";
 
 export default function ReviewsSection() {
-  const reviews = activeReviews();
+  const [reviews, setReviews] = useState<any[]>(() => activeReviews());
+
+  useEffect(() => {
+    fetch('/api/reviews')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          setReviews(data.reviews);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load reviews from DB:', err);
+      });
+  }, []);
 
   if (reviews.length === 0) return null;
+
+  const getImageSrc = (url?: string) => {
+    if (!url) return null;
+    if (url.startsWith('http') || url.startsWith('/assets/')) return url;
+    if (url.startsWith('/')) return `/assets${url}`;
+    return `/assets/${url}`;
+  };
+
 
   return (
     <section className="py-20 bg-background">
@@ -39,14 +61,20 @@ export default function ReviewsSection() {
               className="overflow-hidden border-border bg-card hover:border-primary/30 transition-all"
             >
               <CardContent className="p-0">
-                <div className="relative aspect-[3/4] w-full">
-                  <Image
-                    src={`/assets${review.imageUrl}`}
-                    alt={review.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                {getImageSrc(review.imageUrl || review.image_url) ? (
+                  <div className="relative aspect-[3/4] w-full">
+                    <Image
+                      src={getImageSrc(review.imageUrl || review.image_url)!}
+                      alt={review.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="p-6 bg-muted/20 border-b border-border min-h-[140px] flex items-center justify-center text-center">
+                    <p className="text-sm italic text-muted-foreground font-medium">&ldquo;{review.quote}&rdquo;</p>
+                  </div>
+                )}
                 <div className="p-4">
                   <div className="mb-2 flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (

@@ -32,7 +32,9 @@ import {
   Image as ImageIcon,
   UserCheck,
   ShieldCheck,
-  HelpCircle
+  HelpCircle,
+  Bell,
+  Star
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -44,6 +46,12 @@ import { Product, ProductPlan, ProductCategory } from '@/lib/types';
 import { getProductArtwork, PRESET_PRODUCT_IMAGES } from '@/lib/productImages';
 import { DEFAULT_GEMINI_PROMPT } from '@/lib/gemini';
 import { cn } from '@/lib/utils';
+import AdminNoticesTab from '@/components/admin/AdminNoticesTab';
+import AdminFaqsTab from '@/components/admin/AdminFaqsTab';
+import AdminReviewsTab from '@/components/admin/AdminReviewsTab';
+import AdminServicesTab from '@/components/admin/AdminServicesTab';
+import AdminSiteSettingsTab from '@/components/admin/AdminSiteSettingsTab';
+
 
 // Presets based directly on user's promotional broadcast messages
 const PROMO_PRESETS = [
@@ -201,7 +209,9 @@ export default function AdminPage() {
   const [adminProfile, setAdminProfile] = useState<{ username: string; name: string } | null>(null);
 
   // Tabs
-  const [activeTab, setActiveTab] = useState<'ai_import' | 'products' | 'settings'>('ai_import');
+  const [activeTab, setActiveTab] = useState<
+    'ai_import' | 'products' | 'notices' | 'faqs' | 'reviews' | 'services' | 'settings'
+  >('ai_import');
 
   // AI Import State
   const [rawText, setRawText] = useState('');
@@ -805,6 +815,58 @@ export default function AdminPage() {
           </button>
 
           <button
+            onClick={() => setActiveTab('notices')}
+            className={cn(
+              'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
+              activeTab === 'notices'
+                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
+                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+            )}
+          >
+            <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>Notices & Alerts</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('faqs')}
+            className={cn(
+              'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
+              activeTab === 'faqs'
+                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
+                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+            )}
+          >
+            <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>FAQs</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={cn(
+              'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
+              activeTab === 'reviews'
+                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
+                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+            )}
+          >
+            <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>Reviews</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('services')}
+            className={cn(
+              'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
+              activeTab === 'services'
+                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
+                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+            )}
+          >
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>Services</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('settings')}
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
@@ -814,7 +876,7 @@ export default function AdminPage() {
             )}
           >
             <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Atlas & Portals</span>
+            <span>Site Config & DB</span>
           </button>
         </div>
 
@@ -1433,9 +1495,24 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* ── TAB 3: SETTINGS & DATABASE PROFILE ── */}
+        {/* ── TAB: NOTICES & ALERTS ── */}
+        {activeTab === 'notices' && <AdminNoticesTab />}
+
+        {/* ── TAB: FAQS ── */}
+        {activeTab === 'faqs' && <AdminFaqsTab />}
+
+        {/* ── TAB: REVIEWS ── */}
+        {activeTab === 'reviews' && <AdminReviewsTab />}
+
+        {/* ── TAB: SERVICES ── */}
+        {activeTab === 'services' && <AdminServicesTab />}
+
+        {/* ── TAB: SETTINGS & DATABASE PROFILE ── */}
         {activeTab === 'settings' && (
           <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300 max-w-4xl">
+            {/* Live Site Configuration (Brand, WhatsApp, Trust Counters) */}
+            <AdminSiteSettingsTab />
+
             {/* ── EXTERNAL CLOUD PORTALS CARDS ── */}
             <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 sm:p-8 backdrop-blur-xl shadow-xl">
               <div className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30 mb-2">

@@ -1,8 +1,10 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/catalog";
-import { buildWhatsAppLink } from "@/utils/whatsappMessageBuilder";
 import {
   MessageCircle,
   Instagram,
@@ -16,7 +18,14 @@ import {
 } from "lucide-react";
 
 export default function ContactPage() {
-  const faqs = [
+  const [siteConfig, setSiteConfig] = useState({
+    phone_display: SITE.phoneDisplay,
+    phone_e164: SITE.phoneE164,
+    instagram_url: SITE.instagramUrl,
+    whatsapp_community_url: SITE.whatsappCommunityUrl,
+  });
+
+  const [faqs, setFaqs] = useState<any[]>([
     {
       icon: Clock,
       question: "How long does delivery take?",
@@ -41,7 +50,44 @@ export default function ContactPage() {
       answer:
         "Yes! We offer special pricing for resellers. Message us on WhatsApp to discuss bulk orders and reseller programs.",
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.settings) {
+          setSiteConfig({
+            phone_display: data.settings.phone_display || SITE.phoneDisplay,
+            phone_e164: data.settings.phone_e164 || SITE.phoneE164,
+            instagram_url: data.settings.instagram_url || SITE.instagramUrl,
+            whatsapp_community_url: data.settings.whatsapp_community_url || SITE.whatsappCommunityUrl,
+          });
+        }
+      })
+      .catch(() => {});
+
+    fetch('/api/faqs')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.faqs) && data.faqs.length > 0) {
+          const mapped = data.faqs.slice(0, 4).map((f: any, idx: number) => {
+            const icons = [Clock, RefreshCw, ShoppingCart, Briefcase];
+            return {
+              icon: icons[idx % icons.length],
+              question: f.question,
+              answer: f.answer,
+            };
+          });
+          setFaqs(mapped);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const waLink = `https://wa.me/${siteConfig.phone_e164}?text=${encodeURIComponent(
+    "Hello EduGeniusHub, I have a query."
+  )}`;
 
   return (
     <main className="min-h-screen bg-background">
@@ -79,13 +125,13 @@ export default function ContactPage() {
                   Chat with us directly for instant support
                 </p>
                 <p className="mb-1 text-xl font-semibold text-emerald-600 dark:text-emerald-400">
-                  {SITE.phoneDisplay}
+                  {siteConfig.phone_display}
                 </p>
                 <a
-                  href={buildWhatsAppLink()}
+                  href={waLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                  className="text-sm text-muted-foreground hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium"
                 >
                   Click to start chat →
                 </a>
@@ -106,10 +152,10 @@ export default function ContactPage() {
                   @edugenius.hub1
                 </p>
                 <a
-                  href={SITE.instagramUrl}
+                  href={siteConfig.instagram_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+                  className="text-sm text-muted-foreground hover:text-pink-600 dark:hover:text-pink-400 transition-colors font-medium"
                 >
                   Click to follow →
                 </a>
@@ -135,7 +181,7 @@ export default function ContactPage() {
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-8 py-6 text-base"
               >
                 <a
-                  href={SITE.whatsappCommunityUrl}
+                  href={siteConfig.whatsapp_community_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"

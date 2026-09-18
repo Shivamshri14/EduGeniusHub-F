@@ -68,7 +68,25 @@ export default function HomePage() {
     () => getFeaturedProducts() as unknown as Product[]
   );
 
+  const [faqsList, setFaqsList] = useState<any[]>(() => FAQS);
+  const [siteSettings, setSiteSettings] = useState<{
+    phone_e164: string;
+    whatsapp_community_url: string;
+    reports_delivered: string;
+    students_served: string;
+    satisfaction: string;
+    response_time: string;
+  }>({
+    phone_e164: WA_NUMBER,
+    whatsapp_community_url: SITE.whatsappCommunityUrl,
+    reports_delivered: TRUST_STATS.reports_delivered,
+    students_served: TRUST_STATS.students_served,
+    satisfaction: TRUST_STATS.satisfaction,
+    response_time: TRUST_STATS.response_time,
+  });
+
   useEffect(() => {
+    // 1. Fetch featured products
     fetch('/api/products?featured=true')
       .then((r) => r.json())
       .then((data) => {
@@ -77,7 +95,41 @@ export default function HomePage() {
         }
       })
       .catch(() => {});
+
+    // 2. Fetch dynamic FAQs
+    fetch('/api/faqs')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.faqs) && data.faqs.length > 0) {
+          setFaqsList(data.faqs);
+        }
+      })
+      .catch(() => {});
+
+    // 3. Fetch dynamic Settings & Trust stats
+    fetch('/api/settings')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success && data.settings) {
+          setSiteSettings({
+            phone_e164: data.settings.phone_e164 || WA_NUMBER,
+            whatsapp_community_url: data.settings.whatsapp_community_url || SITE.whatsappCommunityUrl,
+            reports_delivered: data.settings.reports_delivered || TRUST_STATS.reports_delivered,
+            students_served: data.settings.students_served || TRUST_STATS.students_served,
+            satisfaction: data.settings.satisfaction || TRUST_STATS.satisfaction,
+            response_time: data.settings.response_time || TRUST_STATS.response_time,
+          });
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  const dynamicTrustItems = [
+    { value: siteSettings.reports_delivered, label: 'Reports Delivered',     Icon: FileText },
+    { value: siteSettings.students_served,   label: 'Students Served',       Icon: Users },
+    { value: siteSettings.satisfaction,      label: 'Customer Satisfaction', Icon: TrendingUp },
+    { value: siteSettings.response_time,     label: 'WhatsApp Support',      Icon: Headphones },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -141,7 +193,7 @@ export default function HomePage() {
               <Sparkles className="w-4 h-4 mr-2" />
               Request a Product
             </Button>
-            <a href={`https://wa.me/${WA_NUMBER}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="w-full border-white/20 text-white bg-white/5 hover:bg-white/12 px-8 py-4 rounded-xl text-base h-auto hover:scale-105 transition-all">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Chat on WhatsApp
@@ -168,7 +220,7 @@ export default function HomePage() {
       <section ref={statsRef} className="py-16 px-4 bg-[#0B1F3A]">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {trustItems.map((item) => {
+            {dynamicTrustItems.map((item) => {
               const Icon = item.Icon;
               return (
                 <div key={item.label} className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center hover:bg-white/8 hover:border-white/15 transition-all">
@@ -262,7 +314,7 @@ export default function HomePage() {
             <p className="text-muted-foreground text-sm">Everything you need to know</p>
           </div>
           <div className="space-y-2.5">
-            {FAQS.map((faq) => (
+            {faqsList.map((faq) => (
               <div key={faq.id} className="bg-card border border-border rounded-2xl overflow-hidden hover:border-[#F4B400]/20 transition-colors">
                 <button
                   className="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-sm hover:bg-muted/40 transition-colors"
@@ -294,7 +346,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-xs mx-auto">
             <a
-              href={SITE.whatsappCommunityUrl}
+              href={siteSettings.whatsapp_community_url}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:scale-105 text-sm w-full"
@@ -321,7 +373,7 @@ export default function HomePage() {
               <Sparkles className="w-4 h-4 mr-2" />
               Request a Product
             </Button>
-            <a href={`https://wa.me/${WA_NUMBER}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="w-full border-[#0B1F3A]/25 text-[#0B1F3A] bg-[#0B1F3A]/5 hover:bg-[#0B1F3A]/12 px-8 py-4 rounded-xl text-base font-bold h-auto">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Chat First
