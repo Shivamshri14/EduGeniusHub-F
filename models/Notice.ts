@@ -1,8 +1,10 @@
 import mongoose, { Schema, Model, Document } from 'mongoose';
 import { NoticeItem } from '@/lib/types';
 
-export interface NoticeDocument extends Document, Omit<NoticeItem, 'id'> {
+export interface NoticeDocument extends Document, Omit<NoticeItem, 'id' | 'start_date' | 'end_date'> {
   _id: mongoose.Types.ObjectId;
+  start_date?: Date | null;
+  end_date?: Date | null;
 }
 
 const NoticeSchema = new Schema<NoticeDocument>(
