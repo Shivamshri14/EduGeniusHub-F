@@ -143,33 +143,35 @@ export default function HomePage() {
   return (
     <main className="min-h-screen pb-16 md:pb-0">
       {/* HERO */}
-      <section className="relative overflow-hidden bg-[#080808] text-white pt-28 pb-12 sm:pt-36 sm:pb-16 px-4">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_45%,rgba(247,87,28,0.18),transparent_30%),radial-gradient(circle_at_12%_8%,rgba(255,255,255,0.06),transparent_24%)] pointer-events-none" />
-        <div className="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:48px_48px] pointer-events-none" />
+      <section className="relative overflow-hidden bg-[#0c1428] text-white pt-28 pb-14 sm:pt-32 sm:pb-20 px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(14,165,233,0.22),transparent_34%),radial-gradient(circle_at_82%_78%,rgba(37,99,235,0.14),transparent_32%)] pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:48px_48px] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
 
         <div className="relative max-w-6xl mx-auto">
-          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-4">
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-8">
             <div className="max-w-xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#ff6a32]/35 bg-[#ff6a32]/10 px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.16em] text-[#ff9b72] mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.16em] text-sky-300 mb-6">
                 <Sparkles className="w-3.5 h-3.5" />
-                Websites &amp; apps built for growth
+                Premium tools &amp; reports at lowest price
               </div>
-              <h1 className="text-[2.8rem] sm:text-6xl lg:text-[4.6rem] font-black leading-[0.98] tracking-[-0.055em] mb-6">
-                Your next big idea deserves a
-                <span className="block text-[#ff6a32]">better digital home.</span>
+              <h1 className="text-[2.6rem] sm:text-5xl lg:text-[4.2rem] font-black leading-[1.02] tracking-[-0.05em] mb-6">
+                Get premium tools,
+                <span className="block text-sky-400">reports &amp; subscriptions</span>
+                <span className="block">at student-friendly prices.</span>
               </h1>
               <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-white/60 max-w-lg mx-auto lg:mx-0 mb-8">
-                We create sharp, high-converting websites and mobile apps that make your brand look trusted and turn attention into growth.
+                Turnitin, Drillbit, ChatGPT Plus, QuillBot, Grammarly, OTT combos and more — delivered to your WhatsApp in minutes. Trusted by 5000+ students.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
                 <a
-                  href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to build a website or app for my business. Please guide me.')}`}
+                  href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to know more about your products. Please guide me.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button className="w-full sm:w-auto h-12 px-7 rounded-full bg-[#ff6a32] hover:bg-[#ff8454] text-[#160b07] font-black text-sm shadow-[0_12px_35px_rgba(247,87,28,0.25)] transition-all hover:-translate-y-0.5">
+                  <Button className="w-full sm:w-auto h-12 px-7 rounded-full bg-sky-500 hover:bg-sky-400 text-white font-black text-sm shadow-lg shadow-sky-900/30 transition-all hover:-translate-y-0.5">
                     <MessageCircle className="w-4 h-4 mr-2" />
-                    Start Your Project
+                    Chat on WhatsApp
                   </Button>
                 </a>
                 <Link href="/products">
@@ -180,23 +182,31 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-xs text-white/50">
-                <span className="inline-flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-[#ff8a5b]" /> Clear pricing</span>
-                <span className="inline-flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-[#ff8a5b]" /> Fast delivery</span>
-                <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#ff8a5b]" /> Human support</span>
+                <span className="inline-flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-sky-400" /> Clear pricing</span>
+                <span className="inline-flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-sky-400" /> Instant delivery</span>
+                <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-sky-400" /> 24/7 support</span>
               </div>
             </div>
 
-            <div className="relative min-h-[18rem] sm:min-h-[25rem] lg:min-h-[34rem] flex items-center justify-center lg:justify-end">
-              <div className="absolute w-[16rem] sm:w-[28rem] lg:w-[38rem] aspect-square rounded-full bg-[#f5571c]/20 blur-[70px] sm:blur-[110px]" />
-              <img
-                src="/hero-monitor.webp"
-                alt="A curved monitor showing a vibrant digital product design"
-                className="relative z-10 w-[125%] max-w-none lg:w-[118%] lg:translate-x-8 drop-shadow-[0_25px_45px_rgba(0,0,0,0.65)] animate-[hero-float_7s_ease-in-out_infinite]"
-              />
+            <div className="relative min-h-[18rem] sm:min-h-[24rem] lg:min-h-[30rem] flex items-center justify-center lg:justify-end">
+              <div className="absolute w-[15rem] sm:w-[26rem] lg:w-[34rem] aspect-square rounded-full bg-sky-500/15 blur-[70px] sm:blur-[100px]" />
+              <div className="relative z-10 flex items-end justify-center gap-3 sm:gap-4">
+                {[
+                  { src: '/assets/reviews/review1.jpg', alt: 'Student review', tilt: '-rotate-6', size: 'w-24 sm:w-36 h-36 sm:h-52' },
+                  { src: '/assets/file.jpg', alt: 'Product preview', tilt: '-rotate-3', size: 'w-32 sm:w-48 h-48 sm:h-72' },
+                  { src: '/assets/reviews/review2.jpg', alt: 'Student review', tilt: 'rotate-0', size: 'w-36 sm:w-56 h-56 sm:h-80' },
+                  { src: '/assets/file copy.jpg', alt: 'Product preview', tilt: 'rotate-3', size: 'w-32 sm:w-48 h-48 sm:h-72' },
+                  { src: '/assets/reviews/review3.jpg', alt: 'Student review', tilt: 'rotate-6', size: 'w-24 sm:w-36 h-36 sm:h-52' },
+                ].map((image) => (
+                  <div key={image.src} className={`${image.size} ${image.tilt} shrink-0 overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] border-[3px] border-white/15 bg-white/10 shadow-2xl shadow-black/40 transition-transform duration-500 hover:-translate-y-3 hover:rotate-0`}>
+                    <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="relative mt-10 sm:mt-14 pt-5 border-t border-white/10">
+          <div className="relative mt-12 sm:mt-16 pt-5 border-t border-white/10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white/50 text-xs">
               <span className="font-semibold text-white/75">Need a ready-to-use tool today?</span>
               <div className="flex flex-wrap gap-2">
@@ -361,7 +371,7 @@ export default function HomePage() {
             Join 5000+ students using EduGenius Hub. Get your product delivered in minutes.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to discuss a website or app for my business.')}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to know more about your products. Please guide me.')}`} target="_blank" rel="noopener noreferrer">
               <Button className="w-full bg-white hover:bg-white/90 text-primary font-bold px-8 py-3.5 rounded-xl text-base h-auto shadow-lg">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Chat About Your Project
