@@ -207,20 +207,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mx-auto mt-4 grid max-w-5xl grid-cols-2 border-t border-white/10 pt-4 md:grid-cols-4">
-            {dynamicTrustItems.map((item) => {
-              const Icon = item.Icon;
-              return (
-                <div key={item.label} className="flex items-center justify-center gap-2 border-white/10 px-2 py-2 text-center md:border-r md:last:border-r-0">
-                  <Icon className="hidden h-4 w-4 text-sky-400 sm:block" />
-                  <div>
-                    <div className="text-sm font-black text-white sm:text-base">{item.value}</div>
-                    <div className="text-[9px] uppercase tracking-wide text-white/35 sm:text-[10px]">{item.label}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </section>
 
