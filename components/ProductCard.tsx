@@ -89,7 +89,7 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-0 gap-0 border-border bg-card text-card-foreground shadow-xl">
+        <DialogContent className="max-w-lg max-h-[88vh] w-[calc(100vw-1rem)] sm:w-full overflow-y-auto overscroll-contain rounded-2xl p-0 gap-0 border-border bg-card text-card-foreground shadow-xl">
           {/* Header Banner */}
           <div className="p-5 sm:p-6 bg-muted/50 border-b border-border">
             <div className="flex items-start justify-between gap-3">
@@ -98,11 +98,11 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                   <img
                     src={product.image_url}
                     alt={product.name}
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-contain bg-card border border-border p-1.5 shrink-0"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover bg-card border border-border shrink-0"
                   />
                 ) : (
                   <div
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-card border border-border flex items-center justify-center p-2.5 shrink-0"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-card border border-border flex items-center justify-center p-2.5 shrink-0"
                     dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
                   />
                 )}
@@ -367,11 +367,11 @@ export default function ProductCard({ product }: Props) {
               <img
                 src={product.image_url}
                 alt={product.name}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-contain bg-muted border border-border p-1.5 group-hover:scale-105 transition-transform"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover bg-muted border border-border group-hover:scale-105 transition-transform"
               />
             ) : (
               <div
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-muted border border-border flex items-center justify-center p-2.5 group-hover:scale-105 transition-transform"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-muted border border-border flex items-center justify-center p-2.5 group-hover:scale-105 transition-transform"
                 dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
               />
             )}

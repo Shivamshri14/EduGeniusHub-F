@@ -27,7 +27,7 @@ export default function ToolDialog({ tool, open, onOpenChange }: ToolDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl w-[calc(100vw-1rem)] sm:w-full max-h-[88vh] overflow-y-auto overscroll-contain">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             {tool.name}

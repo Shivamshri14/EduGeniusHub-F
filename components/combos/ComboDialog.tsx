@@ -28,7 +28,7 @@ export default function ComboDialog({ combo, open, onOpenChange }: ComboDialogPr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl border-white/10 bg-zinc-900 text-white">
+      <DialogContent className="max-w-2xl w-[calc(100vw-1rem)] sm:w-full max-h-[88vh] overflow-y-auto overscroll-contain border-white/10 bg-zinc-900 text-white">
         <DialogHeader>
           <div className="flex items-center gap-2">
             <Package className="h-6 w-6 text-blue-400" />

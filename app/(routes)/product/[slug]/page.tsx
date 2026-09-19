@@ -161,10 +161,18 @@ export default function ProductSharePage() {
           <div className="p-5 sm:p-8 bg-muted/40 border-b border-border">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-card border border-border flex items-center justify-center p-3 shrink-0"
-                  dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
-                />
+                {product.image_url ? (
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover bg-card border border-border shrink-0"
+                  />
+                ) : (
+                  <div
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-card border border-border flex items-center justify-center p-3 shrink-0"
+                    dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
+                  />
+                )}
                 <div>
                   <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                     <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">

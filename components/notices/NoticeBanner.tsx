@@ -91,16 +91,16 @@ export default function NoticeBanner() {
   return (
     <div
       className={cn(
-        'relative z-50 backdrop-blur-md transition-all duration-300 px-4 py-2.5 sm:py-2 text-xs sm:text-sm font-medium',
+        'relative z-50 backdrop-blur-md transition-all duration-300 px-3 py-2.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium',
         styleClass
       )}
     >
-      <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5 flex-1 min-w-0 justify-center sm:justify-start">
+      <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-2 pr-8 sm:flex-row sm:justify-between sm:gap-3 sm:pr-0">
+        <div className="flex w-full min-w-0 flex-col items-center gap-1.5 text-center sm:w-auto sm:flex-1 sm:flex-row sm:items-center sm:justify-start sm:gap-2.5 sm:text-left">
           {activeNotice.badge && (
             <span
               className={cn(
-                'px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1 shrink-0 shadow-sm',
+                'shrink-0 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm',
                 badgeClass
               )}
             >
@@ -109,7 +109,7 @@ export default function NoticeBanner() {
             </span>
           )}
 
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-center sm:text-left">
+          <div className="flex min-w-0 flex-col items-center gap-0.5 leading-snug sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2 sm:gap-y-0 sm:text-left">
             <span className="font-semibold text-foreground">{activeNotice.title}:</span>
             <span className="text-muted-foreground">{activeNotice.message}</span>
           </div>
@@ -117,7 +117,7 @@ export default function NoticeBanner() {
           {activeNotice.link && (
             <Link
               href={activeNotice.link}
-              className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-bold shrink-0 underline decoration-primary/50 underline-offset-2 hover:scale-105 transition-transform ml-1"
+              className="inline-flex shrink-0 items-center gap-1 text-primary hover:text-primary/80 font-bold underline decoration-primary/50 underline-offset-2 transition-transform hover:scale-105 sm:ml-1"
             >
               <span>{activeNotice.link_text || 'Check Now'}</span>
               <ArrowRight className="w-3 h-3" />
@@ -128,7 +128,7 @@ export default function NoticeBanner() {
         {activeNotice.is_dismissible && (
           <button
             onClick={() => handleDismiss(activeNotice.id)}
-            className="text-muted-foreground hover:text-foreground p-1 rounded-md hover:bg-muted transition-colors shrink-0"
+            className="absolute right-0 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:static sm:shrink-0 sm:translate-y-0"
             aria-label="Dismiss notice"
           >
             <X className="w-3.5 h-3.5" />
