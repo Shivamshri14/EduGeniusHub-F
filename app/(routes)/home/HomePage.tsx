@@ -155,7 +155,7 @@ export default function HomePage() {
                 <Sparkles className="w-3.5 h-3.5" />
                 Premium tools &amp; reports at lowest price
               </div>
-              <h1 className="text-[2.6rem] sm:text-5xl lg:text-[4.2rem] font-black leading-[1.02] tracking-[-0.05em] mb-6">
+              <h1 className="text-[2rem] xs:text-[2.4rem] sm:text-5xl lg:text-[4.2rem] font-black leading-[1.04] tracking-[-0.05em] mb-6">
                 Get premium tools,
                 <span className="block text-sky-400">reports &amp; subscriptions</span>
                 <span className="block">at student-friendly prices.</span>
@@ -188,20 +188,22 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative min-h-[18rem] sm:min-h-[24rem] lg:min-h-[30rem] flex items-center justify-center lg:justify-end">
-              <div className="absolute w-[15rem] sm:w-[26rem] lg:w-[34rem] aspect-square rounded-full bg-sky-500/15 blur-[70px] sm:blur-[100px]" />
-              <div className="relative z-10 flex items-end justify-center gap-3 sm:gap-4">
-                {[
-                  { src: '/assets/reviews/review1.jpg', alt: 'Student review', tilt: '-rotate-6', size: 'w-24 sm:w-36 h-36 sm:h-52' },
-                  { src: '/assets/file.jpg', alt: 'Product preview', tilt: '-rotate-3', size: 'w-32 sm:w-48 h-48 sm:h-72' },
-                  { src: '/assets/reviews/review2.jpg', alt: 'Student review', tilt: 'rotate-0', size: 'w-36 sm:w-56 h-56 sm:h-80' },
-                  { src: '/assets/file copy.jpg', alt: 'Product preview', tilt: 'rotate-3', size: 'w-32 sm:w-48 h-48 sm:h-72' },
-                  { src: '/assets/reviews/review3.jpg', alt: 'Student review', tilt: 'rotate-6', size: 'w-24 sm:w-36 h-36 sm:h-52' },
-                ].map((image) => (
-                  <div key={image.src} className={`${image.size} ${image.tilt} shrink-0 overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] border-[3px] border-white/15 bg-white/10 shadow-2xl shadow-black/40 transition-transform duration-500 hover:-translate-y-3 hover:rotate-0`}>
-                    <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
-                  </div>
-                ))}
+            <div className="relative min-h-[16rem] sm:min-h-[22rem] lg:min-h-[28rem] flex items-center justify-center lg:justify-end">
+              <div className="absolute w-[14rem] sm:w-[24rem] lg:w-[32rem] aspect-square rounded-full bg-sky-500/15 blur-[70px] sm:blur-[100px]" />
+              <div className="relative z-10 w-full overflow-x-auto scrollbar-hide pb-2">
+                <div className="flex items-end justify-center gap-2.5 sm:gap-4 w-max mx-auto px-2">
+                  {[
+                    { src: '/assets/reviews/review1.jpg', alt: 'Student review', tilt: '-rotate-6', size: 'w-20 sm:w-36 h-28 sm:h-52' },
+                    { src: '/assets/file.jpg', alt: 'Product preview', tilt: '-rotate-3', size: 'w-24 sm:w-48 h-36 sm:h-72' },
+                    { src: '/assets/reviews/review2.jpg', alt: 'Student review', tilt: 'rotate-0', size: 'w-28 sm:w-56 h-44 sm:h-80' },
+                    { src: '/assets/file copy.jpg', alt: 'Product preview', tilt: 'rotate-3', size: 'w-24 sm:w-48 h-36 sm:h-72' },
+                    { src: '/assets/reviews/review3.jpg', alt: 'Student review', tilt: 'rotate-6', size: 'w-20 sm:w-36 h-28 sm:h-52' },
+                  ].map((image) => (
+                    <div key={image.src} className={`${image.size} ${image.tilt} shrink-0 overflow-hidden rounded-[1.1rem] sm:rounded-[1.5rem] border-2 sm:border-[3px] border-white/15 bg-white/10 shadow-2xl shadow-black/40 transition-transform duration-500 hover:-translate-y-3 hover:rotate-0`}>
+                      <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
