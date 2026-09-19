@@ -42,18 +42,18 @@ export default function SiteNavbar() {
   if (pathname?.startsWith('/admin')) return null;
 
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3 pointer-events-none sm:px-5 sm:pt-4">
-      <div className="relative mx-auto max-w-6xl pointer-events-auto">
+    <header className="sticky top-0 z-50 px-2 pt-3 pointer-events-none sm:px-4 sm:pt-4">
+      <div className="relative mx-auto max-w-7xl pointer-events-auto">
         <NoticeBanner />
         <div
           className={cn(
-            'relative flex min-h-16 items-center justify-between rounded-[1.35rem] border px-3 shadow-lg transition-all duration-300 sm:px-4',
+            'relative flex min-h-[4.5rem] items-center justify-between rounded-[1.5rem] border px-3.5 shadow-lg transition-all duration-300 sm:px-5',
             'border-white/15 bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/55',
             scrolled || open ? 'shadow-xl shadow-black/10' : 'shadow-black/5'
           )}
         >
           <Link href="/home" className="group flex shrink-0 items-center gap-2.5">
-            <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-9 rounded-xl object-cover shadow-sm transition-transform group-hover:scale-105" />
+            <img src="/logo.jpg" alt="EduGenius Hub" className="h-10 w-10 rounded-xl object-cover shadow-sm transition-transform group-hover:scale-105" />
             <span className="hidden text-base font-bold tracking-tight text-foreground xs:inline sm:inline">EduGenius Hub</span>
           </Link>
 
@@ -112,7 +112,7 @@ export default function SiteNavbar() {
           </div>
 
           {open && (
-            <div className="absolute left-0 right-0 top-[calc(100%+0.75rem)] overflow-hidden rounded-[1.5rem] border border-white/15 bg-background/75 p-2 shadow-2xl shadow-black/20 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 md:hidden">
+            <div className="absolute left-0 right-0 top-[calc(100%+0.75rem)] z-20 overflow-hidden rounded-[1.65rem] border border-white/20 bg-background/[0.97] p-2.5 shadow-2xl shadow-black/25 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/[0.94] md:hidden">
               {navLinks.map((link) => {
                 const active = pathname === link.href;
                 return (
