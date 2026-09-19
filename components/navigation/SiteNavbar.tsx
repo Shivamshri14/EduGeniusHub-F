@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X, Search, Package } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -49,9 +49,10 @@ export default function SiteNavbar() {
     >
       <NoticeBanner />
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/home" className="flex items-center shrink-0 group">
+        {/* Logo + Brand name */}
+        <Link href="/home" className="flex items-center gap-2.5 shrink-0 group">
           <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-auto rounded-xl object-contain shadow-sm group-hover:scale-105 transition-transform" />
+          <span className="font-bold text-base text-foreground tracking-tight hidden xs:inline sm:inline">EduGenius Hub</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -76,21 +77,29 @@ export default function SiteNavbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <ThemeToggle />
           <Link href="/products" className="hidden md:flex">
             <Button variant="ghost" size="icon">
               <Search className="w-4 h-4" />
             </Button>
           </Link>
+          {/* Mobile: Browse Products button */}
+          <Link href="/products" className="md:hidden">
+            <Button variant="outline" size="sm" className="h-9 px-3 text-xs font-semibold gap-1.5">
+              <Package className="w-3.5 h-3.5" />
+              <span className="hidden xs:inline sm:inline">Browse</span>
+            </Button>
+          </Link>
+          {/* WhatsApp button — visible on all sizes */}
           <a
             href="https://wa.me/918766253356"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:scale-105"
+            className="flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl transition-all hover:scale-105"
           >
             {WA_ICON}
-            Chat
+            <span className="hidden sm:inline">Chat</span>
           </a>
           <Button
             variant="ghost"

@@ -143,14 +143,14 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* HERO */}
-      <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 px-4 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-20 pb-10 sm:pt-24 sm:pb-14 px-4 bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-4 py-2 rounded-full mb-6">
+          <div className="text-center mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-4 py-2 rounded-full mb-5 sm:mb-6">
               <Zap className="w-3 h-3" />
               Premium Digital Products at Student Prices
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-[1.1] tracking-tight mb-5">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-foreground leading-[1.08] tracking-tight mb-4">
               What do you<br />
               <span className="text-primary">need today?</span>
             </h1>
@@ -160,10 +160,10 @@ export default function HomePage() {
           </div>
 
           {/* Category grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 max-w-5xl mx-auto mb-10">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 max-w-5xl mx-auto mb-8 sm:mb-10">
             {categories.map((cat) => (
               <Link key={cat.id} href={cat.href}>
-                <div className="group relative rounded-2xl p-4 sm:p-5 bg-card border border-border text-foreground cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 h-full min-h-[100px] flex flex-col">
+                <div className="group relative rounded-2xl p-4 sm:p-5 bg-card border border-border text-foreground cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 h-full min-h-[92px] sm:min-h-[104px] flex flex-col">
                   <h3 className="font-bold text-sm leading-tight mb-1">{cat.label}</h3>
                   <p className="text-xs text-muted-foreground flex-1 leading-tight">{cat.desc}</p>
                   <ArrowRight className="w-3.5 h-3.5 text-primary absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -188,7 +188,7 @@ export default function HomePage() {
             </a>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             {[
               { Icon: Zap,    text: 'Instant Delivery' },
               { Icon: Shield, text: 'Verified & Secure' },
