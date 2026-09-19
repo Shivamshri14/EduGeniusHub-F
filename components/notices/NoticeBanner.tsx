@@ -61,11 +61,11 @@ export default function NoticeBanner() {
 
   // Variant color styles
   const variantStyles = {
-    primary: 'bg-gradient-to-r from-primary/15 to-primary/5 border-b-2 border-primary/30 text-foreground',
-    warning: 'bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b-2 border-amber-500/40 text-amber-950 dark:text-amber-100',
-    info: 'bg-gradient-to-r from-blue-500/20 to-blue-500/5 border-b-2 border-blue-500/40 text-blue-950 dark:text-blue-100',
-    success: 'bg-gradient-to-r from-emerald-500/20 to-emerald-500/5 border-b-2 border-emerald-500/40 text-emerald-950 dark:text-emerald-100',
-    destructive: 'bg-gradient-to-r from-red-500/20 to-red-500/5 border-b-2 border-red-500/40 text-red-950 dark:text-red-100',
+    primary: 'bg-gradient-to-r from-primary/15 to-primary/5 border-primary/25 text-foreground',
+    warning: 'bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-amber-500/40 text-amber-950 dark:text-amber-100',
+    info: 'bg-gradient-to-r from-blue-500/20 to-blue-500/5 border-blue-500/40 text-blue-950 dark:text-blue-100',
+    success: 'bg-gradient-to-r from-emerald-500/20 to-emerald-500/5 border-emerald-500/40 text-emerald-950 dark:text-emerald-100',
+    destructive: 'bg-gradient-to-r from-red-500/20 to-red-500/5 border-red-500/40 text-red-950 dark:text-red-100',
   };
 
   const badgeStyles = {
@@ -91,7 +91,7 @@ export default function NoticeBanner() {
   return (
     <div
       className={cn(
-        'relative z-50 backdrop-blur-md transition-all duration-300 px-3 py-3 sm:px-4 sm:py-3 text-sm sm:text-base font-semibold shadow-md',
+        'relative z-50 mb-2 overflow-hidden rounded-2xl border backdrop-blur-md transition-all duration-300 px-3 py-3 sm:px-4 sm:py-3 text-sm sm:text-base font-semibold shadow-md',
         styleClass
       )}
     >
