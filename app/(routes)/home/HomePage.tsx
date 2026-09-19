@@ -143,82 +143,83 @@ export default function HomePage() {
   return (
     <main className="min-h-screen pb-16 md:pb-0">
       {/* HERO */}
-      <section className="relative overflow-hidden bg-[#0c1428] text-white pt-28 pb-14 sm:pt-32 sm:pb-20 px-4">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(14,165,233,0.22),transparent_34%),radial-gradient(circle_at_82%_78%,rgba(37,99,235,0.14),transparent_32%)] pointer-events-none" />
-        <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:48px_48px] pointer-events-none" />
+      <section className="relative isolate overflow-hidden bg-[#0b1428] text-white pt-28 pb-8 sm:pt-32 sm:pb-10 px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(14,165,233,0.18),transparent_42%),linear-gradient(135deg,#0b1428_0%,#101d3a_48%,#0b1428_100%)] pointer-events-none" />
+        <div className="absolute -left-20 top-24 h-[26rem] w-[55%] rotate-[24deg] bg-sky-400/[0.045] [clip-path:polygon(0_0,100%_36%,75%_100%,0_62%)] pointer-events-none" />
+        <div className="absolute -right-24 top-32 h-[30rem] w-[58%] -rotate-[22deg] bg-blue-500/[0.08] [clip-path:polygon(28%_0,100%_24%,82%_100%,0_66%)] pointer-events-none" />
+        <div className="absolute left-1/2 top-[28rem] h-[20rem] w-[70%] -translate-x-1/2 rotate-[-8deg] bg-sky-300/[0.035] [clip-path:polygon(20%_0,100%_30%,70%_100%,0_68%)] pointer-events-none" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
 
-        <div className="relative max-w-6xl mx-auto">
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-8">
-            <div className="max-w-xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.16em] text-sky-300 mb-6">
-                <Sparkles className="w-3.5 h-3.5" />
-                Premium tools &amp; reports at lowest price
-              </div>
-              <h1 className="text-[2rem] xs:text-[2.4rem] sm:text-5xl lg:text-[4.2rem] font-black leading-[1.04] tracking-[-0.05em] mb-6">
-                Get premium tools,
-                <span className="block text-sky-400">reports &amp; subscriptions</span>
-                <span className="block">at student-friendly prices.</span>
-              </h1>
-              <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-white/60 max-w-lg mx-auto lg:mx-0 mb-8">
-                Turnitin, Drillbit, ChatGPT Plus, QuillBot, Grammarly, OTT combos and more — delivered to your WhatsApp in minutes. Trusted by 5000+ students.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
-                <a
-                  href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to know more about your products. Please guide me.')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button className="w-full sm:w-auto h-12 px-7 rounded-full bg-sky-500 hover:bg-sky-400 text-white font-black text-sm shadow-lg shadow-sky-900/30 transition-all hover:-translate-y-0.5">
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Chat on WhatsApp
-                  </Button>
-                </a>
-                <Link href="/products">
-                  <Button variant="outline" className="w-full sm:w-auto h-12 px-7 rounded-full border-white/20 bg-white/[0.04] hover:bg-white/10 text-white font-bold text-sm transition-all hover:-translate-y-0.5">
-                    <Package className="w-4 h-4 mr-2" />
-                    Browse Products
-                  </Button>
-                </Link>
-              </div>
-              <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-xs text-white/50">
-                <span className="inline-flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-sky-400" /> Clear pricing</span>
-                <span className="inline-flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-sky-400" /> Instant delivery</span>
-                <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-sky-400" /> 24/7 support</span>
-              </div>
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mx-auto max-w-5xl text-center">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-300/25 bg-sky-300/10 px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-sky-200 sm:text-xs">
+              <Sparkles className="h-3.5 w-3.5" />
+              Trusted by 5000+ students
             </div>
-
-            <div className="relative min-h-[16rem] sm:min-h-[22rem] lg:min-h-[28rem] flex items-center justify-center lg:justify-end">
-              <div className="absolute w-[14rem] sm:w-[24rem] lg:w-[32rem] aspect-square rounded-full bg-sky-500/15 blur-[70px] sm:blur-[100px]" />
-              <div className="relative z-10 w-full overflow-x-auto scrollbar-hide pb-2">
-                <div className="flex items-end justify-center gap-2.5 sm:gap-4 w-max mx-auto px-2">
-                  {[
-                    { src: '/assets/reviews/review1.jpg', alt: 'Student review', tilt: '-rotate-6', size: 'w-20 sm:w-36 h-28 sm:h-52' },
-                    { src: '/assets/file.jpg', alt: 'Product preview', tilt: '-rotate-3', size: 'w-24 sm:w-48 h-36 sm:h-72' },
-                    { src: '/assets/reviews/review2.jpg', alt: 'Student review', tilt: 'rotate-0', size: 'w-28 sm:w-56 h-44 sm:h-80' },
-                    { src: '/assets/file copy.jpg', alt: 'Product preview', tilt: 'rotate-3', size: 'w-24 sm:w-48 h-36 sm:h-72' },
-                    { src: '/assets/reviews/review3.jpg', alt: 'Student review', tilt: 'rotate-6', size: 'w-20 sm:w-36 h-28 sm:h-52' },
-                  ].map((image) => (
-                    <div key={image.src} className={`${image.size} ${image.tilt} shrink-0 overflow-hidden rounded-[1.1rem] sm:rounded-[1.5rem] border-2 sm:border-[3px] border-white/15 bg-white/10 shadow-2xl shadow-black/40 transition-transform duration-500 hover:-translate-y-3 hover:rotate-0`}>
-                      <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <h1 className="mx-auto max-w-5xl text-[2.45rem] font-black leading-[1.02] tracking-[-0.055em] sm:text-6xl lg:text-[5.2rem]">
+              Premium tools and reports
+              <span className="block text-sky-400">for your best work.</span>
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/60 sm:text-base lg:text-lg">
+              Get Turnitin, Drillbit, ChatGPT Plus, QuillBot, Grammarly, OTT combos and more at student-friendly prices — delivered fast with real WhatsApp support.
+            </p>
+            <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+              <a
+                href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to know more about your products. Please guide me.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="h-12 w-full rounded-xl bg-sky-500 px-7 text-sm font-black text-white shadow-lg shadow-sky-950/30 transition-all hover:-translate-y-0.5 hover:bg-sky-400 sm:w-auto">
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Chat on WhatsApp
+                </Button>
+              </a>
+              <Link href="/products">
+                <Button variant="outline" className="h-12 w-full rounded-xl border-white/20 bg-white/[0.04] px-7 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-white/10 sm:w-auto">
+                  <Package className="mr-2 h-4 w-4" />
+                  Explore Products
+                </Button>
+              </Link>
+            </div>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/50">
+              <span className="inline-flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-sky-400" /> Verified service</span>
+              <span className="inline-flex items-center gap-1.5"><Zap className="h-3.5 w-3.5 text-sky-400" /> Instant delivery</span>
+              <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-sky-400" /> Support in minutes</span>
             </div>
           </div>
 
-          <div className="relative mt-12 sm:mt-16 pt-5 border-t border-white/10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white/50 text-xs">
-              <span className="font-semibold text-white/75">Need a ready-to-use tool today?</span>
-              <div className="flex flex-wrap gap-2">
-                {categories.slice(0, 4).map((cat) => (
-                  <Link key={cat.id} href={cat.href} className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 hover:bg-white/10 hover:text-white transition-colors">
-                    {cat.label} <ArrowRight className="w-3 h-3" />
-                  </Link>
-                ))}
-              </div>
+          <div className="relative mx-auto mt-12 max-w-5xl border-t border-white/10 pt-6 sm:mt-16">
+            <p className="mb-4 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">Popular with students and researchers</p>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+              {categories.slice(0, 4).map((category) => (
+                <Link
+                  key={category.id}
+                  href={category.href}
+                  className="group flex min-h-16 items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3.5 py-3 text-left transition-all hover:-translate-y-0.5 hover:border-sky-300/30 hover:bg-sky-400/[0.08]"
+                >
+                  <span>
+                    <span className="block text-xs font-bold text-white/80 group-hover:text-white">{category.label}</span>
+                    <span className="mt-0.5 block text-[10px] text-white/40">{category.desc}</span>
+                  </span>
+                  <ArrowRight className="h-3.5 w-3.5 shrink-0 text-sky-400 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              ))}
             </div>
+          </div>
+
+          <div className="mx-auto mt-4 grid max-w-5xl grid-cols-2 border-t border-white/10 pt-4 md:grid-cols-4">
+            {dynamicTrustItems.map((item) => {
+              const Icon = item.Icon;
+              return (
+                <div key={item.label} className="flex items-center justify-center gap-2 border-white/10 px-2 py-2 text-center md:border-r md:last:border-r-0">
+                  <Icon className="hidden h-4 w-4 text-sky-400 sm:block" />
+                  <div>
+                    <div className="text-sm font-black text-white sm:text-base">{item.value}</div>
+                    <div className="text-[9px] uppercase tracking-wide text-white/35 sm:text-[10px]">{item.label}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
