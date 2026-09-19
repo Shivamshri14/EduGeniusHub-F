@@ -354,131 +354,130 @@ export default function ProductCard({ product }: Props) {
   return (
     <>
       <div
-        className="group relative flex flex-col rounded-2xl border border-border bg-card p-4 sm:p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 cursor-pointer overflow-hidden"
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 cursor-pointer"
         onClick={() => setDetailOpen(true)}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && setDetailOpen(true)}
       >
-        {/* Top visual row */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="relative">
-            {product.image_url ? (
-              <img
-                src={product.image_url}
-                alt={product.name}
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover bg-muted border border-border group-hover:scale-105 transition-transform"
-              />
-            ) : (
-              <div
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-muted border border-border flex items-center justify-center p-2.5 group-hover:scale-105 transition-transform"
-                dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
-              />
-            )}
-            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-card border-2 border-border flex items-center justify-center">
-              <span className={`w-2 h-2 rounded-full ${support.badgeColor} animate-pulse`} />
+        {/* Full-width image banner */}
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
+          {product.image_url ? (
+            <img
+              src={product.image_url}
+              alt={product.name}
+              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div
+              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted/50"
+              dangerouslySetInnerHTML={{ __html: artwork.iconSvg.replace('w-8 h-8', 'w-16 h-16') }}
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          {badge && BadgeIcon && (
+            <span className={cn('absolute left-3 top-3 flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full border backdrop-blur-md shadow-sm', badge.cls)}>
+              <BadgeIcon className="w-2.5 h-2.5" />
+              {badge.label}
             </span>
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            {badge && BadgeIcon && (
-              <span className={cn('flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border', badge.cls)}>
-                <BadgeIcon className="w-2.5 h-2.5" />
-                {badge.label}
-              </span>
-            )}
-
-            <button
-              onClick={handleCopyLink}
-              className="p-1.5 rounded-lg bg-card hover:bg-muted border border-border text-muted-foreground hover:text-primary transition-colors"
-              title="Copy Shareable Link"
-            >
-              {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Share2 className="w-3.5 h-3.5" />}
-            </button>
+          )}
+          <button
+            onClick={handleCopyLink}
+            className="absolute right-3 top-3 p-1.5 rounded-lg bg-black/30 backdrop-blur-md border border-white/10 text-white/80 hover:text-white hover:bg-black/50 transition-colors"
+            title="Copy Shareable Link"
+          >
+            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Share2 className="w-3.5 h-3.5" />}
+          </button>
+          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-black/40 backdrop-blur-md px-2.5 py-1 text-[10px] font-medium text-white">
+            <span className={`w-2 h-2 rounded-full ${support.badgeColor} animate-pulse`} />
+            <span>{support.timeText}</span>
           </div>
         </div>
 
-        {/* Product Title & Category */}
-        <div className="mb-2">
-          <div className="flex items-center gap-1.5 mb-1">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
-              {product.category}
-            </span>
-            {planCount > 1 && (
-              <span className="text-[10px] text-muted-foreground font-semibold">
-                • {planCount} Plans
+        {/* Content */}
+        <div className="flex flex-1 flex-col p-4 sm:p-5">
+          {/* Product Title & Category */}
+          <div className="mb-2">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                {product.category}
               </span>
-            )}
-          </div>
-          <h3 className="font-bold text-foreground text-base leading-snug line-clamp-1 group-hover:text-primary transition-colors">
-            {product.name}
-          </h3>
-        </div>
-
-        <p className="text-muted-foreground text-xs mb-4 line-clamp-2 leading-relaxed">
-          {product.description}
-        </p>
-
-        {/* Pricing & Buying Action */}
-        <div className="mt-auto pt-3 border-t border-border">
-          <div className="flex items-end justify-between mb-3">
-            <div>
-              <div className="flex items-baseline gap-1.5 flex-wrap">
-                {hasPlans && planCount > 1 && (
-                  <span className="text-[11px] text-muted-foreground font-medium">From</span>
-                )}
-                <span className="text-xl sm:text-2xl font-black text-primary">
-                  {startingPrice > 0 ? `₹${startingPrice}` : 'DM'}
+              {planCount > 1 && (
+                <span className="text-[10px] text-muted-foreground font-semibold">
+                  • {planCount} Plans
                 </span>
-                {product.plan_type && startingPrice > 0 && (
-                  <span className="text-[11px] text-muted-foreground">/{product.plan_type.toLowerCase()}</span>
-                )}
-              </div>
-              {product.market_price && (
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="text-xs text-muted-foreground line-through">₹{product.market_price}</span>
-                  {discount && (
-                    <span className="text-[10px] font-bold text-green-600 dark:text-green-400 bg-green-500/10 px-1 rounded">
-                      {discount}% OFF
-                    </span>
-                  )}
-                </div>
               )}
             </div>
-
-            <span className="text-[11px] text-muted-foreground font-medium shrink-0 flex items-center gap-1">
-              <Zap className="w-3 h-3 text-primary" />
-              <span>Instant</span>
-            </span>
+            <h3 className="font-bold text-foreground text-base leading-snug line-clamp-1 group-hover:text-primary transition-colors">
+              {product.name}
+            </h3>
           </div>
 
-          {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-2">
-            <a
-              href={quickWaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="w-full"
-            >
-              <Button
-                className="w-full bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold rounded-xl py-2 text-xs sm:text-sm flex items-center justify-center gap-1 shadow-sm transition-transform hover:scale-[1.01]"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>Buy Now</span>
-              </Button>
-            </a>
+          <p className="text-muted-foreground text-xs mb-4 line-clamp-2 leading-relaxed">
+            {product.description}
+          </p>
 
-            <Button
-              variant="outline"
-              className="w-full border-border bg-card hover:bg-muted text-foreground font-bold rounded-xl py-2 text-xs sm:text-sm transition-colors"
-              onClick={(e) => {
-                e.stopPropagation();
-                setDetailOpen(true);
-              }}
-            >
-              <span>{hasPlans && planCount > 1 ? 'View Plans' : 'Details'}</span>
-            </Button>
+          {/* Pricing & Buying Action */}
+          <div className="mt-auto pt-3 border-t border-border">
+            <div className="flex items-end justify-between mb-3">
+              <div>
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  {hasPlans && planCount > 1 && (
+                    <span className="text-[11px] text-muted-foreground font-medium">From</span>
+                  )}
+                  <span className="text-xl sm:text-2xl font-black text-primary">
+                    {startingPrice > 0 ? `₹${startingPrice}` : 'DM'}
+                  </span>
+                  {product.plan_type && startingPrice > 0 && (
+                    <span className="text-[11px] text-muted-foreground">/{product.plan_type.toLowerCase()}</span>
+                  )}
+                </div>
+                {product.market_price && (
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="text-xs text-muted-foreground line-through">₹{product.market_price}</span>
+                    {discount && (
+                      <span className="text-[10px] font-bold text-green-600 dark:text-green-400 bg-green-500/10 px-1 rounded">
+                        {discount}% OFF
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <span className="text-[11px] text-muted-foreground font-medium shrink-0 flex items-center gap-1">
+                <Zap className="w-3 h-3 text-primary" />
+                <span>Instant</span>
+              </span>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href={quickWaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="w-full"
+              >
+                <Button
+                  className="w-full bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold rounded-xl py-2 text-xs sm:text-sm flex items-center justify-center gap-1 shadow-sm transition-transform hover:scale-[1.01]"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Buy Now</span>
+                </Button>
+              </a>
+
+              <Button
+                variant="outline"
+                className="w-full border-border bg-card hover:bg-muted text-foreground font-bold rounded-xl py-2 text-xs sm:text-sm transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDetailOpen(true);
+                }}
+              >
+                <span>{hasPlans && planCount > 1 ? 'View Plans' : 'Details'}</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

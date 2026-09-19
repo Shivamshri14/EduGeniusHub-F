@@ -61,18 +61,18 @@ export default function NoticeBanner() {
 
   // Variant color styles
   const variantStyles = {
-    primary: 'bg-primary/10 border-b border-primary/20 text-foreground',
-    warning: 'bg-amber-500/10 border-b border-amber-500/20 text-amber-900 dark:text-amber-200',
-    info: 'bg-blue-500/10 border-b border-blue-500/20 text-blue-900 dark:text-blue-200',
-    success: 'bg-emerald-500/10 border-b border-emerald-500/20 text-emerald-900 dark:text-emerald-200',
-    destructive: 'bg-red-500/10 border-b border-red-500/20 text-red-900 dark:text-red-200',
+    primary: 'bg-gradient-to-r from-primary/15 to-primary/5 border-b-2 border-primary/30 text-foreground',
+    warning: 'bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b-2 border-amber-500/40 text-amber-950 dark:text-amber-100',
+    info: 'bg-gradient-to-r from-blue-500/20 to-blue-500/5 border-b-2 border-blue-500/40 text-blue-950 dark:text-blue-100',
+    success: 'bg-gradient-to-r from-emerald-500/20 to-emerald-500/5 border-b-2 border-emerald-500/40 text-emerald-950 dark:text-emerald-100',
+    destructive: 'bg-gradient-to-r from-red-500/20 to-red-500/5 border-b-2 border-red-500/40 text-red-950 dark:text-red-100',
   };
 
   const badgeStyles = {
     primary: 'bg-primary text-primary-foreground',
-    warning: 'bg-amber-500 text-amber-950',
-    info: 'bg-blue-500 text-blue-950',
-    success: 'bg-emerald-500 text-emerald-950',
+    warning: 'bg-amber-500 text-white',
+    info: 'bg-blue-500 text-white',
+    success: 'bg-emerald-500 text-white',
     destructive: 'bg-red-500 text-white',
   };
 
@@ -91,7 +91,7 @@ export default function NoticeBanner() {
   return (
     <div
       className={cn(
-        'relative z-50 backdrop-blur-md transition-all duration-300 px-3 py-2.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium',
+        'relative z-50 backdrop-blur-md transition-all duration-300 px-3 py-3 sm:px-4 sm:py-3 text-sm sm:text-base font-semibold shadow-md',
         styleClass
       )}
     >
@@ -100,17 +100,17 @@ export default function NoticeBanner() {
           {activeNotice.badge && (
             <span
               className={cn(
-                'shrink-0 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm',
+                'shrink-0 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm',
                 badgeClass
               )}
             >
-              <IconComponent className="w-3 h-3 shrink-0" />
+              <IconComponent className="w-3.5 h-3.5 shrink-0 animate-pulse" />
               <span>{activeNotice.badge}</span>
             </span>
           )}
 
           <div className="flex min-w-0 flex-col items-center gap-0.5 leading-snug sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2 sm:gap-y-0 sm:text-left">
-            <span className="font-semibold text-foreground">{activeNotice.title}:</span>
+            <span className="font-bold text-foreground">{activeNotice.title}:</span>
             <span className="text-muted-foreground">{activeNotice.message}</span>
           </div>
 

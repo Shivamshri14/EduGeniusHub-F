@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Search, X, Sparkles, Shield, Zap, Headphones } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import ProductCard from '@/components/ProductCard';
-import { getLocalProducts } from '@/lib/localProducts';
+import ProductCardSkeleton from '@/components/ProductCardSkeleton';
 import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
 
@@ -21,10 +21,10 @@ function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category') ?? 'all';
 
-  const [products, setProducts] = useState<Product[]>(getLocalProducts() as unknown as Product[]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState(categoryParam);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setActiveCategory(categoryParam);
@@ -120,14 +120,20 @@ function ProductsContent() {
       </div>
 
       {/* Products Grid */}
-      {filtered.length === 0 ? (
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="text-center py-16 sm:py-20 bg-muted/30 rounded-2xl border border-border">
           <Search className="w-10 h-10 mx-auto mb-4 opacity-30 text-primary" />
           <p className="text-lg font-bold text-foreground">No matching products found</p>
           <p className="text-sm text-muted-foreground mt-1">Try another search term or click &apos;All Tools&apos;</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
           {filtered.map((product) => (
             <ProductCard key={product.id || product.slug} product={product} />
           ))}

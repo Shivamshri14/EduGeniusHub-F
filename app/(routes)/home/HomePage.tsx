@@ -6,8 +6,8 @@ import { FileText, ArrowRight, Shield, Zap, Clock, TrendingUp, Users, Headphones
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import ProductCard from '@/components/ProductCard';
+import ProductCardSkeleton from '@/components/ProductCardSkeleton';
 import RequestAccessModal from '@/components/RequestAccessModal';
-import { getFeaturedProducts } from '@/lib/localProducts';
 import { TESTIMONIALS, TRUST_STATS } from '@/lib/testimonials';
 import { FAQS } from '@/lib/faqs';
 import { SITE } from '@/lib/config';
@@ -63,9 +63,8 @@ export default function HomePage() {
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
 
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>(
-    () => getFeaturedProducts() as unknown as Product[]
-  );
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [featuredLoading, setFeaturedLoading] = useState(true);
 
   const [faqsList, setFaqsList] = useState<any[]>(() => FAQS);
   const [siteSettings, setSiteSettings] = useState<{
@@ -92,7 +91,8 @@ export default function HomePage() {
           setFeaturedProducts(data.products);
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setFeaturedLoading(false));
 
     fetch('/api/faqs')
       .then((r) => r.json())
@@ -231,36 +231,44 @@ export default function HomePage() {
       </section>
 
       {/* BEST SELLERS */}
-      {featuredProducts.length > 0 && (
-        <section className="py-16 sm:py-20 px-4 bg-background">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8 sm:mb-10">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <Flame className="w-5 h-5 text-orange-500" />
-                  <h2 className="text-2xl sm:text-3xl font-black">Best Sellers</h2>
-                </div>
-                <p className="text-muted-foreground text-sm">Most popular products this month</p>
+      <section className="py-16 sm:py-20 px-4 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between mb-8 sm:mb-10">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Flame className="w-5 h-5 text-orange-500" />
+                <h2 className="text-2xl sm:text-3xl font-black">Best Sellers</h2>
               </div>
-              <Link href="/products">
-                <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs sm:text-sm px-4 sm:px-5">
-                  Browse Products <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
+              <p className="text-muted-foreground text-sm">Most popular products this month</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {featuredProducts.slice(0, 6).map((product) => (
-                <ProductCard key={product.id} product={product} />
+            <Link href="/products">
+              <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs sm:text-sm px-4 sm:px-5">
+                Browse Products <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+          {featuredLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
               ))}
             </div>
-            <div className="mt-8 text-center md:hidden">
-              <Link href="/products">
-                <Button variant="outline" className="rounded-xl px-8">View All Products</Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
+          ) : featuredProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
+                {featuredProducts.slice(0, 6).map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <div className="mt-8 text-center md:hidden">
+                <Link href="/products">
+                  <Button variant="outline" className="rounded-xl px-8">View All Products</Button>
+                </Link>
+              </div>
+            </>
+          ) : null}
+        </div>
+      </section>
 
       {/* HOW IT WORKS */}
       <section className="py-16 sm:py-20 px-4 bg-muted/30 border-y border-border">
