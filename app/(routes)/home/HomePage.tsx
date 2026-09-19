@@ -141,64 +141,79 @@ export default function HomePage() {
   );
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pb-16 md:pb-0">
       {/* HERO */}
-      <section className="pt-20 pb-10 sm:pt-24 sm:pb-14 px-4 bg-gradient-to-b from-primary/5 to-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-10">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-4 py-2 rounded-full mb-5 sm:mb-6">
-              <Zap className="w-3 h-3" />
-              Premium Digital Products at Student Prices
+      <section className="relative overflow-hidden bg-[#101a38] text-white pt-28 pb-14 sm:pt-32 sm:pb-20 px-4">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(37,99,235,0.25),transparent_32%),radial-gradient(circle_at_85%_80%,rgba(14,165,233,0.16),transparent_30%)] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
+
+        <div className="relative max-w-6xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/30 bg-emerald-300/10 px-3.5 py-2 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-emerald-200 mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              Websites &amp; apps built for growth
             </div>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-foreground leading-[1.08] tracking-tight mb-4">
-              What do you<br />
-              <span className="text-primary">need today?</span>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black leading-[1.02] tracking-[-0.045em] mb-6">
+              More growth,
+              <span className="text-emerald-300"> less busywork.</span>
+              <span className="block">Your business deserves better.</span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Academic Reports, AI Tools, Premium Accounts &amp; OTT Subscriptions — all in one place.
+            <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-white/65 max-w-2xl mx-auto mb-8">
+              We create fast, modern websites and mobile apps that make your brand look trusted, bring in enquiries, and help you grow with confidence.
             </p>
-          </div>
-
-          {/* Category grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 max-w-5xl mx-auto mb-8 sm:mb-10">
-            {categories.map((cat) => (
-              <Link key={cat.id} href={cat.href}>
-                <div className="group relative rounded-2xl p-4 sm:p-5 bg-card border border-border text-foreground cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 h-full min-h-[92px] sm:min-h-[104px] flex flex-col">
-                  <h3 className="font-bold text-sm leading-tight mb-1">{cat.label}</h3>
-                  <p className="text-xs text-muted-foreground flex-1 leading-tight">{cat.desc}</p>
-                  <ArrowRight className="w-3.5 h-3.5 text-primary absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto">
+              <a
+                href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to build a website or app for my business. Please guide me.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="w-full sm:w-auto h-12 px-7 rounded-full bg-emerald-300 hover:bg-emerald-200 text-[#101a38] font-black text-sm shadow-lg shadow-emerald-950/20">
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Start Your Project
+                </Button>
+              </a>
+              <Link href="/products">
+                <Button variant="outline" className="w-full sm:w-auto h-12 px-7 rounded-full border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold text-sm">
+                  <Package className="w-4 h-4 mr-2" />
+                  Browse Products
+                </Button>
               </Link>
-            ))}
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md sm:max-w-none mx-auto">
-            <Button
-              onClick={() => setRequestOpen(true)}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-3.5 rounded-xl text-base h-auto"
-            >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Request a Product
-            </Button>
-            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${waMessage}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full border-border text-foreground hover:bg-muted px-8 py-3.5 rounded-xl text-base h-auto">
-                <MessageCircle className="w-4 h-4 mr-2 text-[#25D366]" />
-                Chat on WhatsApp
-              </Button>
-            </a>
+          <div className="mt-14 sm:mt-20 overflow-hidden">
+            <div className="flex items-end justify-center gap-3 sm:gap-5 min-w-max px-4 sm:px-8">
+              {[
+                { src: '/assets/reviews/review1.jpg', alt: 'Website project preview', tilt: '-rotate-6', size: 'w-28 sm:w-44 h-40 sm:h-64' },
+                { src: '/assets/file.jpg', alt: 'Mobile app project preview', tilt: '-rotate-3', size: 'w-36 sm:w-52 h-52 sm:h-80' },
+                { src: '/assets/reviews/review2.jpg', alt: 'Digital product project preview', tilt: 'rotate-0', size: 'w-40 sm:w-60 h-60 sm:h-[22rem]' },
+                { src: '/assets/file copy.jpg', alt: 'Business website project preview', tilt: 'rotate-3', size: 'w-36 sm:w-52 h-52 sm:h-80' },
+                { src: '/assets/reviews/review3.jpg', alt: 'App design project preview', tilt: 'rotate-6', size: 'w-28 sm:w-44 h-40 sm:h-64' },
+              ].map((image) => (
+                <div key={image.src} className={`${image.size} ${image.tilt} shrink-0 overflow-hidden rounded-[1.35rem] sm:rounded-[1.75rem] border-[3px] border-white/15 bg-white/10 shadow-2xl shadow-black/30 transition-transform duration-500 hover:-translate-y-3 hover:rotate-0`}>
+                  <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-            {[
-              { Icon: Zap,    text: 'Instant Delivery' },
-              { Icon: Shield, text: 'Verified & Secure' },
-              { Icon: Clock,  text: '24/7 Support' },
-            ].map(({ Icon, text }) => (
-              <div key={text} className="flex items-center gap-1.5 text-muted-foreground text-xs sm:text-sm">
-                <Icon className="w-3.5 h-3.5 text-primary" />
-                {text}
-              </div>
-            ))}
+          <div className="mt-10 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs sm:text-sm text-white/55">
+            <span className="inline-flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-emerald-300" /> Clear pricing</span>
+            <span className="inline-flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-emerald-300" /> Fast delivery</span>
+            <span className="inline-flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-emerald-300" /> Human support</span>
+          </div>
+        </div>
+
+        <div className="relative max-w-6xl mx-auto mt-14 sm:mt-20 pt-5 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white/55 text-xs">
+            <span className="font-semibold text-white/75">Need a ready-to-use tool today?</span>
+            <div className="flex flex-wrap gap-2">
+              {categories.slice(0, 4).map((cat) => (
+                <Link key={cat.id} href={cat.href} className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 hover:bg-white/10 hover:text-white transition-colors">
+                  {cat.label} <ArrowRight className="w-3 h-3" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -235,9 +250,9 @@ export default function HomePage() {
                 </div>
                 <p className="text-muted-foreground text-sm">Most popular products this month</p>
               </div>
-              <Link href="/products" className="hidden md:block">
-                <Button variant="ghost" className="gap-2 text-muted-foreground hover:text-foreground text-sm">
-                  View All <ArrowRight className="w-4 h-4" />
+              <Link href="/products">
+                <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-xs sm:text-sm px-4 sm:px-5">
+                  Browse Products <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
@@ -353,22 +368,39 @@ export default function HomePage() {
             Join 5000+ students using EduGenius Hub. Get your product delivered in minutes.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              onClick={() => setRequestOpen(true)}
-              className="bg-white hover:bg-white/90 text-primary font-bold px-8 py-3.5 rounded-xl text-base h-auto shadow-lg"
-            >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Request a Product
-            </Button>
-            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="w-full border-white/30 text-white bg-white/10 hover:bg-white/20 px-8 py-3.5 rounded-xl text-base font-bold h-auto">
+            <a href={`https://wa.me/${siteSettings.phone_e164}?text=${encodeURIComponent('Hi EduGenius Hub, I want to discuss a website or app for my business.')}`} target="_blank" rel="noopener noreferrer">
+              <Button className="w-full bg-white hover:bg-white/90 text-primary font-bold px-8 py-3.5 rounded-xl text-base h-auto shadow-lg">
                 <MessageCircle className="w-4 h-4 mr-2" />
-                Chat First
+                Chat About Your Project
               </Button>
             </a>
+            <Link href="/products">
+              <Button variant="outline" className="w-full border-white/30 text-white bg-white/10 hover:bg-white/20 px-8 py-3.5 rounded-xl text-base font-bold h-auto">
+                <Package className="w-4 h-4 mr-2" />
+                Browse Products
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* Always-available mobile actions */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden p-2.5 bg-background/95 backdrop-blur-md border-t border-border shadow-[0_-8px_24px_rgba(15,23,42,0.12)]">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
+          <Link href="/products">
+            <Button className="w-full h-11 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs">
+              <Package className="w-4 h-4 mr-1.5" />
+              Browse Products
+            </Button>
+          </Link>
+          <a href={`https://wa.me/${siteSettings.phone_e164}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
+            <Button className="w-full h-11 rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold text-xs">
+              <MessageCircle className="w-4 h-4 mr-1.5" />
+              Chat on WhatsApp
+            </Button>
+          </a>
+        </div>
+      </div>
 
       <RequestAccessModal open={requestOpen} onClose={() => setRequestOpen(false)} />
     </main>
