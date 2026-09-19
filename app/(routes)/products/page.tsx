@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, X, Sparkles, Shield, Zap, Headphones, CheckCircle } from 'lucide-react';
+import { Search, X, Sparkles, Shield, Zap, Headphones } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import ProductCard from '@/components/ProductCard';
 import { getLocalProducts } from '@/lib/localProducts';
@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
 
 const categoryFilters = [
-  { id: 'all',      label: '⚡ All Tools' },
-  { id: 'reports',  label: '📑 Turnitin Reports' },
-  { id: 'ai_tools', label: '🤖 AI Tools & API' },
-  { id: 'ott',      label: '🎬 OTT Subscriptions' },
-  { id: 'services', label: '✍️ Academic Services' },
+  { id: 'all',      label: 'All Tools' },
+  { id: 'reports',  label: 'Turnitin Reports' },
+  { id: 'ai_tools', label: 'AI Tools & API' },
+  { id: 'ott',      label: 'OTT Subscriptions' },
+  { id: 'services', label: 'Academic Services' },
 ];
 
 function ProductsContent() {
@@ -30,7 +30,6 @@ function ProductsContent() {
     setActiveCategory(categoryParam);
   }, [categoryParam]);
 
-  // Fetch dynamically from MongoDB API with local fallback
   useEffect(() => {
     let isMounted = true;
     async function fetchCatalog() {
@@ -70,17 +69,17 @@ function ProductsContent() {
       {/* Search Bar & Category Filters */}
       <div className="flex flex-col gap-4 mb-8">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
-            placeholder="Search Turnitin, ChatGPT, Netflix, Claude, Cursor, StealthWriter..."
-            className="pl-12 pr-10 rounded-2xl h-14 text-sm sm:text-base bg-slate-900/90 border-slate-700/80 text-white placeholder:text-slate-400 focus-visible:ring-[#F4B400] shadow-xl"
+            placeholder="Search Turnitin, ChatGPT, Netflix, Claude, Cursor..."
+            className="pl-12 pr-10 rounded-2xl h-12 sm:h-14 text-sm sm:text-base bg-card border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           {search && (
             <button
               onClick={() => setSearch('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
               <X className="w-5 h-5" />
             </button>
@@ -88,7 +87,7 @@ function ProductsContent() {
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex gap-2.5 overflow-x-auto pb-1.5 scrollbar-hide">
+        <div className="flex gap-2 overflow-x-auto pb-1.5 scrollbar-hide -mx-4 px-4">
           {categoryFilters.map((cat) => {
             const count = cat.id === 'all'
               ? products.length
@@ -99,17 +98,17 @@ function ProductsContent() {
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 className={cn(
-                  'flex-shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 flex items-center gap-1.5 shadow-sm',
+                  'flex-shrink-0 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all duration-200 flex items-center gap-1.5',
                   activeCategory === cat.id
-                    ? 'bg-[#F4B400] text-[#0B1F3A] border-[#F4B400] shadow-lg shadow-[#F4B400]/20 scale-[1.02]'
-                    : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'
                 )}
               >
                 <span>{cat.label}</span>
                 <span
                   className={cn(
                     'text-[10px] px-1.5 py-0.2 rounded-full font-black',
-                    activeCategory === cat.id ? 'bg-[#0B1F3A]/20 text-[#0B1F3A]' : 'bg-slate-800 text-slate-400'
+                    activeCategory === cat.id ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-muted text-muted-foreground'
                   )}
                 >
                   {count}
@@ -122,13 +121,13 @@ function ProductsContent() {
 
       {/* Products Grid */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 bg-slate-900/40 rounded-3xl border border-slate-800/80">
-          <Search className="w-12 h-12 mx-auto mb-4 opacity-30 text-[#F4B400]" />
-          <p className="text-lg font-bold text-white">No matching products found</p>
-          <p className="text-xs text-slate-400 mt-1">Try another search term or click &apos;All Tools&apos;</p>
+        <div className="text-center py-16 sm:py-20 bg-muted/30 rounded-2xl border border-border">
+          <Search className="w-10 h-10 mx-auto mb-4 opacity-30 text-primary" />
+          <p className="text-lg font-bold text-foreground">No matching products found</p>
+          <p className="text-sm text-muted-foreground mt-1">Try another search term or click &apos;All Tools&apos;</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {filtered.map((product) => (
             <ProductCard key={product.id || product.slug} product={product} />
           ))}
@@ -140,43 +139,42 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <main className="min-h-screen pt-20 pb-24 bg-[#07121f] text-slate-100 relative overflow-hidden">
-      {/* Background glow ambiance */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F4B400]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-80 left-0 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
+    <main className="min-h-screen pt-20 pb-20 sm:pb-24 bg-background text-foreground">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Page Title Header */}
         <div className="mb-8 pt-4">
-          <div className="inline-flex items-center gap-2 bg-[#F4B400]/15 border border-[#F4B400]/30 text-[#F4B400] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 shadow-inner">
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-bold px-3.5 py-1.5 rounded-full mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Official Digital Access at Student Prices</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-2">
-            Explore All <span className="text-[#F4B400]">Tools & Subscriptions</span>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight leading-tight mb-2">
+            Explore All <span className="text-primary">Tools & Subscriptions</span>
           </h1>
-          <p className="text-sm sm:text-base text-slate-400">
+          <p className="text-sm sm:text-base text-muted-foreground">
             Instant delivery via WhatsApp. 100% verified validity with dedicated support.
           </p>
         </div>
 
         {/* Trust Badges Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 p-3 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300">
-          <div className="flex items-center gap-2 px-2">
-            <Zap className="w-4 h-4 text-[#F4B400] shrink-0" />
-            <span>Fulfillment in <strong>5–15 mins</strong></span>
+        <div className="grid grid-cols-3 gap-3 mb-8 p-3 rounded-2xl bg-muted/30 border border-border text-xs sm:text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 px-1 sm:px-2">
+            <Zap className="w-4 h-4 text-primary shrink-0" />
+            <span className="hidden sm:inline">Fulfillment in <strong className="text-foreground">5-15 mins</strong></span>
+            <span className="sm:hidden"><strong className="text-foreground">5-15 min</strong></span>
           </div>
-          <div className="flex items-center gap-2 px-2">
-            <Shield className="w-4 h-4 text-green-400 shrink-0" />
-            <span><strong>100% Replacement</strong> Guarantee</span>
+          <div className="flex items-center gap-2 px-1 sm:px-2">
+            <Shield className="w-4 h-4 text-green-500 shrink-0" />
+            <span className="hidden sm:inline"><strong className="text-foreground">100% Replacement</strong> Guarantee</span>
+            <span className="sm:hidden"><strong className="text-foreground">100% Warranty</strong></span>
           </div>
-          <div className="hidden sm:flex items-center gap-2 px-2">
-            <Headphones className="w-4 h-4 text-cyan-400 shrink-0" />
-            <span><strong>24/7 WhatsApp</strong> Customer Support</span>
+          <div className="flex items-center gap-2 px-1 sm:px-2">
+            <Headphones className="w-4 h-4 text-primary shrink-0" />
+            <span className="hidden sm:inline"><strong className="text-foreground">24/7 WhatsApp</strong> Support</span>
+            <span className="sm:hidden"><strong className="text-foreground">24/7</strong> Support</span>
           </div>
         </div>
 
-        <Suspense fallback={<div className="animate-pulse h-14 bg-slate-900 rounded-2xl" />}>
+        <Suspense fallback={<div className="animate-pulse h-14 bg-muted rounded-2xl" />}>
           <ProductsContent />
         </Suspense>
       </div>

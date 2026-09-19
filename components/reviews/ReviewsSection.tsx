@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { activeReviews } from "@/lib/catalog";
 
 export default function ReviewsSection() {
@@ -33,32 +31,30 @@ export default function ReviewsSection() {
     return `/assets/${url}`;
   };
 
-
   return (
-    <section className="py-20 bg-background">
+    <section className="py-16 sm:py-20 bg-muted/30 border-y border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center">
-          {/* 5 Stars */}
+        <div className="mb-10 sm:mb-12 text-center">
           <div className="mb-4 flex items-center justify-center gap-1">
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className="h-8 w-8 fill-yellow-500 text-yellow-500"
+                className="h-6 w-6 sm:h-8 sm:w-8 fill-yellow-500 text-yellow-500"
               />
             ))}
           </div>
 
-          <h2 className="mb-4 text-3xl font-bold text-foreground">
+          <h2 className="mb-3 text-2xl sm:text-3xl font-black text-foreground">
             Trusted by Thousands
           </h2>
-          <p className="text-muted-foreground">See what our customers say about us</p>
+          <p className="text-muted-foreground text-sm sm:text-base">See what our customers say about us</p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
           {reviews.map((review) => (
             <Card
               key={review.id}
-              className="overflow-hidden border-border bg-card hover:border-primary/30 transition-all"
+              className="overflow-hidden border-border bg-card hover:border-primary/30 transition-all hover:shadow-md"
             >
               <CardContent className="p-0">
                 {getImageSrc(review.imageUrl || review.image_url) ? (
@@ -94,7 +90,7 @@ export default function ReviewsSection() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 sm:mt-8 text-center">
           <p className="text-sm text-muted-foreground">See thousands of satisfied customers</p>
         </div>
       </div>

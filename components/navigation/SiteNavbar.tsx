@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Zap, Search } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -38,22 +38,20 @@ export default function SiteNavbar() {
   const isAdmin = pathname?.startsWith('/admin');
   if (isAdmin) return null;
 
-  const isHero = pathname === '/home' || pathname === '/';
-
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled || !isHero
+        scrolled || open
           ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm'
-          : 'bg-transparent'
+          : 'bg-background/80 backdrop-blur-sm'
       )}
     >
       <NoticeBanner />
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/home" className="flex items-center shrink-0 group">
-          <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-auto rounded-xl object-contain shadow-md hover:scale-105 transition-transform" />
+          <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-auto rounded-xl object-contain shadow-sm group-hover:scale-105 transition-transform" />
         </Link>
 
         {/* Desktop Nav */}
@@ -67,10 +65,8 @@ export default function SiteNavbar() {
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                   active
-                    ? 'bg-[#F4B400]/15 text-[#F4B400]'
-                    : scrolled || !isHero
-                    ? 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                 )}
               >
                 {link.label}
@@ -83,11 +79,7 @@ export default function SiteNavbar() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link href="/products" className="hidden md:flex">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(!scrolled && isHero && 'text-white/80 hover:text-white hover:bg-white/10')}
-            >
+            <Button variant="ghost" size="icon">
               <Search className="w-4 h-4" />
             </Button>
           </Link>
@@ -95,7 +87,7 @@ export default function SiteNavbar() {
             href="https://wa.me/918766253356"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:scale-105 shadow-sm"
+            className="hidden sm:flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:scale-105"
           >
             {WA_ICON}
             Chat
@@ -103,7 +95,7 @@ export default function SiteNavbar() {
           <Button
             variant="ghost"
             size="icon"
-            className={cn('md:hidden', !scrolled && isHero && 'text-white hover:bg-white/10')}
+            className="md:hidden"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -114,7 +106,7 @@ export default function SiteNavbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-background/98 backdrop-blur-md border-b border-border px-4 pb-5 pt-2 animate-fade-in-up">
+        <div className="md:hidden bg-background border-b border-border px-4 pb-5 pt-2 animate-fade-in-up">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -123,7 +115,7 @@ export default function SiteNavbar() {
               className={cn(
                 'flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-colors mb-0.5',
                 pathname === link.href
-                  ? 'bg-[#F4B400]/15 text-[#F4B400] font-semibold'
+                  ? 'bg-primary/10 text-primary font-semibold'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted'
               )}
             >

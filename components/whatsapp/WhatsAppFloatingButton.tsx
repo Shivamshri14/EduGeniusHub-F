@@ -1,10 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Phone, X, MessageCircle, Send, Check } from 'lucide-react';
+import { X, MessageCircle, Send } from 'lucide-react';
 import { getSupportStatus } from '@/utils/support';
-
-const CALL_PHONE = 'tel:+918766253356';
 
 const WA_ICON = (
   <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
@@ -19,7 +17,7 @@ export default function WhatsAppFloatingButton() {
     isOnline: true,
     text: 'Online Now',
     badgeColor: 'bg-green-500',
-    timeText: 'Fulfillment in 5–15 mins'
+    timeText: 'Fulfillment in 5-15 mins'
   });
 
   useEffect(() => {
@@ -40,63 +38,61 @@ export default function WhatsAppFloatingButton() {
   };
 
   const supportOptions = [
-    { label: '📑 Buy Plagiarism Report', text: 'Hi, I want a Turnitin report. I am attaching my document file (.pdf/.docx) to this chat.' },
-    { label: '🎓 Get Student Account', text: 'Hi, I want a Quillbot account (shared). Please share the login credentials.' },
-    { label: '🎬 Buy Netflix / Prime Sub', text: 'Hi, I want Netflix Premium. Please set up a profile for me.' },
-    { label: '❓ General Inquiry', text: 'Hello EduGenius Hub, I have a query.' },
+    { label: 'Buy Plagiarism Report', text: 'Hi, I want a Turnitin report. I am attaching my document file (.pdf/.docx) to this chat.' },
+    { label: 'Get Student Account', text: 'Hi, I want a Quillbot account (shared). Please share the login credentials.' },
+    { label: 'Buy Netflix / Prime Sub', text: 'Hi, I want Netflix Premium. Please set up a profile for me.' },
+    { label: 'General Inquiry', text: 'Hello EduGenius Hub, I have a query.' },
   ];
 
   return (
-    <div className="fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-3">
-      {/* Interactive Support Widget */}
+    <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end gap-3">
+      {/* Support Widget */}
       {isOpen && (
-        <div className="bg-[#121212] border border-white/10 text-white rounded-2xl w-[90vw] sm:w-[340px] shadow-2xl overflow-hidden transition-all duration-300 animate-fade-in-up">
+        <div className="bg-card border border-border text-foreground rounded-2xl w-[calc(100vw-2rem)] sm:w-[340px] shadow-xl overflow-hidden transition-all duration-300 animate-fade-in-up">
           {/* Header */}
-          <div className="bg-gradient-to-r from-zinc-800 to-zinc-950 p-4 relative flex items-center gap-3 border-b border-white/5">
+          <div className="bg-muted/50 p-4 relative flex items-center gap-3 border-b border-border">
             <div className="relative shrink-0">
-              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-white shadow-sm border border-white/10 text-base">
+              <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-base">
                 R
               </div>
-              <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#121212] ${status.isOnline ? 'bg-green-500' : 'bg-amber-500'}`} />
+              <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-card ${status.isOnline ? 'bg-green-500' : 'bg-amber-500'}`} />
             </div>
             <div>
-              <h4 className="font-bold text-sm leading-tight text-white">Rahul</h4>
-              <p className="text-[10px] text-gray-400 leading-tight">EduGenius Support Manager</p>
-              <p className="text-[10px] text-emerald-400 font-semibold leading-tight mt-0.5 flex items-center gap-1">
-                {status.isOnline ? '🟢 Online' : '🕒 Offline'} · {status.isOnline ? 'Replies in < 2 mins' : 'Delayed replies'}
+              <h4 className="font-bold text-sm leading-tight text-foreground">Rahul</h4>
+              <p className="text-[10px] text-muted-foreground leading-tight">EduGenius Support Manager</p>
+              <p className="text-[10px] text-green-600 dark:text-green-400 font-semibold leading-tight mt-0.5">
+                {status.isOnline ? 'Online' : 'Offline'} - {status.isOnline ? 'Replies in < 2 mins' : 'Delayed replies'}
               </p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
             >
-              <X className="w-4.5 h-4.5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Body */}
-          <div className="p-4 bg-[#121212]/98 space-y-3">
-            <div className="rounded-xl bg-white/5 border border-white/8 p-3 text-xs leading-relaxed text-gray-300">
-              <p className="font-medium text-white mb-1">Hey there! 👋</p>
+          <div className="p-4 space-y-3">
+            <div className="rounded-xl bg-muted/50 border border-border p-3 text-xs leading-relaxed text-muted-foreground">
+              <p className="font-medium text-foreground mb-1">Hey there!</p>
               <p>How can I help you get tools or reports today? Select an option below to start chat on WhatsApp:</p>
             </div>
 
-            {/* Quick Actions */}
             <div className="space-y-1.5 pt-1">
               {supportOptions.map((opt) => (
                 <button
                   key={opt.label}
                   onClick={() => triggerChat(opt.text)}
-                  className="w-full text-left bg-white/5 hover:bg-white/12 border border-white/8 hover:border-white/15 px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between group transition-all"
+                  className="w-full text-left bg-card hover:bg-muted border border-border hover:border-primary/30 px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between group transition-all"
                 >
-                  <span>{opt.label}</span>
-                  <Send className="w-3 h-3 text-white opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                  <span className="text-foreground">{opt.label}</span>
+                  <Send className="w-3 h-3 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
                 </button>
               ))}
             </div>
 
-            {/* Support timing badge */}
-            <div className="text-[10px] text-center text-gray-400 border-t border-white/8 pt-3 mt-1 leading-normal">
+            <div className="text-[10px] text-center text-muted-foreground border-t border-border pt-3 mt-1 leading-normal">
               {status.timeText}
             </div>
           </div>
@@ -106,8 +102,8 @@ export default function WhatsAppFloatingButton() {
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2.5 shadow-xl transition-all duration-300 hover:scale-105 rounded-2xl px-4 py-2.5 text-white ${
-          isOpen ? 'bg-[#EF4444] hover:bg-[#dc2626] shadow-[#EF4444]/35' : 'bg-[#25D366] hover:bg-[#1ebe5d] shadow-[#25D366]/35'
+        className={`flex items-center gap-2.5 shadow-lg transition-all duration-300 hover:scale-105 rounded-2xl px-4 py-2.5 text-white ${
+          isOpen ? 'bg-destructive hover:bg-destructive/90' : 'bg-[#25D366] hover:bg-[#1ebe5d]'
         }`}
         aria-label={isOpen ? 'Close support chat' : 'Open support chat'}
       >

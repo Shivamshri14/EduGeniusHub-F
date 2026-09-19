@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Sparkles, ArrowRight, Bell, AlertTriangle, CheckCircle2, Info } from 'lucide-react';
+import { X, Sparkles, ArrowRight, Bell, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2, Info } from 'lucide-react';
 import { NoticeItem } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
@@ -61,18 +61,18 @@ export default function NoticeBanner() {
 
   // Variant color styles
   const variantStyles = {
-    primary: 'bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 border-b border-[#F4B400]/30 text-amber-100',
-    warning: 'bg-gradient-to-r from-yellow-600/25 via-amber-600/25 to-yellow-600/25 border-b border-yellow-500/40 text-yellow-100',
-    info: 'bg-gradient-to-r from-blue-600/25 via-indigo-600/25 to-blue-600/25 border-b border-blue-500/40 text-blue-100',
-    success: 'bg-gradient-to-r from-emerald-600/25 via-teal-600/25 to-emerald-600/25 border-b border-emerald-500/40 text-emerald-100',
-    destructive: 'bg-gradient-to-r from-red-600/25 via-rose-600/25 to-red-600/25 border-b border-red-500/40 text-red-100',
+    primary: 'bg-primary/10 border-b border-primary/20 text-foreground',
+    warning: 'bg-amber-500/10 border-b border-amber-500/20 text-amber-900 dark:text-amber-200',
+    info: 'bg-blue-500/10 border-b border-blue-500/20 text-blue-900 dark:text-blue-200',
+    success: 'bg-emerald-500/10 border-b border-emerald-500/20 text-emerald-900 dark:text-emerald-200',
+    destructive: 'bg-red-500/10 border-b border-red-500/20 text-red-900 dark:text-red-200',
   };
 
   const badgeStyles = {
-    primary: 'bg-[#F4B400] text-[#0B1F3A]',
-    warning: 'bg-yellow-400 text-yellow-950',
-    info: 'bg-blue-400 text-blue-950',
-    success: 'bg-emerald-400 text-emerald-950',
+    primary: 'bg-primary text-primary-foreground',
+    warning: 'bg-amber-500 text-amber-950',
+    info: 'bg-blue-500 text-blue-950',
+    success: 'bg-emerald-500 text-emerald-950',
     destructive: 'bg-red-500 text-white',
   };
 
@@ -110,14 +110,14 @@ export default function NoticeBanner() {
           )}
 
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-center sm:text-left">
-            <span className="font-semibold text-white/90">{activeNotice.title}:</span>
-            <span className="text-white/80">{activeNotice.message}</span>
+            <span className="font-semibold text-foreground">{activeNotice.title}:</span>
+            <span className="text-muted-foreground">{activeNotice.message}</span>
           </div>
 
           {activeNotice.link && (
             <Link
               href={activeNotice.link}
-              className="inline-flex items-center gap-1 text-[#F4B400] hover:text-amber-300 font-bold shrink-0 underline decoration-[#F4B400]/50 underline-offset-2 hover:scale-105 transition-transform ml-1"
+              className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-bold shrink-0 underline decoration-primary/50 underline-offset-2 hover:scale-105 transition-transform ml-1"
             >
               <span>{activeNotice.link_text || 'Check Now'}</span>
               <ArrowRight className="w-3 h-3" />
@@ -128,7 +128,7 @@ export default function NoticeBanner() {
         {activeNotice.is_dismissible && (
           <button
             onClick={() => handleDismiss(activeNotice.id)}
-            className="text-white/60 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors shrink-0"
+            className="text-muted-foreground hover:text-foreground p-1 rounded-md hover:bg-muted transition-colors shrink-0"
             aria-label="Dismiss notice"
           >
             <X className="w-3.5 h-3.5" />
