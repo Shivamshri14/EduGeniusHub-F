@@ -141,7 +141,7 @@ export default function HomePage() {
   );
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pb-16 md:pb-0">
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#101a38] text-white pt-28 pb-14 sm:pt-32 sm:pb-20 px-4">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(37,99,235,0.25),transparent_32%),radial-gradient(circle_at_85%_80%,rgba(14,165,233,0.16),transparent_30%)] pointer-events-none" />
@@ -181,38 +181,19 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mt-8 sm:mt-12 overflow-hidden">
-            <div className="flex items-end justify-center gap-3 sm:gap-5 px-3 sm:px-8">
-              <div className="hidden sm:block w-40 h-60 rounded-[1.6rem] border-[3px] border-white/15 bg-[#172449] p-2 shadow-2xl rotate-[-7deg] transition-transform duration-500 hover:-translate-y-3 hover:rotate-0">
-                <div className="h-full rounded-[1.15rem] bg-[#f8fafc] p-3 text-left">
-                  <div className="flex items-center justify-between mb-6"><span className="w-5 h-5 rounded-md bg-[#2563eb]" /><span className="w-10 h-1.5 rounded-full bg-[#cbd5e1]" /></div>
-                  <div className="h-2 w-20 rounded-full bg-[#12203e] mb-2" /><div className="h-2 w-14 rounded-full bg-[#38bdf8] mb-5" />
-                  <div className="h-20 rounded-xl bg-[#dbeafe] mb-3" /><div className="h-2 w-full rounded-full bg-[#e2e8f0] mb-2" /><div className="h-2 w-3/4 rounded-full bg-[#e2e8f0]" />
+          <div className="mt-14 sm:mt-20 overflow-hidden">
+            <div className="flex items-end justify-center gap-3 sm:gap-5 min-w-max px-4 sm:px-8">
+              {[
+                { src: '/assets/reviews/review1.jpg', alt: 'Website project preview', tilt: '-rotate-6', size: 'w-28 sm:w-44 h-40 sm:h-64' },
+                { src: '/assets/file.jpg', alt: 'Mobile app project preview', tilt: '-rotate-3', size: 'w-36 sm:w-52 h-52 sm:h-80' },
+                { src: '/assets/reviews/review2.jpg', alt: 'Digital product project preview', tilt: 'rotate-0', size: 'w-40 sm:w-60 h-60 sm:h-[22rem]' },
+                { src: '/assets/file copy.jpg', alt: 'Business website project preview', tilt: 'rotate-3', size: 'w-36 sm:w-52 h-52 sm:h-80' },
+                { src: '/assets/reviews/review3.jpg', alt: 'App design project preview', tilt: 'rotate-6', size: 'w-28 sm:w-44 h-40 sm:h-64' },
+              ].map((image) => (
+                <div key={image.src} className={`${image.size} ${image.tilt} shrink-0 overflow-hidden rounded-[1.35rem] sm:rounded-[1.75rem] border-[3px] border-white/15 bg-white/10 shadow-2xl shadow-black/30 transition-transform duration-500 hover:-translate-y-3 hover:rotate-0`}>
+                  <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
                 </div>
-              </div>
-
-              <div className="w-32 sm:w-52 h-52 sm:h-80 rounded-[1.6rem] border-[3px] border-white/15 bg-[#172449] p-2 shadow-2xl rotate-[-3deg] transition-transform duration-500 hover:-translate-y-3 hover:rotate-0">
-                <div className="h-full rounded-[1.15rem] bg-[#f8fafc] p-3 sm:p-4 text-left">
-                  <div className="flex items-center gap-2 mb-6"><span className="w-6 h-6 rounded-md bg-[#2563eb]" /><span className="text-[9px] font-black text-[#12203e]">EDUGENIUS</span></div>
-                  <div className="h-2.5 w-28 rounded-full bg-[#12203e] mb-2" /><div className="h-2.5 w-20 rounded-full bg-[#2563eb] mb-4" />
-                  <div className="h-2 w-full rounded-full bg-[#cbd5e1] mb-1.5" /><div className="h-2 w-4/5 rounded-full bg-[#cbd5e1] mb-5" />
-                  <div className="h-9 w-24 rounded-full bg-[#12203e] mb-6" />
-                  <div className="grid grid-cols-2 gap-2"><div className="h-16 rounded-xl bg-[#dbeafe]" /><div className="h-16 rounded-xl bg-[#e0f2fe]" /></div>
-                </div>
-              </div>
-
-              <div className="w-36 sm:w-60 h-56 sm:h-[22rem] rounded-[1.7rem] border-[3px] border-emerald-200/30 bg-[#172449] p-2 shadow-2xl transition-transform duration-500 hover:-translate-y-3">
-                <div className="h-full rounded-[1.2rem] bg-[#f8fafc] p-3 sm:p-4 text-left">
-                  <div className="flex items-center justify-between mb-7"><div className="flex items-center gap-2"><span className="w-6 h-6 rounded-md bg-[#12203e]" /><span className="text-[9px] font-black text-[#12203e]">YOUR APP</span></div><span className="w-12 h-4 rounded-full bg-[#bbf7d0]" /></div>
-                  <div className="rounded-2xl bg-gradient-to-br from-[#2563eb] to-[#38bdf8] h-24 sm:h-32 p-3 mb-4"><div className="h-2 w-16 rounded-full bg-white/80 mb-2" /><div className="h-2 w-24 rounded-full bg-white/40" /></div>
-                  <div className="grid grid-cols-3 gap-2 mb-4"><div className="h-12 rounded-xl bg-[#e0f2fe]" /><div className="h-12 rounded-xl bg-[#dbeafe]" /><div className="h-12 rounded-xl bg-[#dcfce7]" /></div>
-                  <div className="h-2 w-4/5 rounded-full bg-[#cbd5e1] mb-2" /><div className="h-2 w-3/5 rounded-full bg-[#e2e8f0]" />
-                </div>
-              </div>
-
-              <div className="hidden sm:block w-40 h-60 rounded-[1.6rem] border-[3px] border-white/15 bg-[#172449] p-2 shadow-2xl rotate-[7deg] transition-transform duration-500 hover:-translate-y-3 hover:rotate-0">
-                <div className="h-full rounded-[1.15rem] bg-[#f8fafc] p-3 text-left"><div className="h-16 rounded-xl bg-[#dcfce7] mb-4" /><div className="h-2 w-20 rounded-full bg-[#12203e] mb-2" /><div className="h-2 w-14 rounded-full bg-[#38bdf8] mb-6" /><div className="space-y-2"><div className="h-8 rounded-lg bg-[#e2e8f0]" /><div className="h-8 rounded-lg bg-[#e2e8f0]" /><div className="h-8 rounded-lg bg-[#e2e8f0]" /></div></div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -402,6 +383,24 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Always-available mobile actions */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden p-2.5 bg-background/95 backdrop-blur-md border-t border-border shadow-[0_-8px_24px_rgba(15,23,42,0.12)]">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
+          <Link href="/products">
+            <Button className="w-full h-11 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs">
+              <Package className="w-4 h-4 mr-1.5" />
+              Browse Products
+            </Button>
+          </Link>
+          <a href={`https://wa.me/${siteSettings.phone_e164}?text=${waMessage}`} target="_blank" rel="noopener noreferrer">
+            <Button className="w-full h-11 rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold text-xs">
+              <MessageCircle className="w-4 h-4 mr-1.5" />
+              Chat on WhatsApp
+            </Button>
+          </a>
+        </div>
+      </div>
 
       <RequestAccessModal open={requestOpen} onClose={() => setRequestOpen(false)} />
     </main>
