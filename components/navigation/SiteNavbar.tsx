@@ -41,14 +41,14 @@ export default function SiteNavbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'sticky top-0 z-50 transition-all duration-300',
         scrolled || open
           ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm'
           : 'bg-background/80 backdrop-blur-sm'
       )}
     >
       <NoticeBanner />
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 min-h-16 flex items-center justify-between">
         {/* Logo + Brand name */}
         <Link href="/home" className="flex items-center gap-2.5 shrink-0 group">
           <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-auto rounded-xl object-contain shadow-sm group-hover:scale-105 transition-transform" />

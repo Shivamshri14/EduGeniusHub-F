@@ -58,7 +58,7 @@ export default function ProductSharePage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background text-foreground pt-24 pb-20 px-4 flex items-center justify-center">
+      <main className="min-h-screen bg-background text-foreground pt-6 pb-20 px-4 flex items-center justify-center">
         <div className="text-center space-y-3">
           <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-sm text-muted-foreground">Loading product details...</p>
@@ -69,7 +69,7 @@ export default function ProductSharePage() {
 
   if (error || !product) {
     return (
-      <main className="min-h-screen bg-background text-foreground pt-24 pb-20 px-4 flex items-center justify-center">
+      <main className="min-h-screen bg-background text-foreground pt-6 pb-20 px-4 flex items-center justify-center">
         <div className="max-w-md w-full text-center bg-card border border-border p-8 rounded-2xl">
           <AlertCircle className="w-12 h-12 text-destructive mx-auto mb-3" />
           <h1 className="text-2xl font-black">Product Not Found</h1>
@@ -122,7 +122,7 @@ export default function ProductSharePage() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground pt-20 pb-20 sm:pb-24 px-4 sm:px-6">
+    <main className="min-h-screen bg-background text-foreground pt-6 pb-20 sm:pb-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         {/* Navigation Breadcrumb & Back */}
         <div className="flex items-center justify-between gap-4 mb-6">

@@ -143,7 +143,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen pb-16 md:pb-0">
       {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-[#0b1428] text-white pt-28 pb-8 sm:pt-32 sm:pb-10 px-4">
+      <section className="relative isolate overflow-hidden bg-[#0b1428] text-white pt-8 pb-8 sm:pt-12 sm:pb-10 px-4">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(14,165,233,0.18),transparent_42%),linear-gradient(135deg,#0b1428_0%,#101d3a_48%,#0b1428_100%)] pointer-events-none" />
         <div className="absolute -left-20 top-24 h-[26rem] w-[55%] rotate-[24deg] bg-sky-400/[0.045] [clip-path:polygon(0_0,100%_36%,75%_100%,0_62%)] pointer-events-none" />
         <div className="absolute -right-24 top-32 h-[30rem] w-[58%] -rotate-[22deg] bg-blue-500/[0.08] [clip-path:polygon(28%_0,100%_24%,82%_100%,0_66%)] pointer-events-none" />

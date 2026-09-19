@@ -145,7 +145,7 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <main className="min-h-screen pt-20 pb-20 sm:pb-24 bg-background text-foreground">
+    <main className="min-h-screen pt-6 pb-20 sm:pb-24 bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-4">
         {/* Page Title Header */}
         <div className="mb-8 pt-4">
