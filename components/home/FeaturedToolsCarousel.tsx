@@ -58,7 +58,7 @@ export default function FeaturedToolsCarousel() {
             <CardContent className="p-8">
               <div className="mb-6 flex items-center justify-between">
                 <Badge className="bg-primary/15 text-primary">
-                  {currentTool.category.toUpperCase()}
+                  {currentTool.category === 'report' ? 'Reports' : currentTool.category === 'account' ? 'Accounts' : 'OTT'}
                 </Badge>
                 <div className="flex gap-2">
                   {currentTool.marketPrice > currentTool.ourPrice && (

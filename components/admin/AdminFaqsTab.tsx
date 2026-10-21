@@ -134,14 +134,14 @@ export default function AdminFaqsTab() {
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/80 border border-slate-800 p-5 sm:p-6 rounded-3xl backdrop-blur-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 shadow-sm p-5 sm:p-6 rounded-3xl backdrop-blur-xl">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 text-blue-400 text-xs font-bold border border-blue-500/30 mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-bold border border-blue-200 dark:border-blue-800 mb-2">
             <HelpCircle className="w-3.5 h-3.5" />
             MongoDB FAQs Management
           </div>
-          <h3 className="text-xl font-black text-white">Frequently Asked Questions</h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <h3 className="text-xl font-black text-slate-900 dark:text-white">Frequently Asked Questions</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Questions and answers displayed on the homepage and contact page. Stored in MongoDB.
           </p>
         </div>
@@ -151,7 +151,7 @@ export default function AdminFaqsTab() {
             variant="outline"
             onClick={loadFaqs}
             disabled={loading}
-            className="border-slate-700 text-slate-300 hover:bg-slate-800 rounded-xl text-xs h-10 px-3"
+            className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs h-10 px-3"
           >
             <RefreshCw className={cn('w-3.5 h-3.5 mr-1.5', loading && 'animate-spin')} />
             Refresh
@@ -172,23 +172,23 @@ export default function AdminFaqsTab() {
           <div
             key={faq.id || index}
             className={cn(
-              'bg-slate-900/80 border rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4',
-              faq.is_active ? 'border-slate-800' : 'border-slate-800/60 opacity-60'
+              'bg-white dark:bg-slate-900 border rounded-2xl shadow-sm p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4',
+              faq.is_active ? 'border-orange-200 dark:border-slate-700' : 'border-orange-100 dark:border-slate-800 opacity-60'
             )}
           >
             <div className="flex-1 min-w-0 space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-white text-sm">{faq.question}</span>
+                <span className="font-bold text-slate-900 dark:text-white text-sm">{faq.question}</span>
                 <span
                   className={cn(
                     'px-2 py-0.5 rounded-full text-[10px] font-bold',
-                    faq.is_active ? 'bg-green-500/15 text-green-400' : 'bg-slate-800 text-slate-400'
+                    faq.is_active ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                   )}
                 >
                   {faq.is_active ? 'ACTIVE' : 'INACTIVE'}
                 </span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">{faq.answer}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{faq.answer}</p>
             </div>
 
             <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
@@ -196,19 +196,19 @@ export default function AdminFaqsTab() {
                 variant="outline"
                 size="sm"
                 onClick={() => handleToggleActive(faq)}
-                className="border-slate-700 text-slate-300 hover:bg-slate-800 rounded-xl text-xs h-8 px-2.5"
+                className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs h-8 px-2.5"
               >
                 {faq.is_active ? (
-                  <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-300" />
                 ) : (
-                  <XCircle className="w-3.5 h-3.5 text-slate-500" />
+                  <XCircle className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                 )}
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleOpenEdit(faq)}
-                className="border-slate-700 text-slate-300 hover:bg-slate-800 rounded-xl text-xs h-8 px-2.5"
+                className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs h-8 px-2.5"
               >
                 <Edit className="w-3.5 h-3.5 mr-1" />
                 Edit
@@ -217,7 +217,7 @@ export default function AdminFaqsTab() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleDelete(faq.id)}
-                className="text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl text-xs h-8 px-2"
+                className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950 rounded-xl text-xs h-8 px-2"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </Button>
@@ -227,9 +227,9 @@ export default function AdminFaqsTab() {
       </div>
 
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="w-[95vw] sm:max-w-lg bg-[#0B1F3A] border-slate-800 text-slate-100 rounded-3xl p-5 sm:p-7">
+        <DialogContent className="w-[95vw] sm:max-w-lg bg-white dark:bg-slate-900 border-orange-100 dark:border-slate-800 text-slate-900 dark:text-white rounded-3xl p-5 sm:p-7">
           <DialogHeader className="mb-3">
-            <DialogTitle className="text-xl font-black text-white flex items-center gap-2">
+            <DialogTitle className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
               <HelpCircle className="w-5 h-5 text-[#F4B400]" />
               {editingFaq?.id ? 'Edit FAQ' : 'Add FAQ'}
             </DialogTitle>
@@ -238,34 +238,34 @@ export default function AdminFaqsTab() {
           {editingFaq && (
             <form onSubmit={handleSave} className="space-y-4 text-xs sm:text-sm">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Question *</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Question *</label>
                 <Input
                   value={editingFaq.question || ''}
                   onChange={(e) => setEditingFaq({ ...editingFaq, question: e.target.value })}
                   placeholder="e.g. How fast is delivery?"
-                  className="bg-slate-900 border-slate-800 text-white rounded-xl text-xs"
+                  className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Answer *</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Answer *</label>
                 <Textarea
                   value={editingFaq.answer || ''}
                   onChange={(e) => setEditingFaq({ ...editingFaq, answer: e.target.value })}
                   placeholder="e.g. Delivery is fulfilled within 5-30 minutes on WhatsApp..."
-                  className="bg-slate-900 border-slate-800 text-white rounded-xl text-xs min-h-[90px]"
+                  className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs min-h-[90px]"
                   required
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-slate-800">
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-300">
+              <div className="flex items-center justify-between pt-2 border-t border-orange-100 dark:border-slate-800">
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700 dark:text-slate-200">
                   <input
                     type="checkbox"
                     checked={editingFaq.is_active ?? true}
                     onChange={(e) => setEditingFaq({ ...editingFaq, is_active: e.target.checked })}
-                    className="rounded bg-slate-900 border-slate-700 text-[#F4B400] focus:ring-[#F4B400]"
+                    className="rounded bg-white dark:bg-slate-900 border-orange-300 dark:border-slate-600 text-[#F4B400] focus:ring-[#F4B400]"
                   />
                   <span>Active</span>
                 </label>
@@ -275,7 +275,7 @@ export default function AdminFaqsTab() {
                     type="button"
                     variant="ghost"
                     onClick={() => setModalOpen(false)}
-                    className="text-slate-400 hover:text-white text-xs h-9"
+                    className="text-slate-600 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white text-xs h-9"
                   >
                     Cancel
                   </Button>

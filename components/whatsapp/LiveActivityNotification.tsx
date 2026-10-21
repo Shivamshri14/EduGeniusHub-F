@@ -1,91 +1,81 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { ShoppingCart, X, CircleCheck as CheckCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { ShoppingBag, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const NAMES = ['Anjali', 'Vikram', 'Amit', 'Rahul', 'Priya', 'Sneha', 'Rohan', 'Karan', 'Nisha', 'Neha', 'Deepak', 'Sandeep', 'Ravi', 'Divya', 'Aarav', 'Ishaan', 'Aditya'];
-const CITIES = ['Delhi', 'Mumbai', 'Pune', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Chandigarh', 'Noida', 'Gurugram'];
+const NAMES = ['Anjali', 'Amit', 'Rahul', 'Priya', 'Sneha', 'Rohan', 'Neha', 'Ravi', 'Divya', 'Aditya'];
+const CITIES = ['Delhi', 'Mumbai', 'Pune', 'Bangalore', 'Jaipur', 'Lucknow', 'Noida', 'Chandigarh'];
 const PRODUCTS = [
-  { name: 'Turnitin Plagiarism Report', icon: '📑' },
-  { name: 'Turnitin AI Report', icon: '📑' },
-  { name: 'Turnitin Combo Report', icon: '📑' },
-  { name: 'ChatGPT Plus Access', icon: '🤖' },
-  { name: 'QuillBot Premium', icon: '🎓' },
-  { name: 'Grammarly Premium', icon: '🎓' },
-  { name: 'Netflix Premium Profile', icon: '🎬' },
-  { name: 'Amazon Prime Video', icon: '🎬' },
+  'EduGenius Similarity Report',
+  'EduGenius AI-Writing Check',
+  'EduGenius Combo Report',
+  'ChatGPT Plus',
+  'QuillBot Premium',
+  'Grammarly Premium',
+  'Netflix Premium',
+  'Prime Video',
 ];
+const TIMES = ['2 mins ago', '5 mins ago', '7 mins ago', '11 mins ago'];
 
 export default function LiveActivityNotification() {
-  const [notification, setNotification] = useState<{ name: string; city: string; product: string; icon: string; time: string } | null>(null);
+  const pathname = usePathname();
+  const [notification, setNotification] = useState<{ name: string; city: string; product: string; time: string } | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const triggerNotification = () => {
-      const name = NAMES[Math.floor(Math.random() * NAMES.length)];
-      const city = CITIES[Math.floor(Math.random() * CITIES.length)];
-      const prod = PRODUCTS[Math.floor(Math.random() * PRODUCTS.length)];
-      const time = `${Math.floor(Math.random() * 15) + 1} mins ago`;
+    if (pathname?.startsWith('/admin')) return;
 
+    const triggerNotification = () => {
       setNotification({
-        name,
-        city,
-        product: prod.name,
-        icon: prod.icon,
-        time,
+        name: NAMES[Math.floor(Math.random() * NAMES.length)],
+        city: CITIES[Math.floor(Math.random() * CITIES.length)],
+        product: PRODUCTS[Math.floor(Math.random() * PRODUCTS.length)],
+        time: TIMES[Math.floor(Math.random() * TIMES.length)],
       });
       setVisible(true);
-
-      // Hide after 6 seconds
-      setTimeout(() => {
-        setVisible(false);
-      }, 6000);
+      window.setTimeout(() => setVisible(false), 7000);
     };
 
-    // Initial delay before first toast
-    const initialDelay = setTimeout(triggerNotification, 8000);
-
-    // Loop interval: runs every 50 seconds
-    const interval = setInterval(triggerNotification, 50000);
+    const initialDelay = window.setTimeout(triggerNotification, 2500);
+    const interval = window.setInterval(triggerNotification, 22000);
 
     return () => {
-      clearTimeout(initialDelay);
-      clearInterval(interval);
+      window.clearTimeout(initialDelay);
+      window.clearInterval(interval);
     };
-  }, []);
+  }, [pathname]);
 
-  if (!notification) return null;
+  if (!notification || pathname?.startsWith('/admin')) return null;
 
   return (
     <div
       className={cn(
-        'fixed bottom-6 left-6 z-50 max-w-sm w-[90vw] sm:w-[320px] transition-all duration-500 ease-out transform',
-        visible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'
+        'fixed left-3 z-50 w-[min(92vw,340px)] transition-all duration-500 ease-out bottom-[calc(4.75rem+env(safe-area-inset-bottom))] md:bottom-6 md:left-6',
+        visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-8 opacity-0'
       )}
     >
-      <div className="bg-card/95 border border-border backdrop-blur-md rounded-2xl p-4 shadow-xl flex items-start gap-3 text-foreground">
-        <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 mt-0.5 animate-pulse">
-          <ShoppingCart className="w-4.5 h-4.5" />
+      <div className="flex items-start gap-3 rounded-2xl border border-orange-100 bg-white p-4 text-slate-900 shadow-2xl dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+        <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500 text-white">
+          <ShoppingBag className="h-5 w-5" />
         </div>
-        <div className="flex-1 min-w-0 pr-2">
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <span className="font-bold text-sm truncate">{notification.name}</span>
-            <span className="text-[10px] text-muted-foreground">from {notification.city}</span>
-          </div>
-          <p className="text-xs text-muted-foreground leading-tight">
-            Purchased **{notification.product}** {notification.icon}
+        <div className="min-w-0 flex-1 pr-2">
+          <p className="text-sm font-bold leading-tight">
+            {notification.name} <span className="font-medium text-slate-500 dark:text-slate-300">from {notification.city}</span>
           </p>
-          <div className="flex items-center gap-1 mt-1 text-[10px] text-green-600 dark:text-green-400 font-medium">
-            <CheckCircle className="w-3 h-3 fill-current" />
-            <span>Verified Purchase · {notification.time}</span>
-          </div>
+          <p className="mt-1 text-sm leading-snug">
+            bought <span className="font-semibold">{notification.product}</span>
+          </p>
+          <p className="mt-1 text-xs font-semibold text-emerald-600">{notification.time}</p>
         </div>
         <button
+          type="button"
           onClick={() => setVisible(false)}
-          className="text-muted-foreground hover:text-foreground p-0.5 rounded-lg transition-colors shrink-0"
+          className="shrink-0 rounded-lg p-1 text-slate-400 hover:text-slate-700 dark:hover:text-white"
+          aria-label="Dismiss purchase notice"
         >
-          <X className="w-3.5 h-3.5" />
+          <X className="h-4 w-4" />
         </button>
       </div>
     </div>

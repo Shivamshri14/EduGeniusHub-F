@@ -19,6 +19,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { type Product, type ProductPlan } from '@/lib/types';
 import { getProductArtwork } from '@/lib/productImages';
+import { categoryLabel, pricePeriod, publicDescription, publicName, CANONICAL_ORIGIN } from '@/lib/publicCopy';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -87,28 +88,26 @@ export default function ProductSharePage() {
   }
 
   const artwork = getProductArtwork(product);
+  const displayName = publicName(product.name);
+  const description = publicDescription(product.description);
   const hasPlans = Boolean(product.plans && product.plans.length > 0);
   const currentPlan: ProductPlan | undefined = hasPlans ? product.plans?.[selectedPlanIndex] : undefined;
 
   const activePrice = currentPlan ? currentPlan.price : product.price;
-  const activeOriginalPrice = currentPlan?.original_price ?? product.market_price;
-
-  const discount = activeOriginalPrice && activeOriginalPrice > activePrice
-    ? Math.round(((activeOriginalPrice - activePrice) / activeOriginalPrice) * 100)
-    : null;
+  const period = pricePeriod(product.plan_type, currentPlan?.duration);
 
   const getWhatsAppOrderUrl = () => {
     let planInfo = '';
     if (currentPlan) {
       planInfo = ` - ${currentPlan.name} (₹${currentPlan.price}${currentPlan.limits ? ` • ${currentPlan.limits}` : ''})`;
     }
-    const msg = `Hi EduGenius Hub, I want to order ${product.name}${planInfo}. Please share the payment details and access steps.`;
+    const msg = `Hi EduGenius Hub, I want to order ${displayName}${planInfo}. Please share the payment details.`;
     return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   };
 
   const getWhatsAppShareUrl = () => {
-    const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://www.edugeniushub.com/product/${product.slug}`;
-    const text = `${product.name} is now available on EduGenius Hub!\n\nPrice: Starting at just ₹${activePrice}\nInstant WhatsApp Activation • 100% Replacement Warranty\n\nView details & order here:\n${shareUrl}`;
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : `${CANONICAL_ORIGIN}/product/${product.slug}`;
+    const text = `${displayName} on EduGenius Hub. Price: ₹${activePrice}. ${shareUrl}`;
     return `https://wa.me/?text=${encodeURIComponent(text)}`;
   };
 
@@ -135,8 +134,10 @@ export default function ProductSharePage() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <button
+                    <button
+              type="button"
               onClick={handleCopyLink}
+              aria-label="Copy product link"
               className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-xl bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5 text-primary" />}
@@ -164,8 +165,8 @@ export default function ProductSharePage() {
                 {product.image_url ? (
                   <img
                     src={product.image_url}
-                    alt={product.name}
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover bg-card border border-border shrink-0"
+                    alt={displayName}
+                    className="h-28 w-28 rounded-2xl border border-border bg-white object-contain p-2 shrink-0 sm:h-32 sm:w-32"
                   />
                 ) : (
                   <div
@@ -176,24 +177,26 @@ export default function ProductSharePage() {
                 <div>
                   <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                     <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                      {product.category}
+                      {categoryLabel(product.category)}
                     </span>
-                    {product.badge && (
-                      <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
-                        {product.badge.replace('_', ' ')}
+                    {product.badge === 'best_seller' && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-700 border border-orange-500/20">
+                        Popular
                       </span>
                     )}
                   </div>
                   <h1 className="text-xl sm:text-2xl lg:text-3xl font-black text-foreground leading-tight">
-                    {product.name}
+                    {displayName}
                   </h1>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-xs bg-card border border-border px-3.5 py-1.5 rounded-full text-muted-foreground shrink-0 self-start sm:self-center">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span>Instant WhatsApp Delivery</span>
-              </div>
+              {product.delivery_time && (
+                <div className="rounded-2xl bg-orange-50 px-4 py-3">
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-orange-700">Delivery</p>
+                  <p className="mt-1 text-sm font-bold text-slate-900">{product.delivery_time}</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -202,7 +205,7 @@ export default function ProductSharePage() {
             {/* Description */}
             {product.description && (
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                {product.description}
+                {description}
               </p>
             )}
 
@@ -256,22 +259,10 @@ export default function ProductSharePage() {
                 </span>
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-primary">
-                    {activePrice > 0 ? `₹${activePrice}` : 'DM for Price'}
+                    {activePrice > 0 ? `₹${activePrice}` : 'Ask on WhatsApp'}
                   </span>
-                  {product.plan_type && activePrice > 0 && (
-                    <span className="text-xs sm:text-sm text-muted-foreground">
-                      /{currentPlan?.duration || product.plan_type.toLowerCase()}
-                    </span>
-                  )}
-                  {activeOriginalPrice && activeOriginalPrice > activePrice && (
-                    <span className="text-sm text-muted-foreground line-through ml-1">
-                      ₹{activeOriginalPrice}
-                    </span>
-                  )}
-                  {discount && (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
-                      Save {discount}%
-                    </span>
+                  {period && (
+                    <span className="text-xs sm:text-sm text-muted-foreground">{period}</span>
                   )}
                 </div>
               </div>
@@ -293,15 +284,10 @@ export default function ProductSharePage() {
                 What&apos;s Included
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {(product.features && product.features.length > 0
-                  ? product.features
-                  : [
-                      'Instant WhatsApp Delivery in 5-15 minutes',
-                      '100% Replacement Warranty & Validity',
-                      'Dedicated customer support',
-                      'Verified official account access',
-                    ]
-                ).map((f, i) => (
+                {(product.features || [])
+                  .filter((feature) => !/official|100%|guaranteed|instant/i.test(feature))
+                  .concat(product.delivery_time ? [`Delivery: ${product.delivery_time}`] : [])
+                  .map((f, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm text-foreground bg-muted/30 p-2.5 rounded-xl border border-border">
                     <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
                     <span>{f}</span>
@@ -340,22 +326,6 @@ export default function ProductSharePage() {
                 ))}
               </div>
             )}
-
-            {/* Trust Footer */}
-            <div className="pt-4 border-t border-border grid grid-cols-3 gap-3 text-center text-[11px] sm:text-xs text-muted-foreground">
-              <div className="flex flex-col items-center gap-1">
-                <Zap className="w-4 h-4 text-primary" />
-                <span>5-15 Min Delivery</span>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <Shield className="w-4 h-4 text-green-500" />
-                <span>100% Guaranteed</span>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <Headphones className="w-4 h-4 text-primary" />
-                <span>24/7 WhatsApp Help</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

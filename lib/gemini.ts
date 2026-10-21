@@ -324,7 +324,7 @@ export function parseWithHeuristics(raw: string): ParsedProductCandidate[] {
 
       products.push({
         name,
-        description: `Official ${name} with fast delivery and guaranteed uptime.`,
+        description: `${name}. Message on WhatsApp for the current price and delivery time.`,
         category: cat,
         price,
         market_price: Math.round(price * 1.6),
@@ -353,7 +353,7 @@ export function parseWithHeuristics(raw: string): ParsedProductCandidate[] {
     const firstLine = lines[0] || 'Special Digital Tool';
     products.push({
       name: firstLine.replace(/^[^\w]+|[^\w]+$/g, ''),
-      description: lines.slice(1, 3).join(' ') || 'High performance digital subscription with guaranteed access.',
+      description: lines.slice(1, 3).join(' ') || 'Subscription access. Message on WhatsApp for the current price.',
       category: 'ai_tools',
       price: 299,
       market_price: 499,

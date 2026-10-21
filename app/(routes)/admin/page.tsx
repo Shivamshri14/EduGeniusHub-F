@@ -46,6 +46,7 @@ import { Product, ProductPlan, ProductCategory } from '@/lib/types';
 import { getProductArtwork, PRESET_PRODUCT_IMAGES } from '@/lib/productImages';
 import { DEFAULT_GEMINI_PROMPT } from '@/lib/gemini';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/theme-toggle';
 import AdminNoticesTab from '@/components/admin/AdminNoticesTab';
 import AdminFaqsTab from '@/components/admin/AdminFaqsTab';
 import AdminReviewsTab from '@/components/admin/AdminReviewsTab';
@@ -561,23 +562,26 @@ export default function AdminPage() {
   // ── 1. DB AUTHENTICATION SCREEN ──
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-[#07121f] text-white flex items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#F4B400]/10 rounded-full blur-3xl pointer-events-none" />
+      <main className="min-h-screen bg-[#fff7ed] dark:bg-slate-950 text-slate-900 dark:text-white flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="absolute top-4 right-4 z-20">
+          <ThemeToggle />
+        </div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-200/50 dark:bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-md w-full bg-[#0B1F3A]/90 border border-slate-800 rounded-3xl p-8 backdrop-blur-2xl shadow-2xl relative z-10">
+        <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl p-8 shadow-xl relative z-10">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#F4B400]/15 text-[#F4B400] border border-[#F4B400]/30 mb-4 shadow-lg shadow-[#F4B400]/10">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-300 border border-orange-200 dark:border-slate-700 mb-4">
               <ShieldCheck className="w-8 h-8" />
             </div>
-            <h1 className="text-2xl font-black tracking-tight text-white">EduGenius Hub Admin</h1>
-            <p className="text-xs text-slate-400 mt-1">
+            <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">EduGenius Hub Admin</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Database-authenticated access via MongoDB Atlas
             </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1.5 uppercase tracking-wider">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-200 block mb-1.5 uppercase tracking-wider">
                 Admin Username
               </label>
               <Input
@@ -585,13 +589,13 @@ export default function AdminPage() {
                 placeholder="Enter admin username"
                 value={usernameInput}
                 onChange={(e) => setUsernameInput(e.target.value)}
-                className="bg-slate-900 border-slate-700 text-white rounded-xl h-12 px-4 focus-visible:ring-[#F4B400]"
+                className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-12 px-4 focus-visible:ring-orange-400"
                 required
               />
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1.5 uppercase tracking-wider">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-200 block mb-1.5 uppercase tracking-wider">
                 Admin Password
               </label>
               <Input
@@ -599,7 +603,7 @@ export default function AdminPage() {
                 placeholder="Enter your admin password"
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
-                className="bg-slate-900 border-slate-700 text-white rounded-xl h-12 px-4 focus-visible:ring-[#F4B400]"
+                className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-12 px-4 focus-visible:ring-orange-400"
                 required
                 autoFocus
               />
@@ -615,7 +619,7 @@ export default function AdminPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <Link href="/home" className="text-xs text-slate-400 hover:text-[#F4B400] transition-colors">
+            <Link href="/home" className="text-xs text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
               ← Return to EduGeniusHub Storefront
             </Link>
           </div>
@@ -625,17 +629,17 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#07121f] text-slate-100 flex flex-col">
+    <main className="min-h-screen bg-[#fff7ed] dark:bg-slate-950 text-slate-900 dark:text-white flex flex-col">
       {/* Top Header */}
-      <header className="sticky top-0 z-40 bg-[#0B1F3A]/95 backdrop-blur-md border-b border-slate-800 px-3 sm:px-6 py-3 sm:py-4">
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-orange-100 dark:border-slate-800 shadow-sm px-3 sm:px-6 py-3 sm:py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           {/* Logo & Brand */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <Link href="/home" className="flex items-center gap-2 group">
               <img src="/logo.jpg" alt="EduGenius Hub" className="h-8 sm:h-9 w-auto rounded-xl object-contain shadow-md" />
               <div>
-                <span className="font-black text-white text-sm sm:text-base tracking-tight">EduGenius Hub</span>
-                <span className="ml-1.5 sm:ml-2 text-[9px] sm:text-[10px] uppercase font-extrabold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-[#F4B400]/20 text-[#F4B400] border border-[#F4B400]/30">
+                <span className="font-black text-slate-900 dark:text-white text-sm sm:text-base tracking-tight">EduGenius Hub</span>
+                <span className="ml-1.5 sm:ml-2 text-[9px] sm:text-[10px] uppercase font-extrabold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-orange-500 text-white">
                   Admin
                 </span>
               </div>
@@ -649,10 +653,10 @@ export default function AdminPage() {
               href="https://cloud.mongodb.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-900/60 transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition-all shadow-sm"
               title="Open MongoDB Atlas Console (cloud.mongodb.com)"
             >
-              <Database className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <Database className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-300 shrink-0" />
               <span className="hidden sm:inline">MongoDB Atlas</span>
               <span className="sm:hidden text-[11px]">Atlas</span>
               <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
@@ -663,10 +667,10 @@ export default function AdminPage() {
               href="https://aistudio.google.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-950/60 border border-blue-500/40 text-blue-400 hover:bg-blue-900/60 transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all shadow-sm"
               title="Open Google AI Studio (aistudio.google.com)"
             >
-              <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 text-blue-700 dark:text-blue-300 shrink-0" />
               <span className="hidden sm:inline">Gemini AI</span>
               <span className="sm:hidden text-[11px]">Gemini</span>
               <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
@@ -676,17 +680,19 @@ export default function AdminPage() {
             <Link
               href="/products"
               target="_blank"
-              className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors"
+              className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 border border-orange-200 dark:border-slate-700 transition-colors"
               title="View Public Storefront"
             >
               <span>Storefront</span>
               <ExternalLink className="w-3 h-3 opacity-70" />
             </Link>
 
+            <ThemeToggle />
+
             {/* Logout */}
             <button
               onClick={handleLogout}
-              className="p-1.5 sm:p-2 text-slate-400 hover:text-red-400 transition-colors rounded-xl hover:bg-slate-800"
+              className="p-1.5 sm:p-2 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors rounded-xl hover:bg-red-50 dark:hover:bg-red-950"
               title="Sign Out"
             >
               <LogOut className="w-4 h-4" />
@@ -704,18 +710,18 @@ export default function AdminPage() {
             href="https://cloud.mongodb.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-[#0B1F3A]/90 hover:bg-[#0E2749] border border-slate-800 hover:border-emerald-500/50 transition-all group shadow-md"
+            className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-emerald-950 border border-orange-100 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all group shadow-sm"
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-200 dark:border-emerald-800">
                 <Database className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs sm:text-sm font-bold text-white group-hover:text-emerald-400 transition-colors flex items-center gap-1 truncate">
+                <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors flex items-center gap-1 truncate">
                   <span>MongoDB Atlas</span>
                   <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
                 </div>
-                <div className="text-[10px] text-slate-400 truncate">512MB M0 Free Cluster</div>
+                <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">512MB M0 Free Cluster</div>
               </div>
             </div>
           </a>
@@ -725,18 +731,18 @@ export default function AdminPage() {
             href="https://aistudio.google.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-[#0B1F3A]/90 hover:bg-[#0E2749] border border-slate-800 hover:border-blue-500/50 transition-all group shadow-md"
+            className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-950 border border-orange-100 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all group shadow-sm"
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/30">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center shrink-0 border border-blue-200 dark:border-blue-800">
                 <Sparkles className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs sm:text-sm font-bold text-white group-hover:text-blue-400 transition-colors flex items-center gap-1 truncate">
+                <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors flex items-center gap-1 truncate">
                   <span>Gemini Studio</span>
                   <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
                 </div>
-                <div className="text-[10px] text-slate-400 truncate">100% Free AI Tier</div>
+                <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">100% Free AI Tier</div>
               </div>
             </div>
           </a>
@@ -745,54 +751,54 @@ export default function AdminPage() {
           <Link
             href="/products"
             target="_blank"
-            className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-[#0B1F3A]/90 hover:bg-[#0E2749] border border-slate-800 hover:border-[#F4B400]/50 transition-all group shadow-md"
+            className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-100 dark:border-slate-800 hover:border-orange-300 dark:hover:border-orange-500 transition-all group shadow-sm"
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#F4B400]/15 text-[#F4B400] flex items-center justify-center shrink-0 border border-[#F4B400]/30">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-600 dark:text-orange-300 flex items-center justify-center shrink-0 border border-orange-200 dark:border-slate-700">
                 <Package className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs sm:text-sm font-bold text-white group-hover:text-[#F4B400] transition-colors flex items-center gap-1 truncate">
+                <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors flex items-center gap-1 truncate">
                   <span>Live Store</span>
                   <ExternalLink className="w-3 h-3 opacity-60 shrink-0" />
                 </div>
-                <div className="text-[10px] text-slate-400 truncate">Customer Catalog</div>
+                <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Customer Catalog</div>
               </div>
             </div>
           </Link>
 
           {/* Card 4: Database Catalog Sync */}
-          <div className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-[#0B1F3A]/90 border border-slate-800 shadow-md">
+          <div className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 shadow-sm">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-green-500/15 text-green-400 flex items-center justify-center shrink-0 border border-green-500/30">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-200 dark:border-emerald-800">
                 <CheckCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5 truncate">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shrink-0" />
+                <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5 truncate">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                   <span>{systemStatus?.mongodb?.productCount || products.length} Live Items</span>
                 </div>
-                <div className="text-[10px] text-slate-400 truncate">Synced to Atlas Cloud</div>
+                <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Synced to Atlas Cloud</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Navigation Tabs - Mobile Optimized */}
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3 sm:pb-4 mb-6 sm:mb-8 overflow-x-auto scrollbar-none">
+        <div className="flex items-center gap-2 border-b border-orange-100 dark:border-slate-800 pb-3 sm:pb-4 mb-6 sm:mb-8 overflow-x-auto scrollbar-none">
           <button
             onClick={() => setActiveTab('ai_import')}
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'ai_import'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>AI Importer</span>
             {stagedProducts.length > 0 && (
-              <span className="bg-[#0B1F3A] text-[#F4B400] text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-black">
+              <span className="bg-white text-orange-600 dark:text-orange-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-black">
                 {stagedProducts.length}
               </span>
             )}
@@ -803,13 +809,13 @@ export default function AdminPage() {
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'products'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Manage Catalog</span>
-            <span className="bg-slate-800 text-slate-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold">
+            <span className="bg-white text-orange-600 dark:text-orange-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold">
               {products.length}
             </span>
           </button>
@@ -819,8 +825,8 @@ export default function AdminPage() {
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'notices'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -832,8 +838,8 @@ export default function AdminPage() {
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'faqs'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -845,8 +851,8 @@ export default function AdminPage() {
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'reviews'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -858,8 +864,8 @@ export default function AdminPage() {
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'services'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -871,8 +877,8 @@ export default function AdminPage() {
             className={cn(
               'flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0',
               activeTab === 'settings'
-                ? 'bg-[#F4B400] text-[#0B1F3A] shadow-lg shadow-[#F4B400]/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-800 border border-orange-200 dark:border-slate-700'
             )}
           >
             <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -884,38 +890,38 @@ export default function AdminPage() {
         {activeTab === 'ai_import' && (
           <div className="space-y-8 animate-in fade-in duration-300">
             {/* Promo Parser Box */}
-            <div className="bg-[#0B1F3A]/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl relative overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl shadow-sm p-6 sm:p-8 backdrop-blur-xl relative overflow-hidden">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                       <Sparkles className="w-3.5 h-3.5" />
                       100% Free Tier (Gemini 3.5 Flash)
                     </span>
                     <button
                       type="button"
                       onClick={() => setShowPromptEditor(!showPromptEditor)}
-                      className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-slate-300 hover:text-white border border-slate-700 transition-colors"
+                      className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-orange-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-100 border border-orange-200 dark:border-slate-700 transition-colors"
                     >
                       <Sliders className="w-3 h-3 text-[#F4B400]" />
                       <span>{showPromptEditor ? 'Hide AI Prompt' : '⚙️ Customize AI Prompt'}</span>
                     </button>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-white">Promotional Broadcast Importer</h2>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">Promotional Broadcast Importer</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
                     Paste raw WhatsApp or Telegram marketing messages. Gemini will parse plans, word quotas, and features automatically.
                   </p>
                 </div>
 
                 {/* Quick Presets */}
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs text-slate-400 self-center font-medium mr-1">Presets:</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 self-center font-medium mr-1">Presets:</span>
                   {PROMO_PRESETS.map((p, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => setRawText(p.text)}
-                      className="text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700/60 px-3 py-1.5 rounded-xl transition-colors font-medium"
+                      className="text-xs bg-orange-50 dark:bg-slate-800 hover:bg-orange-100 text-slate-800 dark:text-slate-100 border border-orange-200 dark:border-slate-700 px-3 py-1.5 rounded-xl transition-colors font-medium"
                     >
                       {p.label}
                     </button>
@@ -925,7 +931,7 @@ export default function AdminPage() {
 
               {/* Collapsible Prompt Editor */}
               {showPromptEditor && (
-                <div className="mb-5 p-4 sm:p-5 rounded-2xl bg-slate-950/80 border border-[#F4B400]/30 space-y-3 animate-in fade-in duration-200">
+                <div className="mb-5 p-4 sm:p-5 rounded-2xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 space-y-3 animate-in fade-in duration-200">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-[#F4B400] flex items-center gap-1.5 uppercase tracking-wider">
                       <Sliders className="w-3.5 h-3.5" />
@@ -934,7 +940,7 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={() => setCustomPrompt(DEFAULT_GEMINI_PROMPT)}
-                      className="text-[11px] text-slate-400 hover:text-white underline"
+                      className="text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline"
                     >
                       Reset to Default
                     </button>
@@ -943,9 +949,9 @@ export default function AdminPage() {
                     value={customPrompt}
                     onChange={(e) => setCustomPrompt(e.target.value)}
                     rows={6}
-                    className="bg-slate-900 border-slate-800 text-slate-200 font-mono text-xs rounded-xl p-3 resize-y"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 font-mono text-xs rounded-xl p-3 resize-y"
                   />
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     💡 You can customize rules here (e.g., &quot;Always assign 10% discount&quot;, &quot;Default category to ai_tools&quot;).
                   </p>
                 </div>
@@ -958,13 +964,13 @@ export default function AdminPage() {
                   rows={8}
                   value={rawText}
                   onChange={(e) => setRawText(e.target.value)}
-                  className="bg-slate-900/90 border-slate-700/80 text-white rounded-2xl p-4 font-mono text-xs sm:text-sm focus-visible:ring-[#F4B400] leading-relaxed resize-y"
+                  className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-2xl p-4 font-mono text-xs sm:text-sm focus-visible:ring-[#F4B400] leading-relaxed resize-y"
                 />
               </div>
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-2 text-xs text-slate-400">
+                <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                   <Zap className="w-4 h-4 text-[#F4B400]" />
                   <span>Newly imported products will automatically append to the end of your catalog.</span>
                 </div>
@@ -974,7 +980,7 @@ export default function AdminPage() {
                     <Button
                       variant="outline"
                       onClick={() => setRawText('')}
-                      className="border-slate-700 text-slate-300 hover:bg-slate-800 rounded-xl"
+                      className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl"
                     >
                       Clear
                     </Button>
@@ -1005,11 +1011,11 @@ export default function AdminPage() {
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <h3 className="text-xl font-black text-white flex items-center gap-2">
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
                       <span>Parsed Products Staging Area</span>
                       <Badge className="bg-[#F4B400] text-[#0B1F3A] font-black">{stagedProducts.length}</Badge>
                     </h3>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                       Review, edit details, or change artwork before saving directly to MongoDB Atlas.
                     </p>
                   </div>
@@ -1034,49 +1040,49 @@ export default function AdminPage() {
                     return (
                       <div
                         key={idx}
-                        className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 flex flex-col justify-between hover:border-[#F4B400]/40 transition-all shadow-xl"
+                        className="bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl shadow-sm p-5 flex flex-col justify-between hover:border-[#F4B400]/40 transition-all shadow-xl"
                       >
                         <div>
                           {/* Top Visual */}
                           <div className="flex items-start justify-between gap-2 mb-3">
                             <div className="flex items-center gap-2.5">
                               <div
-                                className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center p-2 shadow-inner"
+                                className="w-10 h-10 rounded-xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 flex items-center justify-center p-2 shadow-inner"
                                 dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
                               />
-                              <span className="text-xs uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-slate-800 text-[#F4B400] border border-slate-700">
+                              <span className="text-xs uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-orange-50 dark:bg-slate-800 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-slate-700">
                                 {p.category}
                               </span>
                             </div>
                             {p.badge && (
-                              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-orange-50 dark:bg-slate-800 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-slate-700">
                                 {p.badge.replace('_', ' ')}
                               </span>
                             )}
                           </div>
 
                           {/* Title & Price */}
-                          <h4 className="font-bold text-white text-base leading-tight mb-1">{p.name}</h4>
+                          <h4 className="font-bold text-slate-900 dark:text-white text-base leading-tight mb-1">{p.name}</h4>
                           <div className="flex items-baseline gap-2 mb-3">
                             <span className="text-2xl font-black text-[#F4B400]">
                               {p.price > 0 ? `₹${p.price}` : 'DM for Pricing'}
                             </span>
-                            {p.plan_type && <span className="text-xs text-slate-400">/{p.plan_type.toLowerCase()}</span>}
+                            {p.plan_type && <span className="text-xs text-slate-500 dark:text-slate-400">/{p.plan_type.toLowerCase()}</span>}
                           </div>
 
-                          <p className="text-xs text-slate-400 mb-4 line-clamp-2">{p.description}</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{p.description}</p>
 
                           {/* Plans (Tiers) */}
                           {p.plans && p.plans.length > 0 && (
-                            <div className="mb-4 bg-slate-950/60 rounded-xl p-3 border border-slate-800/80">
-                              <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <div className="mb-4 bg-orange-50 dark:bg-slate-800 rounded-xl p-3 border border-orange-100 dark:border-slate-800">
+                              <div className="text-[11px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                                 <Layers className="w-3 h-3 text-[#F4B400]" />
                                 <span>{p.plans.length} Tiered Plans Extracted:</span>
                               </div>
                               <div className="space-y-1.5">
                                 {p.plans.map((plan: ProductPlan, pIdx: number) => (
-                                  <div key={pIdx} className="flex items-center justify-between text-xs py-1 border-b border-slate-800/50 last:border-0">
-                                    <span className="font-medium text-slate-200">{plan.name}</span>
+                                  <div key={pIdx} className="flex items-center justify-between text-xs py-1 border-b border-orange-100 dark:border-slate-800 last:border-0">
+                                    <span className="font-medium text-slate-700 dark:text-slate-200">{plan.name}</span>
                                     <span className="font-bold text-[#F4B400]">₹{plan.price}</span>
                                   </div>
                                 ))}
@@ -1088,8 +1094,8 @@ export default function AdminPage() {
                           {p.features && p.features.length > 0 && (
                             <div className="space-y-1 mb-4">
                               {p.features.slice(0, 3).map((feat: string, fIdx: number) => (
-                                <div key={fIdx} className="flex items-center gap-1.5 text-xs text-slate-300">
-                                  <CheckCircle className="w-3.5 h-3.5 text-green-400 shrink-0" />
+                                <div key={fIdx} className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300">
+                                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-300 shrink-0" />
                                   <span className="truncate">{feat}</span>
                                 </div>
                               ))}
@@ -1098,14 +1104,14 @@ export default function AdminPage() {
                         </div>
 
                         {/* Card Actions */}
-                        <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
+                        <div className="pt-3 border-t border-orange-100 dark:border-slate-800 flex items-center justify-between gap-2 mt-2">
                           <button
                             type="button"
                             onClick={() => {
                               setEditingProduct({ ...p, id: undefined });
                               setEditModalOpen(true);
                             }}
-                            className="text-xs text-slate-300 hover:text-[#F4B400] flex items-center gap-1 font-medium"
+                            className="text-xs text-slate-600 dark:text-slate-300 hover:text-[#F4B400] flex items-center gap-1 font-medium"
                           >
                             <Edit className="w-3.5 h-3.5" />
                             <span>Edit Details / Image</span>
@@ -1116,7 +1122,7 @@ export default function AdminPage() {
                             onClick={() => {
                               setStagedProducts((prev) => prev.filter((_, i) => i !== idx));
                             }}
-                            className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1"
+                            className="text-xs text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 flex items-center gap-1"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                             <span>Remove</span>
@@ -1138,19 +1144,19 @@ export default function AdminPage() {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <div className="relative flex-1 sm:w-80">
-                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <Input
                     placeholder="Search catalog in MongoDB Atlas..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 bg-slate-900 border-slate-800 text-white rounded-xl h-11 text-sm focus-visible:ring-[#F4B400]"
+                    className="pl-10 bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-11 text-sm focus-visible:ring-[#F4B400]"
                   />
                 </div>
 
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="bg-slate-900 border border-slate-800 text-slate-300 rounded-xl h-11 px-3 text-xs font-semibold focus:outline-none focus:border-[#F4B400]"
+                  className="bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-xl h-11 px-3 text-xs font-semibold focus:outline-none focus:border-[#F4B400]"
                 >
                   <option value="all">All Categories</option>
                   <option value="ai_tools">AI Tools</option>
@@ -1165,7 +1171,7 @@ export default function AdminPage() {
                 <Button
                   variant="outline"
                   onClick={loadProducts}
-                  className="border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 rounded-xl h-11 px-3"
+                  className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl h-11 px-3"
                   title="Refresh from Atlas"
                 >
                   <RefreshCw className={cn('w-4 h-4', loadingProducts && 'animate-spin')} />
@@ -1203,30 +1209,30 @@ export default function AdminPage() {
             </div>
 
             {/* Products Table */}
-            <div className="bg-slate-900/70 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+            <div className="bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden shadow-xl">
               {loadingProducts ? (
-                <div className="py-20 text-center text-slate-400">
+                <div className="py-20 text-center text-slate-500 dark:text-slate-400">
                   <RefreshCw className="w-8 h-8 mx-auto mb-3 animate-spin text-[#F4B400]" />
                   <p>Loading catalog from MongoDB Atlas...</p>
                 </div>
               ) : filteredProducts.length === 0 ? (
-                <div className="py-20 text-center text-slate-400">
+                <div className="py-20 text-center text-slate-500 dark:text-slate-400">
                   <Package className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                  <p className="text-base font-semibold text-slate-300">No products found</p>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-base font-semibold text-slate-700 dark:text-slate-200">No products found</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     Try different search terms or use the AI Importer tab to add products.
                   </p>
                 </div>
               ) : (
                 <>
                   {/* ── MOBILE VIEW: Touch-Friendly Product Cards (< md) ── */}
-                  <div className="block md:hidden divide-y divide-slate-800/80 p-3 space-y-3">
+                  <div className="block md:hidden divide-y divide-orange-100 dark:divide-slate-800 p-3 space-y-3">
                     {filteredProducts.map((p) => {
                       const artwork = getProductArtwork(p);
                       return (
                         <div
                           key={p.id || p.slug}
-                          className="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-4 space-y-3 shadow-md"
+                          className="bg-orange-50/70 dark:bg-slate-800/80 border border-orange-100 dark:border-slate-800 rounded-2xl p-4 space-y-3 shadow-md"
                         >
                           {/* Top: Icon + Name + Badges + Live Pill */}
                           <div className="flex items-start gap-3">
@@ -1234,11 +1240,11 @@ export default function AdminPage() {
                               <img
                                 src={p.image_url}
                                 alt={p.name}
-                                className="w-12 h-12 rounded-xl object-contain bg-slate-900 border border-slate-700/80 p-1.5 shrink-0"
+                                className="w-12 h-12 rounded-xl object-contain bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 p-1.5 shrink-0"
                               />
                             ) : (
                               <div
-                                className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center justify-center p-2.5 shrink-0"
+                                className="w-12 h-12 rounded-xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 flex items-center justify-center p-2.5 shrink-0"
                                 dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
                               />
                             )}
@@ -1248,24 +1254,24 @@ export default function AdminPage() {
                                 <Link
                                   href={`/product/${p.slug || p.id}`}
                                   target="_blank"
-                                  className="font-bold text-white text-sm hover:text-[#F4B400] transition-colors truncate"
+                                  className="font-bold text-slate-900 dark:text-white text-sm hover:text-[#F4B400] transition-colors truncate"
                                 >
                                   {p.name}
                                 </Link>
                                 <span
                                   className={cn(
                                     'text-[10px] px-2 py-0.5 rounded-full font-bold shrink-0',
-                                    p.is_hidden ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'
+                                    p.is_hidden ? 'bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300' : 'bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
                                   )}
                                 >
                                   {p.is_hidden ? 'Hidden' : 'Live'}
                                 </span>
                               </div>
 
-                              <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">{p.description}</p>
+                              <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">{p.description}</p>
 
                               <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
-                                <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
+                                <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-md bg-orange-50 dark:bg-slate-800 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-slate-700">
                                   {p.category}
                                 </span>
                                 {p.badge && (
@@ -1278,15 +1284,15 @@ export default function AdminPage() {
                           </div>
 
                           {/* Middle: Price & Tier Summary */}
-                          <div className="flex items-center justify-between bg-slate-900/90 rounded-xl px-3 py-2 border border-slate-800/80">
+                          <div className="flex items-center justify-between bg-orange-50 dark:bg-slate-800 rounded-xl px-3 py-2 border border-orange-100 dark:border-slate-800">
                             <div className="flex items-baseline gap-1.5">
-                              <span className="text-[11px] text-slate-400 font-medium">Starting:</span>
+                              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Starting:</span>
                               <span className="text-base font-black text-[#F4B400]">₹{p.price}</span>
                               {p.market_price && (
-                                <span className="text-xs text-slate-500 line-through">₹{p.market_price}</span>
+                                <span className="text-xs text-slate-500 dark:text-slate-400 line-through">₹{p.market_price}</span>
                               )}
                             </div>
-                            <span className="text-xs text-slate-300 font-semibold">
+                            <span className="text-xs text-slate-600 dark:text-slate-300 font-semibold">
                               {p.plans && p.plans.length > 0 ? `${p.plans.length} Plans` : (p.plan_type || 'Standard')}
                             </span>
                           </div>
@@ -1306,7 +1312,7 @@ export default function AdminPage() {
                             <button
                               type="button"
                               onClick={() => copyProductLink(p.slug || p.id, p.name)}
-                              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-slate-800 active:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors"
+                              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 active:bg-orange-50 dark:active:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-semibold border border-slate-700 transition-colors"
                               title="Copy Link"
                             >
                               <Copy className="w-3.5 h-3.5" />
@@ -1319,7 +1325,7 @@ export default function AdminPage() {
                                 setEditingProduct({ ...p });
                                 setEditModalOpen(true);
                               }}
-                              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-slate-800 active:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors"
+                              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 active:bg-orange-50 dark:active:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-semibold border border-slate-700 transition-colors"
                               title="Edit Product"
                             >
                               <Edit className="w-3.5 h-3.5" />
@@ -1332,7 +1338,7 @@ export default function AdminPage() {
                                 setProductToDelete(p);
                                 setDeleteDialogOpen(true);
                               }}
-                              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-red-950/40 active:bg-red-900/60 text-red-400 text-xs font-semibold border border-red-800/40 transition-colors"
+                              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-red-50 dark:bg-red-950 active:bg-red-100 dark:active:bg-red-900 text-red-700 dark:text-red-300 text-xs font-semibold border border-red-200 dark:border-red-800 transition-colors"
                               title="Delete Product"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -1348,7 +1354,7 @@ export default function AdminPage() {
                   <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left border-collapse text-xs sm:text-sm">
                       <thead>
-                        <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs uppercase tracking-wider font-bold">
+                        <tr className="border-b border-orange-100 dark:border-slate-800 bg-orange-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs uppercase tracking-wider font-bold">
                           <th className="py-4 px-5">Artwork & Product</th>
                           <th className="py-4 px-4">Category</th>
                           <th className="py-4 px-4">Price / Plans</th>
@@ -1357,11 +1363,11 @@ export default function AdminPage() {
                           <th className="py-4 px-5 text-right">Share & Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-800/60">
+                      <tbody className="divide-y divide-orange-100 dark:divide-slate-800">
                         {filteredProducts.map((p) => {
                           const artwork = getProductArtwork(p);
                           return (
-                            <tr key={p.id || p.slug} className="hover:bg-slate-800/30 transition-colors">
+                            <tr key={p.id || p.slug} className="hover:bg-orange-50/80 dark:hover:bg-slate-800 transition-colors">
                               {/* Artwork + Name */}
                               <td className="py-4 px-5">
                                 <div className="flex items-center gap-3">
@@ -1369,28 +1375,28 @@ export default function AdminPage() {
                                     <img
                                       src={p.image_url}
                                       alt={p.name}
-                                      className="w-10 h-10 rounded-xl object-contain bg-slate-950 border border-slate-700/80 p-1 shrink-0"
+                                      className="w-10 h-10 rounded-xl object-contain bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 p-1 shrink-0"
                                     />
                                   ) : (
                                     <div
-                                      className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center p-2 shrink-0"
+                                      className="w-10 h-10 rounded-xl bg-orange-50 dark:bg-slate-800 border border-orange-200 dark:border-slate-700 flex items-center justify-center p-2 shrink-0"
                                       dangerouslySetInnerHTML={{ __html: artwork.iconSvg }}
                                     />
                                   )}
                                   <div>
-                                    <div className="font-bold text-white text-sm hover:text-[#F4B400] transition-colors">
+                                    <div className="font-bold text-slate-900 dark:text-white text-sm hover:text-[#F4B400] transition-colors">
                                       <Link href={`/product/${p.slug || p.id}`} target="_blank">
                                         {p.name}
                                       </Link>
                                     </div>
-                                    <div className="text-xs text-slate-400 line-clamp-1 max-w-xs">{p.description}</div>
+                                    <div className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 max-w-xs">{p.description}</div>
                                   </div>
                                 </div>
                               </td>
 
                               {/* Category */}
                               <td className="py-4 px-4">
-                                <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                                <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-50 dark:bg-slate-800 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-slate-700">
                                   {p.category}
                                 </span>
                               </td>
@@ -1399,11 +1405,11 @@ export default function AdminPage() {
                               <td className="py-4 px-4">
                                 <div className="font-black text-[#F4B400] text-sm">₹{p.price}</div>
                                 {p.plans && p.plans.length > 0 ? (
-                                  <div className="text-[11px] text-slate-400 font-semibold">
+                                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
                                     {p.plans.length} tiers
                                   </div>
                                 ) : (
-                                  <div className="text-xs text-slate-500">{p.plan_type}</div>
+                                  <div className="text-xs text-slate-500 dark:text-slate-400">{p.plan_type}</div>
                                 )}
                               </td>
 
@@ -1414,7 +1420,7 @@ export default function AdminPage() {
                                     {p.badge.replace('_', ' ')}
                                   </Badge>
                                 ) : (
-                                  <span className="text-slate-500 text-xs">—</span>
+                                  <span className="text-slate-500 dark:text-slate-400 text-xs">—</span>
                                 )}
                               </td>
 
@@ -1427,7 +1433,7 @@ export default function AdminPage() {
                                       p.is_hidden ? 'bg-red-500' : 'bg-green-500'
                                     )}
                                   />
-                                  <span className="text-xs text-slate-300">
+                                  <span className="text-xs text-slate-600 dark:text-slate-300">
                                     {p.is_hidden ? 'Hidden' : 'Live'}
                                   </span>
                                 </div>
@@ -1440,7 +1446,7 @@ export default function AdminPage() {
                                   <button
                                     type="button"
                                     onClick={() => copyProductLink(p.slug || p.id, p.name)}
-                                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-[#F4B400] transition-colors"
+                                    className="p-2 rounded-lg bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 border border-orange-200 dark:border-slate-700 transition-colors"
                                     title="Copy Sharable Link"
                                   >
                                     <Copy className="w-3.5 h-3.5" />
@@ -1463,7 +1469,7 @@ export default function AdminPage() {
                                       setEditingProduct({ ...p });
                                       setEditModalOpen(true);
                                     }}
-                                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                                    className="p-2 rounded-lg bg-white dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-950 text-red-600 dark:text-red-400 border border-orange-200 dark:border-slate-700 transition-colors"
                                     title="Edit Product"
                                   >
                                     <Edit className="w-3.5 h-3.5" />
@@ -1476,7 +1482,7 @@ export default function AdminPage() {
                                       setProductToDelete(p);
                                       setDeleteDialogOpen(true);
                                     }}
-                                    className="p-2 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-400 transition-colors"
+                                    className="p-2 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-600 dark:text-red-400 transition-colors"
                                     title="Delete Product"
                                   >
                                     <Trash2 className="w-3.5 h-3.5" />
@@ -1514,38 +1520,38 @@ export default function AdminPage() {
             <AdminSiteSettingsTab />
 
             {/* ── EXTERNAL CLOUD PORTALS CARDS ── */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 sm:p-8 backdrop-blur-xl shadow-xl">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30 mb-2">
+            <div className="bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-sm text-slate-900 dark:text-white">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 mb-2">
                 <ExternalLink className="w-3.5 h-3.5" />
                 Cloud Infrastructure Dashboards
               </div>
-              <h3 className="text-xl font-black text-white">Direct Cloud Management Portals</h3>
-              <p className="text-xs text-slate-400 mt-1 mb-6">
+              <h3 className="text-xl font-black text-slate-900 dark:text-white">Direct Cloud Management Portals</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-6">
                 One-click direct access to manage your MongoDB database and Google AI Studio models.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* MongoDB Atlas Portal Card */}
-                <div className="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-emerald-500/50 transition-colors shadow-md">
+                <div className="bg-orange-50/70 dark:bg-slate-800/80 border border-orange-100 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-emerald-300 dark:hover:border-emerald-700 transition-colors">
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                        <span className="p-2.5 rounded-xl bg-emerald-100 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                           <Database className="w-5 h-5" />
                         </span>
                         <div>
-                          <h4 className="font-black text-white text-base">MongoDB Atlas</h4>
-                          <span className="text-[11px] text-emerald-400 font-semibold">Free 512MB M0 Cluster</span>
+                          <h4 className="font-black text-slate-900 dark:text-white text-base">MongoDB Atlas</h4>
+                          <span className="text-[11px] text-emerald-700 dark:text-emerald-300 font-semibold">Free 512MB M0 Cluster</span>
                         </div>
                       </div>
                       <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
                     </div>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      Access your cloud database directly. View the <code className="text-[#F4B400]">products</code> and <code className="text-[#F4B400]">adminusers</code> collections, manage database users, or configure Network IP Access list.
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                      Access your cloud database directly. View the <code className="text-orange-600 dark:text-orange-300">products</code> and <code className="text-orange-600 dark:text-orange-300">adminusers</code> collections, manage database users, or configure Network IP Access list.
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
+                  <div className="pt-3 border-t border-orange-100 dark:border-slate-800 flex flex-wrap items-center gap-2">
                     <a
                       href="https://cloud.mongodb.com"
                       target="_blank"
@@ -1559,7 +1565,7 @@ export default function AdminPage() {
                       href="https://cloud.mongodb.com/v2#/clusters"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs border border-slate-800 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs border border-orange-200 dark:border-slate-700 transition-colors"
                     >
                       <span>View Collections</span>
                     </a>
@@ -1567,26 +1573,26 @@ export default function AdminPage() {
                 </div>
 
                 {/* Google AI Studio Portal Card */}
-                <div className="bg-slate-950/80 border border-slate-800/90 rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-blue-500/50 transition-colors shadow-md">
+                <div className="bg-orange-50/70 dark:bg-slate-800/80 border border-orange-100 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="p-2.5 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/30">
+                        <span className="p-2.5 rounded-xl bg-blue-100 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                           <Sparkles className="w-5 h-5" />
                         </span>
                         <div>
-                          <h4 className="font-black text-white text-base">Google AI Studio</h4>
-                          <span className="text-[11px] text-blue-400 font-semibold">Gemini 3.5 Flash (100% Free)</span>
+                          <h4 className="font-black text-slate-900 dark:text-white text-base">Google AI Studio</h4>
+                          <span className="text-[11px] text-blue-700 dark:text-blue-300 font-semibold">Gemini 3.5 Flash (100% Free)</span>
                         </div>
                       </div>
                       <span className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse" />
                     </div>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                       Manage your Google AI developer account. Inspect your Free Tier quota (15 RPM / 1M TPM free), test prompt iterations in playground, or generate new API keys.
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
+                  <div className="pt-3 border-t border-orange-100 dark:border-slate-800 flex flex-wrap items-center gap-2">
                     <a
                       href="https://aistudio.google.com"
                       target="_blank"
@@ -1600,7 +1606,7 @@ export default function AdminPage() {
                       href="https://aistudio.google.com/app/apikey"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs border border-slate-800 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs border border-orange-200 dark:border-slate-700 transition-colors"
                     >
                       <span>API Keys Manager</span>
                     </a>
@@ -1610,44 +1616,44 @@ export default function AdminPage() {
             </div>
 
             {/* Admin Profile & Password Manager (Saved in MongoDB Atlas) */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 sm:p-8 backdrop-blur-xl">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#F4B400]/15 text-[#F4B400] border border-[#F4B400]/30 mb-2">
+            <div className="bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-sm text-slate-900 dark:text-white">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-orange-50 dark:bg-slate-800 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-slate-700 mb-2">
                 <UserCheck className="w-3.5 h-3.5" />
                 MongoDB Atlas Admin Credentials
               </div>
-              <h3 className="text-xl font-black text-white">Admin Account & Password Manager</h3>
-              <p className="text-xs text-slate-400 mt-1 mb-6">
-                Your credentials are encrypted and stored directly in your MongoDB Atlas <code className="text-[#F4B400]">adminusers</code> collection.
+              <h3 className="text-xl font-black text-slate-900 dark:text-white">Admin Account & Password Manager</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-6">
+                Your credentials are encrypted and stored directly in your MongoDB Atlas <code className="text-orange-600 dark:text-orange-300">adminusers</code> collection.
               </p>
 
               <form onSubmit={handleUpdateAdminProfile} className="space-y-4 max-w-lg">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Display Name
                   </label>
                   <Input
                     value={adminDisplayName}
                     onChange={(e) => setAdminDisplayName(e.target.value)}
                     placeholder="EduGenius Admin"
-                    className="bg-slate-950 border-slate-700 text-white rounded-xl"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Admin Username *
                   </label>
                   <Input
                     value={newAdminUsername}
                     onChange={(e) => setNewAdminUsername(e.target.value)}
                     placeholder="Enter admin username"
-                    className="bg-slate-950 border-slate-700 text-white rounded-xl"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                     Change Password (leave blank to keep current)
                   </label>
                   <Input
@@ -1655,7 +1661,7 @@ export default function AdminPage() {
                     value={newAdminPassword}
                     onChange={(e) => setNewAdminPassword(e.target.value)}
                     placeholder="Enter new password (optional)"
-                    className="bg-slate-950 border-slate-700 text-white rounded-xl"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                   />
                 </div>
 
@@ -1670,23 +1676,23 @@ export default function AdminPage() {
             </div>
 
             {/* MongoDB Atlas M0 Status */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 sm:p-8 backdrop-blur-xl">
+            <div className="bg-white dark:bg-slate-900 border border-orange-100 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-sm text-slate-900 dark:text-white">
               <div className="flex items-start justify-between gap-4 mb-6">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
+                  <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 mb-2">
                     <Database className="w-3.5 h-3.5" />
                     MongoDB Atlas Free Plan (512MB M0)
                   </div>
-                  <h3 className="text-xl font-black text-white">Cloud Database Status</h3>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Database: <code className="text-[#F4B400]">{systemStatus?.mongodb?.database || 'edugeniushub (Atlas Cloud)'}</code>
+                  <h3 className="text-xl font-black text-slate-900 dark:text-white">Cloud Database Status</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Database: <code className="text-orange-600 dark:text-orange-300">{systemStatus?.mongodb?.database || 'edugeniushub (Atlas Cloud)'}</code>
                   </p>
                 </div>
 
                 <Button
                   variant="outline"
                   onClick={loadSystemStatus}
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 rounded-xl text-xs h-9"
+                  className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs h-9"
                 >
                   <RefreshCw className="w-3 h-3 mr-1" />
                   Check Status
@@ -1694,27 +1700,27 @@ export default function AdminPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div className="bg-slate-950/60 rounded-2xl p-4 border border-slate-800">
-                  <div className="text-xs text-slate-400 mb-1 font-medium">Connection State</div>
+                <div className="bg-orange-50 dark:bg-slate-800 rounded-2xl p-4 border border-orange-100 dark:border-slate-800">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium">Connection State</div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
-                    <span className="font-bold text-base text-white">Connected to MongoDB Atlas</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="font-bold text-base text-slate-900 dark:text-white">Connected to MongoDB Atlas</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-950/60 rounded-2xl p-4 border border-slate-800">
-                  <div className="text-xs text-slate-400 mb-1 font-medium">Catalog Items Stored in Cloud</div>
-                  <div className="font-bold text-base text-[#F4B400]">
+                <div className="bg-orange-50 dark:bg-slate-800 rounded-2xl p-4 border border-orange-100 dark:border-slate-800">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium">Catalog Items Stored in Cloud</div>
+                  <div className="font-bold text-base text-orange-600 dark:text-orange-300">
                     {systemStatus?.mongodb?.productCount || products.length} Products
                   </div>
                 </div>
               </div>
 
               {/* 1-Click Database Seeder */}
-              <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="pt-6 border-t border-orange-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h4 className="font-bold text-white text-sm">Reseed Default Products</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-sm">Reseed Default Products</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                     Sync default tools into Atlas if needed.
                   </p>
                 </div>
@@ -1734,9 +1740,9 @@ export default function AdminPage() {
 
       {/* ── EDIT / ADD PRODUCT MODAL ── */}
       <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
-        <DialogContent className="w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0B1F3A] border-slate-800 text-slate-100 rounded-3xl p-4 sm:p-8">
+        <DialogContent className="w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 border-orange-100 dark:border-slate-800 text-slate-900 dark:text-white rounded-3xl p-4 sm:p-8">
           <DialogHeader className="mb-4">
-            <DialogTitle className="text-xl font-black text-white">
+            <DialogTitle className="text-xl font-black text-slate-900 dark:text-white">
               {editingProduct?.id ? `Edit ${editingProduct.name}` : 'Add New Product'}
             </DialogTitle>
           </DialogHeader>
@@ -1745,21 +1751,21 @@ export default function AdminPage() {
             <form onSubmit={handleSaveProduct} className="space-y-5 text-xs sm:text-sm">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">Product Name *</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Product Name *</label>
                   <Input
                     value={editingProduct.name || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
-                    className="bg-slate-900 border-slate-800 text-white rounded-xl"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">Category *</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Category *</label>
                   <select
                     value={editingProduct.category || 'ai_tools'}
                     onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
-                    className="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl h-10 px-3 text-xs focus:outline-none focus:border-[#F4B400]"
+                    className="w-full bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-10 px-3 text-xs focus:outline-none focus:border-[#F4B400]"
                   >
                     <option value="ai_tools">AI Tools & API</option>
                     <option value="reports">Turnitin Reports</option>
@@ -1771,8 +1777,8 @@ export default function AdminPage() {
               </div>
 
               {/* Product Artwork Preset Picker */}
-              <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
-                <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+              <div className="bg-orange-50 dark:bg-slate-800 p-3.5 rounded-2xl border border-orange-100 dark:border-slate-800 space-y-2">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
                   <ImageIcon className="w-3.5 h-3.5 text-[#F4B400]" />
                   <span>Branded Logo & Artwork Preset</span>
                 </label>
@@ -1786,7 +1792,7 @@ export default function AdminPage() {
                         });
                       }
                     }}
-                    className="flex-1 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl h-9 px-3 text-xs focus:outline-none focus:border-[#F4B400]"
+                    className="flex-1 bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-9 px-3 text-xs focus:outline-none focus:border-[#F4B400]"
                   >
                     <option value="">Auto-Detect from Product Name</option>
                     {PRESET_PRODUCT_IMAGES.map((preset) => (
@@ -1800,25 +1806,25 @@ export default function AdminPage() {
                     placeholder="Or custom Image URL (optional)"
                     value={editingProduct.image_url || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, image_url: e.target.value })}
-                    className="flex-1 bg-slate-900 border-slate-800 text-white rounded-xl h-9 text-xs"
+                    className="flex-1 bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-9 text-xs"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">Base Price (₹) *</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Base Price (₹) *</label>
                   <Input
                     type="number"
                     value={editingProduct.price ?? ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, price: Number(e.target.value) })}
-                    className="bg-slate-900 border-slate-800 text-white rounded-xl"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">Market Price (₹)</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Market Price (₹)</label>
                   <Input
                     type="number"
                     value={editingProduct.market_price ?? ''}
@@ -1828,16 +1834,16 @@ export default function AdminPage() {
                         market_price: e.target.value ? Number(e.target.value) : null,
                       })
                     }
-                    className="bg-slate-900 border-slate-800 text-white rounded-xl"
+                    className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">Badge</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Badge</label>
                   <select
                     value={editingProduct.badge || ''}
                     onChange={(e) => setEditingProduct({ ...editingProduct, badge: e.target.value || null })}
-                    className="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl h-10 px-3 text-xs focus:outline-none focus:border-[#F4B400]"
+                    className="w-full bg-white dark:bg-slate-800 border border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl h-10 px-3 text-xs focus:outline-none focus:border-[#F4B400]"
                   >
                     <option value="">None</option>
                     <option value="best_seller">Best Seller</option>
@@ -1849,19 +1855,19 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Description</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Description</label>
                 <Textarea
                   value={editingProduct.description || ''}
                   onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
                   rows={2}
-                  className="bg-slate-900 border-slate-800 text-white rounded-xl"
+                  className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl"
                 />
               </div>
 
               {/* Multi-Tier Plans Manager */}
-              <div className="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-3">
+              <div className="bg-orange-50 dark:bg-slate-800 p-4 rounded-2xl border border-orange-100 dark:border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-[#F4B400]" />
                     <span>Tiered Plans & Packages ({editingProduct.plans?.length || 0})</span>
                   </label>
@@ -1880,7 +1886,7 @@ export default function AdminPage() {
                       ];
                       setEditingProduct({ ...editingProduct, plans: newPlans });
                     }}
-                    className="h-7 text-xs px-2.5 rounded-lg border-slate-700 text-slate-300 hover:bg-slate-800"
+                    className="h-7 text-xs px-2.5 rounded-lg border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                   >
                     <Plus className="w-3 h-3 mr-1" />
                     Add Plan Tier
@@ -1892,7 +1898,7 @@ export default function AdminPage() {
                     {editingProduct.plans.map((plan: ProductPlan, pIdx: number) => (
                       <div
                         key={pIdx}
-                        className="flex flex-wrap items-center gap-2 p-2.5 bg-slate-900 rounded-xl border border-slate-800 text-xs"
+                        className="flex flex-wrap items-center gap-2 p-2.5 bg-white dark:bg-slate-900 rounded-xl border border-orange-100 dark:border-slate-800 text-xs"
                       >
                         <Input
                           placeholder="Plan Name (e.g. Plan 1)"
@@ -1902,7 +1908,7 @@ export default function AdminPage() {
                             updated[pIdx].name = e.target.value;
                             setEditingProduct({ ...editingProduct, plans: updated });
                           }}
-                          className="h-8 flex-1 min-w-[120px] bg-slate-950 border-slate-700 text-white rounded-lg text-xs"
+                          className="h-8 flex-1 min-w-[120px] bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg text-xs"
                         />
                         <Input
                           type="number"
@@ -1913,7 +1919,7 @@ export default function AdminPage() {
                             updated[pIdx].price = Number(e.target.value);
                             setEditingProduct({ ...editingProduct, plans: updated });
                           }}
-                          className="h-8 w-24 bg-slate-950 border-slate-700 text-white rounded-lg text-xs"
+                          className="h-8 w-24 bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg text-xs"
                         />
                         <Input
                           placeholder="Limits (e.g. 20 req/day)"
@@ -1923,7 +1929,7 @@ export default function AdminPage() {
                             updated[pIdx].limits = e.target.value;
                             setEditingProduct({ ...editingProduct, plans: updated });
                           }}
-                          className="h-8 flex-1 min-w-[140px] bg-slate-950 border-slate-700 text-white rounded-lg text-xs"
+                          className="h-8 flex-1 min-w-[140px] bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg text-xs"
                         />
                         <button
                           type="button"
@@ -1931,7 +1937,7 @@ export default function AdminPage() {
                             const updated = editingProduct.plans.filter((_: any, i: number) => i !== pIdx);
                             setEditingProduct({ ...editingProduct, plans: updated });
                           }}
-                          className="p-1.5 text-red-400 hover:text-red-300"
+                          className="p-1.5 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -1939,7 +1945,7 @@ export default function AdminPage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     No tiered plans added. This product will use the single base price.
                   </p>
                 )}
@@ -1947,7 +1953,7 @@ export default function AdminPage() {
 
               {/* Features Builder */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
                   Bullet Features (1 per line)
                 </label>
                 <Textarea
@@ -1960,7 +1966,7 @@ export default function AdminPage() {
                   }
                   placeholder="Instant WhatsApp Delivery&#10;Login with Your Own Gmail&#10;100% Replacement Warranty"
                   rows={3}
-                  className="bg-slate-900 border-slate-800 text-white rounded-xl text-xs font-mono"
+                  className="bg-white dark:bg-slate-800 border-orange-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl text-xs font-mono"
                 />
               </div>
 
@@ -1973,7 +1979,7 @@ export default function AdminPage() {
                     onChange={(e) => setEditingProduct({ ...editingProduct, is_featured: e.target.checked })}
                     className="w-4 h-4 rounded text-[#F4B400] accent-[#F4B400]"
                   />
-                  <span className="font-semibold text-slate-300">Feature on Homepage</span>
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">Feature on Homepage</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-xs">
@@ -1983,17 +1989,17 @@ export default function AdminPage() {
                     onChange={(e) => setEditingProduct({ ...editingProduct, is_hidden: e.target.checked })}
                     className="w-4 h-4 rounded text-red-500 accent-red-500"
                   />
-                  <span className="font-semibold text-slate-300">Hide from Storefront</span>
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">Hide from Storefront</span>
                 </label>
               </div>
 
               {/* Submit Buttons */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-orange-100 dark:border-slate-800">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setEditModalOpen(false)}
-                  className="border-slate-800 text-slate-300 hover:bg-slate-800 rounded-xl"
+                  className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl"
                 >
                   Cancel
                 </Button>
@@ -2012,23 +2018,23 @@ export default function AdminPage() {
 
       {/* ── DELETE CONFIRMATION DIALOG ── */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="w-[92vw] sm:max-w-md bg-[#0B1F3A] border-slate-800 text-slate-100 rounded-3xl p-5 sm:p-6">
+        <DialogContent className="w-[92vw] sm:max-w-md bg-white dark:bg-slate-900 border-orange-100 dark:border-slate-800 text-slate-900 dark:text-white rounded-3xl p-5 sm:p-6">
           <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-white flex items-center gap-2 text-red-400">
+            <DialogTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 text-red-600 dark:text-red-400">
               <AlertTriangle className="w-5 h-5" />
               <span>Confirm Deletion</span>
             </DialogTitle>
           </DialogHeader>
 
-          <p className="text-xs text-slate-300 mt-2">
-            Are you sure you want to delete <strong className="text-white">{productToDelete?.name}</strong> from your MongoDB Atlas cloud database?
+          <p className="text-xs text-slate-600 dark:text-slate-300 mt-2">
+            Are you sure you want to delete <strong className="text-slate-900 dark:text-white">{productToDelete?.name}</strong> from your MongoDB Atlas cloud database?
           </p>
 
           <div className="flex justify-end gap-3 mt-6">
             <Button
               variant="outline"
               onClick={() => setDeleteDialogOpen(false)}
-              className="border-slate-800 text-slate-300 hover:bg-slate-800 rounded-xl text-xs"
+              className="border-orange-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs"
             >
               Cancel
             </Button>

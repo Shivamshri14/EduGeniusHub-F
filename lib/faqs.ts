@@ -8,7 +8,7 @@ export const FAQS: FaqItem[] = [
   {
     id: 'f1',
     question: 'How fast do I receive my product?',
-    answer: 'Most products are delivered within 5–30 minutes via WhatsApp after payment confirmation. Reports may take up to a few hours depending on document length.',
+    answer: 'The delivery time is the one written on that product. We reply on WhatsApp between 9am and 11pm IST.',
   },
   {
     id: 'f2',
@@ -28,7 +28,7 @@ export const FAQS: FaqItem[] = [
   {
     id: 'f5',
     question: 'Do you offer refunds?',
-    answer: 'Since these are digital products, refunds are not applicable once delivered. However, we always ensure you receive a fully working product.',
+    answer: 'If we do not deliver, or the access does not work when we send it, we replace it or refund you. If it was already delivered and it worked, we do not refund it. Details are on the refund page.',
   },
   {
     id: 'f6',

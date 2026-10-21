@@ -42,7 +42,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
         >
           <div className="mb-4 flex flex-wrap items-start gap-2">
             <Badge variant="default">
-              {tool.category.toUpperCase()}
+              {tool.category === 'report' ? 'Reports' : tool.category === 'account' ? 'Accounts' : 'OTT'}
             </Badge>
             <Badge variant="secondary">
               {tool.accountType === "private" ? "Private" : tool.accountType === "shared" ? "Shared" : "Mail Access"}

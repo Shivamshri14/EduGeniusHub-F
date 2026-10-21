@@ -1,164 +1,127 @@
+import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { MessageCircle, Instagram, Mail, ExternalLink, Lock } from 'lucide-react';
+import { Clapperboard, FileText, Home, Instagram, KeyRound, Mail, MessageCircle, Shield, Sparkles } from 'lucide-react';
+import { SITE } from '@/lib/config';
+import { TRADEMARK_DISCLAIMER } from '@/lib/publicCopy';
 
-const WA_URL = 'https://wa.me/918766253356';
-const IG_URL = 'https://www.instagram.com/turnitin__plagiarism';
-const WA_COMMUNITY = 'https://chat.whatsapp.com/FtMZUM8Ql41IkUXSmw3pBU';
+const WA_URL = `https://wa.me/${SITE.phoneE164}`;
+const IG_URL = SITE.instagramUrl;
+const WA_COMMUNITY = SITE.whatsappCommunityUrl;
+
+const productLinks = [
+  { label: 'Reports', href: '/products?category=reports', Icon: FileText },
+  { label: 'AI tools', href: '/products?category=ai_tools', Icon: Sparkles },
+  { label: 'Accounts', href: '/products?category=accounts', Icon: KeyRound },
+  { label: 'OTT', href: '/products?category=ott', Icon: Clapperboard },
+];
+
+const companyLinks = [
+  { label: 'Home', href: '/', Icon: Home },
+  { label: 'All products', href: '/products', Icon: Sparkles },
+  { label: 'Contact', href: '/contact', Icon: Mail },
+];
+
+const legalLinks = [
+  { label: 'Terms of Service', href: '/terms' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Refund and cancellation', href: '/refund-policy' },
+  { label: 'Disclaimer', href: '/disclaimer' },
+];
+
+function FooterColumn({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div>
+      <h2 className="mb-3 text-xs font-bold uppercase tracking-widest text-sky-300">{title}</h2>
+      {children}
+    </div>
+  );
+}
 
 export default function SiteFooter() {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="max-w-6xl mx-auto px-4 pt-12 sm:pt-16 pb-8">
-        <div className="grid gap-8 sm:gap-10 md:grid-cols-4">
-          {/* Brand */}
-          <div className="md:col-span-1">
-            <div className="flex items-center mb-4">
-              <img src="/logo.jpg" alt="EduGenius Hub" className="h-9 w-auto rounded-xl object-contain" />
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-              Premium digital products at student prices. Turnitin reports, AI tools, OTT subscriptions and more.
+    <footer className="border-t border-blue-800 bg-blue-950 text-white">
+      <div className="mx-auto max-w-6xl px-4 pb-28 pt-12 md:pb-10">
+        <div className="flex flex-col gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-center sm:justify-between">
+          <Link href="/" className="inline-flex items-center gap-3">
+            <img src="/logo.jpg" alt="" className="h-12 w-12 rounded-xl object-cover" />
+            <span>
+              <span className="block text-lg font-black tracking-tight">EduGenius Hub</span>
+              <span className="text-sm text-white/60">Reports, tools, and custom websites</span>
+            </span>
+          </Link>
+          <div className="flex items-center gap-2">
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#25D366] px-4 text-sm font-bold text-white">
+              <MessageCircle className="h-4 w-4" /> WhatsApp
+            </a>
+            <a href={IG_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 text-white">
+              <Instagram className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+
+        <div className="grid gap-8 py-8 sm:grid-cols-2 lg:grid-cols-4">
+          <FooterColumn title="Products">
+            <ul className="space-y-2 text-sm">
+              {productLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="inline-flex items-center gap-2 text-white/75 hover:text-white">
+                    <link.Icon className="h-4 w-4 text-sky-300" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </FooterColumn>
+
+          <FooterColumn title="Company">
+            <ul className="space-y-2 text-sm">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="inline-flex items-center gap-2 text-white/75 hover:text-white">
+                    <link.Icon className="h-4 w-4 text-sky-300" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <a href={WA_COMMUNITY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white/75 hover:text-white">
+                  <MessageCircle className="h-4 w-4 text-sky-300" />
+                  Community
+                </a>
+              </li>
+            </ul>
+          </FooterColumn>
+
+          <FooterColumn title="Legal">
+            <ul className="space-y-2 text-sm">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} className="inline-flex items-center gap-2 text-white/75 hover:text-white">
+                    <Shield className="h-4 w-4 text-sky-300" />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </FooterColumn>
+
+          <FooterColumn title="Contact">
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="mb-3 flex items-center gap-2 text-sm text-white/75 hover:text-white">
+              <MessageCircle className="h-4 w-4 shrink-0 text-sky-300" />
+              +91 87662 53356
+            </a>
+            <a href="mailto:support@edugeniushub.com" className="flex items-center gap-2 text-sm text-white/75 hover:text-white">
+              <Mail className="h-4 w-4 shrink-0 text-sky-300" />
+              support@edugeniushub.com
+            </a>
+            <p className="mt-4 text-sm leading-relaxed text-white/55">
+              Grievance: same email or WhatsApp.
             </p>
-            <div className="flex items-center gap-3">
-              <a
-                href={WA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20 flex items-center justify-center hover:bg-[#25D366]/20 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              </a>
-              <a
-                href={IG_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center hover:bg-pink-500/20 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4 text-pink-500" />
-              </a>
-            </div>
-          </div>
-
-          {/* Products */}
-          <div>
-            <h4 className="font-semibold text-xs mb-4 text-muted-foreground uppercase tracking-widest">Products</h4>
-            <ul className="space-y-2.5">
-              {[
-                { label: 'Turnitin Reports', href: '/products?category=reports' },
-                { label: 'AI Tools', href: '/products?category=ai_tools' },
-                { label: 'Student Accounts', href: '/products?category=accounts' },
-                { label: 'OTT Subscriptions', href: '/products?category=ott' },
-                { label: 'Best Sellers', href: '/products' },
-              ].map((link) => (
-                <li key={link.href + link.label}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold text-xs mb-4 text-muted-foreground uppercase tracking-widest">Company</h4>
-            <ul className="space-y-2.5">
-              {[
-                { label: 'Home', href: '/home' },
-                { label: 'All Products', href: '/products' },
-                { label: 'Contact Us', href: '/contact' },
-                { label: 'Community', href: WA_COMMUNITY, external: true },
-              ].map((link) => (
-                <li key={link.label}>
-                  {'external' in link && link.external ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-                    >
-                      {link.label}
-                      <ExternalLink className="w-3 h-3 opacity-50" />
-                    </a>
-                  ) : (
-                    <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                      {link.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-
-            <h4 className="font-semibold text-xs mt-6 mb-4 text-muted-foreground uppercase tracking-widest">Legal</h4>
-            <ul className="space-y-2.5">
-              {[
-                { label: 'Terms of Service', href: '/home' },
-                { label: 'Privacy Policy', href: '/home' },
-                { label: 'Disclaimer', href: '/home' },
-              ].map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-xs mb-4 text-muted-foreground uppercase tracking-widest">Contact</h4>
-            <div className="space-y-3">
-              <a
-                href={WA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group"
-              >
-                <span className="w-8 h-8 rounded-lg bg-muted border border-border flex items-center justify-center group-hover:bg-muted/80 transition-colors">
-                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                </span>
-                WhatsApp Support
-              </a>
-              <a
-                href="mailto:support@edugeniushub.com"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group"
-              >
-                <span className="w-8 h-8 rounded-lg bg-muted border border-border flex items-center justify-center group-hover:bg-muted/80 transition-colors">
-                  <Mail className="w-4 h-4 text-foreground" />
-                </span>
-                support@edugeniushub.com
-              </a>
-            </div>
-
-            <div className="mt-5 p-4 rounded-xl bg-muted/50 border border-border">
-              <p className="text-xs text-muted-foreground mb-1">Average reply time</p>
-              <p className="text-sm font-bold text-foreground">Under 2 minutes</p>
-              <div className="mt-2 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-xs text-muted-foreground">Support online now</span>
-              </div>
-            </div>
-          </div>
+          </FooterColumn>
         </div>
 
-        <div className="mt-10 sm:mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} EduGenius Hub. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            <span>www.edugeniushub.com</span>
-            <span>•</span>
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-muted hover:bg-muted/80 border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-all font-medium text-xs"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Admin</span>
-            </Link>
-          </div>
-        </div>
+        <p className="border-t border-white/10 pt-6 text-xs leading-relaxed text-white/50">{TRADEMARK_DISCLAIMER}</p>
+        <p className="mt-3 text-sm text-white/60">© {new Date().getFullYear()} EduGenius Hub · edugeniushub.in</p>
       </div>
     </footer>
   );

@@ -33,7 +33,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: true, reviews: formatted, source: 'mongodb' });
     }
 
-    // Fallback to static lib/reviews.ts
+    if (!all) {
+      return NextResponse.json({ success: true, reviews: [], source: 'none' });
+    }
+
     const fallback = staticReviews.map((r, i) => ({
       id: r.id,
       name: r.name,
@@ -48,6 +51,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ success: true, reviews: fallback, source: 'fallback' });
   } catch (err: any) {
+    if (!all) {
+      return NextResponse.json({ success: true, reviews: [], source: 'none' });
+    }
     console.warn('MongoDB query for Reviews failed, serving fallback:', err?.message);
     const fallback = staticReviews.map((r, i) => ({
       id: r.id,

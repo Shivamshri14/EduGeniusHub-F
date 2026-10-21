@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X, Search, Package } from 'lucide-react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { Clapperboard, FileText, Home, Mail, Menu, Package, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import NoticeBanner from '@/components/notices/NoticeBanner';
 
 const navLinks = [
-  { label: 'Home', href: '/home' },
-  { label: 'Products', href: '/products' },
-  { label: 'Reports', href: '/products?category=reports' },
-  { label: 'AI Tools', href: '/products?category=ai_tools' },
-  { label: 'OTT', href: '/products?category=ott' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Home', href: '/', Icon: Home },
+  { label: 'Products', href: '/products', Icon: ShoppingBag },
+  { label: 'Reports', href: '/products?category=reports', Icon: FileText },
+  { label: 'AI Tools', href: '/products?category=ai_tools', Icon: Sparkles },
+  { label: 'OTT', href: '/products?category=ott', Icon: Clapperboard },
+  { label: 'Contact', href: '/contact', Icon: Mail },
 ];
 
 const WA_ICON = (
@@ -28,6 +28,7 @@ export default function SiteNavbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const category = useSearchParams().get('category');
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 24);
@@ -37,40 +38,40 @@ export default function SiteNavbar() {
 
   useEffect(() => {
     setOpen(false);
-  }, [pathname]);
+  }, [pathname, category]);
 
   if (pathname?.startsWith('/admin')) return null;
 
   return (
-    <header className="sticky top-0 z-50 px-2 pt-3 pointer-events-none sm:px-4 sm:pt-4">
-      <div className="relative mx-auto max-w-7xl pointer-events-auto">
+    <header className="pointer-events-none sticky top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+      <div className="pointer-events-auto relative mx-auto max-w-6xl">
+      <div className={cn('overflow-hidden rounded-2xl border border-orange-200 bg-white text-slate-900 shadow-lg shadow-orange-900/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white', scrolled && 'shadow-xl')}>
         <NoticeBanner />
-        <div
-          className={cn(
-            'relative flex min-h-[4.5rem] items-center justify-between rounded-[1.5rem] border px-3.5 shadow-lg transition-all duration-300 sm:px-5',
-            'border-white/15 bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/55',
-            scrolled || open ? 'shadow-xl shadow-black/10' : 'shadow-black/5'
-          )}
-        >
-          <Link href="/home" className="group flex shrink-0 items-center gap-2.5">
-            <img src="/logo.jpg" alt="EduGenius Hub" className="h-10 w-10 rounded-xl object-cover shadow-sm transition-transform group-hover:scale-105" />
-            <span className="hidden text-base font-bold tracking-tight text-foreground xs:inline sm:inline">EduGenius Hub</span>
+        <div className="relative flex h-16 items-center justify-between gap-3 px-3 sm:px-4">
+          <Link href="/" className="group flex min-w-0 shrink items-center gap-2.5">
+            <img src="/logo.jpg" alt="" className="h-10 w-10 shrink-0 rounded-xl object-cover ring-2 ring-orange-100 dark:ring-slate-700" />
+            <span className="truncate text-base font-black tracking-tight text-slate-900 dark:text-white">EduGenius Hub</span>
           </Link>
 
-          <nav className="hidden items-center gap-0.5 md:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => {
-              const active = pathname === link.href || (link.href !== '/home' && pathname?.startsWith(link.href.split('?')[0]));
+              const [path, query] = link.href.split('?');
+              const want = query ? new URLSearchParams(query).get('category') : null;
+              const active = want
+                ? pathname === '/products' && category === want
+                : pathname === path && !category;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'rounded-xl px-3 py-2 text-sm font-medium transition-all',
+                    'inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-all',
                     active
-                      ? 'bg-primary/15 text-primary shadow-sm'
-                      : 'text-muted-foreground hover:bg-foreground/5 hover:text-foreground'
+                      ? 'bg-orange-500 text-white shadow-sm'
+                      : 'text-slate-600 hover:bg-orange-50 hover:text-orange-600 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
                   )}
                 >
+                  <link.Icon className="h-4 w-4" />
                   {link.label}
                 </Link>
               );
@@ -79,12 +80,12 @@ export default function SiteNavbar() {
 
           <div className="flex items-center gap-1 sm:gap-2">
             <ThemeToggle />
-            <Link href="/products" className="hidden md:flex">
+            <Link href="/products" className="hidden lg:flex" aria-label="Search products">
               <Button variant="ghost" size="icon" className="rounded-xl hover:bg-foreground/5">
                 <Search className="h-4 w-4" />
               </Button>
             </Link>
-            <Link href="/products" className="md:hidden">
+            <Link href="/products" className="lg:hidden">
               <Button variant="outline" size="sm" className="h-9 rounded-xl border-border/70 bg-background/35 px-3 text-xs font-semibold">
                 <Package className="mr-1.5 h-3.5 w-3.5" />
                 <span className="hidden xs:inline sm:inline">Browse</span>
@@ -102,7 +103,7 @@ export default function SiteNavbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-xl hover:bg-foreground/5 md:hidden"
+              className="rounded-xl hover:bg-foreground/5 lg:hidden"
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
               aria-expanded={open}
@@ -111,36 +112,40 @@ export default function SiteNavbar() {
             </Button>
           </div>
 
-          {open && (
-            <div className="absolute left-0 right-0 top-[calc(100%+0.75rem)] z-20 overflow-hidden rounded-[1.65rem] border border-white/20 bg-background/[0.97] p-2.5 shadow-2xl shadow-black/25 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/[0.94] md:hidden">
-              {navLinks.map((link) => {
-                const active = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      'flex items-center rounded-xl px-4 py-3.5 text-sm font-medium transition-colors',
-                      active ? 'bg-primary/15 font-semibold text-primary' : 'text-muted-foreground hover:bg-foreground/5 hover:text-foreground'
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-              <a
-                href="https://wa.me/918766253356"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#1ebe5d]"
-              >
-                {WA_ICON}
-                Chat on WhatsApp
-              </a>
-            </div>
-          )}
         </div>
+      </div>
+      {open && (
+        <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-20 overflow-hidden rounded-2xl border border-orange-100 bg-white p-2.5 shadow-2xl dark:border-slate-700 dark:bg-slate-950 lg:hidden">
+          {navLinks.map((link) => {
+            const [path, query] = link.href.split('?');
+            const want = query ? new URLSearchParams(query).get('category') : null;
+            const active = want ? pathname === '/products' && category === want : pathname === path;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  'flex items-center gap-2 rounded-xl px-4 py-3.5 text-sm font-semibold transition-colors',
+                  active ? 'bg-orange-500 text-white' : 'text-slate-700 hover:bg-orange-50 dark:text-slate-200 dark:hover:bg-white/10'
+                )}
+              >
+                <link.Icon className="h-4 w-4" />
+                {link.label}
+              </Link>
+            );
+          })}
+          <a
+            href="https://wa.me/918766253356"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#1ebe5d]"
+          >
+            {WA_ICON}
+            Chat on WhatsApp
+          </a>
+        </div>
+      )}
       </div>
     </header>
   );

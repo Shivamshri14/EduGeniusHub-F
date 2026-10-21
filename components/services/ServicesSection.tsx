@@ -42,16 +42,13 @@ export default function ServicesSection() {
             variant="outline"
             className="mb-4 border-primary/20 bg-primary/10 text-primary font-semibold px-4 py-1.5 rounded-full text-xs tracking-wider uppercase"
           >
-            Premium Solutions
+            Academic help and websites
           </Badge>
-          <h2 className="mb-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-foreground">
-            Professional{' '}
-            <span className="text-primary">
-              Services
-            </span>
+          <h2 className="mb-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+            Academic help and websites
           </h2>
           <p className="mx-auto max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Beyond standard tool accounts — we provide customized, high-quality academic support and custom software development to guarantee your success.
+            We also build websites and apps at affordable prices. Academic writing help is listed here too. Ask on WhatsApp for a price.
           </p>
         </div>
 

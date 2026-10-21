@@ -52,8 +52,8 @@ export const TESTIMONIALS: TestimonialItem[] = [
 ];
 
 export const TRUST_STATS = {
-  reports_delivered: '12000+',
-  students_served: '5000+',
-  satisfaction: '99%',
-  response_time: '< 2 mins',
+  reports_delivered: '',
+  students_served: '',
+  satisfaction: '',
+  response_time: '',
 };

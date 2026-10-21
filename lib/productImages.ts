@@ -107,7 +107,7 @@ export const PRESET_PRODUCT_IMAGES: Array<{
     brandColor: '#0D9488',
     accentGlow: 'rgba(13, 148, 136, 0.3)',
     iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-8 h-8 text-teal-400"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
-    defaultBadge: 'Official Access',
+    defaultBadge: 'Account access',
   },
   {
     id: 'canva-pro',

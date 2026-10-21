@@ -1,10 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import {
-  Zap,
-  Clock,
   TrendingUp,
   CircleCheck as CheckCircle,
   CircleAlert as AlertCircle,
@@ -13,25 +11,27 @@ import {
   Check,
   ExternalLink,
   Layers,
-  Sparkles,
+  Clock,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { type Product, type ProductPlan } from '@/lib/types';
 import { getProductArtwork } from '@/lib/productImages';
+import { categoryLabel, pricePeriod, publicDescription, publicName } from '@/lib/publicCopy';
 import { cn } from '@/lib/utils';
 import RequestAccessModal from '@/components/RequestAccessModal';
-import { getSupportStatus } from '@/utils/support';
 import { toast } from 'sonner';
 
 const WA_NUMBER = '918766253356';
 
 const badgeConfig: Record<string, { label: string; Icon: any; cls: string }> = {
-  best_seller: { label: 'Best Seller', Icon: TrendingUp, cls: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20' },
-  instant_delivery: { label: 'Instant', Icon: Zap, cls: 'bg-primary/10 text-primary border-primary/20' },
-  available_now: { label: 'Available', Icon: CheckCircle, cls: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20' },
-  limited_slots: { label: 'Limited Slots', Icon: Clock, cls: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' },
+  best_seller: { label: 'Popular', Icon: TrendingUp, cls: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20' },
 };
+
+function shownBadge(badge?: string | null) {
+  if (!badge || badge === 'instant_delivery' || badge === 'limited_slots' || badge === 'available_now') return null;
+  return badgeConfig[badge] || null;
+}
 
 type Props = { product: Product };
 
@@ -39,19 +39,15 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
   const [requestOpen, setRequestOpen] = useState(false);
   const artwork = getProductArtwork(product);
 
-  const badge = product.badge ? badgeConfig[product.badge] : null;
+  const badge = shownBadge(product.badge);
   const BadgeIcon = badge?.Icon;
+  const displayName = publicName(product.name);
 
   const hasPlans = Boolean(product.plans && product.plans.length > 0);
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
   const currentPlan: ProductPlan | undefined = hasPlans ? product.plans?.[selectedPlanIndex] : undefined;
 
   const activePrice = currentPlan ? currentPlan.price : product.price;
-  const activeOriginalPrice = currentPlan?.original_price ?? product.market_price;
-
-  const discount = activeOriginalPrice && activeOriginalPrice > activePrice
-    ? Math.round(((activeOriginalPrice - activePrice) / activeOriginalPrice) * 100)
-    : null;
 
   const getWhatsAppMessage = () => {
     let planText = '';
@@ -60,25 +56,13 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
     }
 
     if (product.category === 'reports') {
-      return `Hi EduGenius Hub, I want ${product.name}${planText}. I am attaching my document file (.pdf/.docx) to this chat.`;
+      return `Hi EduGenius Hub, I want ${displayName}${planText}. I am attaching my document file (.pdf/.docx) to this chat.`;
     }
-    if (product.category === 'ott') {
-      return `Hi EduGenius Hub, I want ${product.name}${planText}. Please set up a profile for me.`;
-    }
-    return `Hi EduGenius Hub, I want ${product.name}${planText}. Please share the details and payment link.`;
+    return `Hi EduGenius Hub, I want to buy ${displayName}${planText}. Please share the payment details.`;
   };
 
   const waMsg = encodeURIComponent(getWhatsAppMessage());
-
-  const [support, setSupport] = useState({
-    isOnline: true,
-    badgeColor: 'bg-green-500',
-    timeText: 'Fulfillment in 5-15 mins',
-  });
-
-  useEffect(() => {
-    setSupport(getSupportStatus());
-  }, []);
+  const period = pricePeriod(product.plan_type, currentPlan?.duration);
 
   const handleCopyProductLink = () => {
     const url = `${window.location.origin}/product/${product.slug || product.id}`;
@@ -97,8 +81,8 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                 {product.image_url ? (
                   <img
                     src={product.image_url}
-                    alt={product.name}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover bg-card border border-border shrink-0"
+                    alt={displayName}
+                    className="h-16 w-16 rounded-2xl border border-border bg-white object-contain p-1 shrink-0 sm:h-20 sm:w-20"
                   />
                 ) : (
                   <div
@@ -109,7 +93,7 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] text-primary font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-                      {product.category}
+                      {categoryLabel(product.category)}
                     </span>
                     {badge && BadgeIcon && (
                       <span className={cn('flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border', badge.cls)}>
@@ -118,14 +102,14 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                       </span>
                     )}
                   </div>
-                  <h2 className="font-bold text-base sm:text-lg text-foreground leading-tight">{product.name}</h2>
+                  <h2 className="font-bold text-base sm:text-lg text-foreground leading-tight">{displayName}</h2>
                 </div>
               </div>
 
               <button
                 onClick={handleCopyProductLink}
                 className="p-2 rounded-xl bg-card hover:bg-muted border border-border text-muted-foreground hover:text-primary transition-colors shrink-0"
-                title="Copy Product Link"
+                aria-label="Copy product link"
               >
                 <Share2 className="w-4 h-4" />
               </button>
@@ -181,23 +165,9 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                 </p>
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-2xl sm:text-3xl font-black text-primary">
-                    {activePrice > 0 ? `₹${activePrice}` : 'DM for Pricing'}
+                    {activePrice > 0 ? `₹${activePrice}` : 'Ask on WhatsApp'}
                   </span>
-                  {product.plan_type && activePrice > 0 && (
-                    <span className="text-xs text-muted-foreground">
-                      /{currentPlan?.duration || product.plan_type.toLowerCase()}
-                    </span>
-                  )}
-                  {activeOriginalPrice && activeOriginalPrice > activePrice && (
-                    <span className="text-xs text-muted-foreground line-through">
-                      ₹{activeOriginalPrice}
-                    </span>
-                  )}
-                  {discount && (
-                    <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
-                      Save {discount}%
-                    </span>
-                  )}
+                  {period && <span className="text-xs text-muted-foreground">{period}</span>}
                 </div>
                 {currentPlan?.limits && (
                   <p className="text-xs text-foreground mt-1 font-medium">
@@ -205,16 +175,15 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
                   </p>
                 )}
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
-                <span className={`w-2 h-2 rounded-full ${support.badgeColor} animate-pulse`} />
-                <span>{support.timeText}</span>
-              </div>
+              {product.delivery_time && (
+                <p className="max-w-[9rem] text-right text-xs text-muted-foreground">{product.delivery_time}</p>
+              )}
             </div>
 
             {/* Description */}
             {product.description && (
               <div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{publicDescription(product.description)}</p>
               </div>
             )}
 
@@ -222,12 +191,8 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
             <div className="space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Key Features</h4>
               {(product.features && product.features.length > 0
-                ? product.features
-                : [
-                    'Fast delivery via WhatsApp',
-                    product.is_instant ? 'Instant access after payment' : `Delivered in ${product.delivery_time}`,
-                    '100% Replacement Warranty',
-                  ]
+                ? product.features.filter((feature) => !/official|100%|guaranteed|instant/i.test(feature))
+                : [`Delivery: ${product.delivery_time}`]
               ).map((f) => (
                 <div key={f} className="flex items-center gap-2 text-sm text-foreground">
                   <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
@@ -312,175 +277,111 @@ function ProductDetailModal({ product, open, onClose }: Props & { open: boolean;
 export default function ProductCard({ product }: Props) {
   const [detailOpen, setDetailOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
 
   const artwork = getProductArtwork(product);
-  const badge = product.badge ? badgeConfig[product.badge] : null;
+  const badge = shownBadge(product.badge);
   const BadgeIcon = badge?.Icon;
-
-  const [support, setSupport] = useState({
-    isOnline: true,
-    badgeColor: 'bg-green-500',
-    timeText: '5-15 mins',
-  });
-
-  useEffect(() => {
-    setSupport(getSupportStatus());
-  }, []);
+  const displayName = publicName(product.name);
+  const description = publicDescription(product.description);
 
   const hasPlans = Boolean(product.plans && product.plans.length > 0);
   const planCount = product.plans?.length || 0;
   const startingPrice = hasPlans && product.plans
     ? Math.min(...product.plans.map((p) => p.price))
     : product.price;
-
-  const discount = product.market_price && product.market_price > startingPrice
-    ? Math.round(((product.market_price - startingPrice) / product.market_price) * 100)
-    : null;
+  const period = pricePeriod(product.plan_type, product.plans?.[0]?.duration);
+  const productHref = `/product/${product.slug || product.id}`;
 
   const quickOrderMsg = encodeURIComponent(
-    `Hi EduGenius Hub, I want to buy ${product.name} (₹${startingPrice}). Please share the payment link and setup instructions.`
+    `Hi EduGenius Hub, I want to buy ${displayName} (₹${startingPrice}). Please share the payment details.`
   );
   const quickWaUrl = `https://wa.me/${WA_NUMBER}?text=${quickOrderMsg}`;
 
   const handleCopyLink = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
-    const url = `${window.location.origin}/product/${product.slug || product.id}`;
+    const url = `${window.location.origin}${productHref}`;
     navigator.clipboard.writeText(url);
     setCopied(true);
-    toast.success(`Shareable link copied for ${product.name}!`);
+    toast.success('Link copied');
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <>
-      <div
-        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 cursor-pointer"
-        onClick={() => setDetailOpen(true)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && setDetailOpen(true)}
-      >
-        {/* Full-width image banner */}
-        <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
-          {product.image_url ? (
+      <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-orange-100 bg-white text-slate-900 shadow-md shadow-orange-900/5 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+        <div
+          className="relative flex h-64 w-full items-center justify-center bg-[#fff7ed] p-3 dark:bg-slate-800"
+          style={{ backgroundImage: `linear-gradient(180deg, ${artwork.brandColor}33, transparent 72%)` }}
+        >
+          {product.image_url && !imageFailed ? (
             <img
               src={product.image_url}
-              alt={product.name}
-              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+              alt={displayName}
+              className="h-full w-auto max-w-full rounded-xl object-contain shadow-md"
+              onError={() => setImageFailed(true)}
             />
           ) : (
             <div
-              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted/50"
-              dangerouslySetInnerHTML={{ __html: artwork.iconSvg.replace('w-8 h-8', 'w-16 h-16') }}
-            />
+              className="flex h-full w-full items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 via-amber-300 to-rose-400"
+              style={{ backgroundImage: `linear-gradient(135deg, ${artwork.brandColor}, #fb923c 55%, #7c3aed)` }}
+            >
+              <div
+                className="drop-shadow-lg"
+                dangerouslySetInnerHTML={{ __html: artwork.iconSvg.replace('w-8 h-8', 'w-20 h-20').replace(/text-[a-z]+-\d+/g, 'text-white') }}
+              />
+            </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
           {badge && BadgeIcon && (
-            <span className={cn('absolute left-3 top-3 flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full border backdrop-blur-md shadow-sm', badge.cls)}>
-              <BadgeIcon className="w-2.5 h-2.5" />
+            <span className={cn('absolute left-3 top-3 flex items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-bold', badge.cls)}>
+              <BadgeIcon className="h-2.5 w-2.5" />
               {badge.label}
             </span>
           )}
           <button
+            type="button"
             onClick={handleCopyLink}
-            className="absolute right-3 top-3 p-1.5 rounded-lg bg-black/30 backdrop-blur-md border border-white/10 text-white/80 hover:text-white hover:bg-black/50 transition-colors"
-            title="Copy Shareable Link"
+            aria-label={`Copy link for ${displayName}`}
+            className="absolute right-3 top-3 rounded-lg border border-white/20 bg-black/50 p-2 text-white"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Share2 className="w-3.5 h-3.5" />}
+            {copied ? <Check className="h-3.5 w-3.5" /> : <Share2 className="h-3.5 w-3.5" />}
           </button>
-          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-black/40 backdrop-blur-md px-2.5 py-1 text-[10px] font-medium text-white">
-            <span className={`w-2 h-2 rounded-full ${support.badgeColor} animate-pulse`} />
-            <span>{support.timeText}</span>
-          </div>
         </div>
 
-        {/* Content */}
-        <div className="flex flex-1 flex-col p-4 sm:p-5">
-          {/* Product Title & Category */}
-          <div className="mb-2">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
-                {product.category}
+        <div className="flex flex-1 flex-col p-4">
+          <p className="mb-1 text-xs font-semibold text-orange-600">{categoryLabel(product.category)}</p>
+          <h3 className="text-lg font-bold leading-snug">
+            <Link href={productHref} className="hover:underline">
+              {displayName}
+            </Link>
+          </h3>
+          {description && <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{description}</p>}
+
+          <div className="mt-3 flex items-center gap-2">
+            <div className="flex h-10 min-w-0 flex-1 items-center gap-1.5 rounded-xl bg-orange-50 px-3" title={product.delivery_time || 'Ask on WhatsApp'}>
+              <Clock className="h-4 w-4 shrink-0 text-orange-600" />
+              <span className="shrink-0 text-xs font-bold text-orange-700">Delivery time</span>
+              <span className="truncate text-sm font-bold text-slate-900">
+                {(product.delivery_time || 'Ask on WhatsApp').replace(/^usually\s+/i, '')}
               </span>
-              {planCount > 1 && (
-                <span className="text-[10px] text-muted-foreground font-semibold">
-                  • {planCount} Plans
-                </span>
-              )}
             </div>
-            <h3 className="font-bold text-foreground text-base leading-snug line-clamp-1 group-hover:text-primary transition-colors">
-              {product.name}
-            </h3>
+            <div className="flex h-10 shrink-0 items-center gap-1 whitespace-nowrap rounded-xl bg-violet-50 px-3">
+              <span className="text-sm font-black text-slate-900">{startingPrice > 0 ? `₹${startingPrice}` : 'Ask'}</span>
+              {period && <span className="text-xs font-semibold text-violet-700">{period}</span>}
+            </div>
           </div>
 
-          <p className="text-muted-foreground text-xs mb-4 line-clamp-2 leading-relaxed">
-            {product.description}
-          </p>
-
-          {/* Pricing & Buying Action */}
-          <div className="mt-auto pt-3 border-t border-border">
-            <div className="flex items-end justify-between mb-3">
-              <div>
-                <div className="flex items-baseline gap-1.5 flex-wrap">
-                  {hasPlans && planCount > 1 && (
-                    <span className="text-[11px] text-muted-foreground font-medium">From</span>
-                  )}
-                  <span className="text-xl sm:text-2xl font-black text-primary">
-                    {startingPrice > 0 ? `₹${startingPrice}` : 'DM'}
-                  </span>
-                  {product.plan_type && startingPrice > 0 && (
-                    <span className="text-[11px] text-muted-foreground">/{product.plan_type.toLowerCase()}</span>
-                  )}
-                </div>
-                {product.market_price && (
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <span className="text-xs text-muted-foreground line-through">₹{product.market_price}</span>
-                    {discount && (
-                      <span className="text-[10px] font-bold text-green-600 dark:text-green-400 bg-green-500/10 px-1 rounded">
-                        {discount}% OFF
-                      </span>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              <span className="text-[11px] text-muted-foreground font-medium shrink-0 flex items-center gap-1">
-                <Zap className="w-3 h-3 text-primary" />
-                <span>Instant</span>
-              </span>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-2">
-              <a
-                href={quickWaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="w-full"
-              >
-                <Button
-                  className="w-full bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold rounded-xl py-2 text-xs sm:text-sm flex items-center justify-center gap-1 shadow-sm transition-transform hover:scale-[1.01]"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>Buy Now</span>
-                </Button>
-              </a>
-
-              <Button
-                variant="outline"
-                className="w-full border-border bg-card hover:bg-muted text-foreground font-bold rounded-xl py-2 text-xs sm:text-sm transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setDetailOpen(true);
-                }}
-              >
-                <span>{hasPlans && planCount > 1 ? 'View Plans' : 'Details'}</span>
-              </Button>
-            </div>
+          <div className="mt-auto grid grid-cols-2 gap-3 pt-4">
+            <a href={quickWaUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 px-3 text-base font-bold text-white shadow-sm">
+              Buy Now
+            </a>
+            <Link href={productHref} className="inline-flex h-12 items-center justify-center rounded-2xl border-2 border-orange-200 bg-white px-3 text-base font-bold text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-white">
+              {planCount > 1 ? 'View plans' : 'Details'}
+            </Link>
           </div>
         </div>
-      </div>
+      </article>
 
       <ProductDetailModal product={product} open={detailOpen} onClose={() => setDetailOpen(false)} />
     </>

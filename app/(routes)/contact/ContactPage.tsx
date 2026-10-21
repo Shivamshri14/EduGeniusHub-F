@@ -20,19 +20,19 @@ export default function ContactPage() {
       icon: Clock,
       question: "How long does delivery take?",
       answer:
-        "Most tools are delivered within 5-30 minutes after payment confirmation. Some tools may take up to 24 hours.",
+        "The time is the one written on the product. We reply on WhatsApp between 9am and 11pm IST.",
     },
     {
       icon: RefreshCw,
       question: "What is your refund policy?",
       answer:
-        "We offer refunds if the tool/service is not delivered as promised. Contact us within 24 hours of purchase.",
+        "If we do not deliver, or access does not work when we send it, we replace it or refund you. See the refund page. Contact us within 24 hours.",
     },
     {
       icon: ShoppingCart,
       question: "How do I purchase?",
       answer:
-        "Click on any 'Buy Now' or 'WhatsApp' button, message us with your requirements, make payment, and receive your tool instantly.",
+        "Message us on WhatsApp, pay by UPI, and we send the report or access in the time shown on the product.",
     },
     {
       icon: Briefcase,
@@ -50,7 +50,9 @@ export default function ContactPage() {
           setSiteConfig({
             phone_display: data.settings.phone_display || SITE.phoneDisplay,
             phone_e164: data.settings.phone_e164 || SITE.phoneE164,
-            instagram_url: data.settings.instagram_url || SITE.instagramUrl,
+            instagram_url: (data.settings.instagram_url || '').includes('turnitin')
+              ? SITE.instagramUrl
+              : data.settings.instagram_url || SITE.instagramUrl,
             whatsapp_community_url: data.settings.whatsapp_community_url || SITE.whatsappCommunityUrl,
           });
         }
@@ -112,7 +114,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mb-2 text-xl sm:text-2xl font-bold text-foreground">WhatsApp</h3>
                 <p className="mb-4 text-sm sm:text-base text-muted-foreground">
-                  Chat with us directly for instant support
+                  Message us on WhatsApp. We reply between 9am and 11pm IST.
                 </p>
                 <p className="mb-2 text-lg font-semibold text-foreground">
                   {siteConfig.phone_display}
@@ -165,7 +167,7 @@ export default function ContactPage() {
                 Join Our Community
               </h3>
               <p className="mb-6 text-muted-foreground max-w-xl mx-auto text-sm sm:text-base">
-                Connect with thousands of users, get exclusive deals, and stay updated.
+                Join the WhatsApp group for new offers. Orders still go in a direct chat.
               </p>
               <Button
                 asChild
@@ -182,6 +184,15 @@ export default function ContactPage() {
                   Join WhatsApp Community
                 </a>
               </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="mb-10 border border-border bg-card">
+            <CardContent className="p-6 sm:p-8">
+              <h2 className="mb-2 text-xl font-bold">Grievance contact</h2>
+              <p className="text-base leading-relaxed text-muted-foreground">
+                Email <a className="underline" href="mailto:support@edugeniushub.com">support@edugeniushub.com</a>. WhatsApp +91 87662 53356. Refund rules are on the <a className="underline" href="/refund-policy">refund page</a>.
+              </p>
             </CardContent>
           </Card>
 

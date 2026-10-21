@@ -3,14 +3,12 @@ import { connectToDatabase } from '@/lib/mongodb';
 import ProductModel from '@/models/Product';
 import FaqModel from '@/models/Faq';
 import ServiceModel from '@/models/Service';
-import ReviewModel from '@/models/Review';
 import SiteConfigModel from '@/models/SiteConfig';
 import NoticeModel from '@/models/Notice';
 import { TOOLS } from '@/lib/tools';
 import { FAQS } from '@/lib/faqs';
 import { services as staticServices, customRequirement } from '@/lib/services';
-import { reviews as staticReviews } from '@/lib/reviews';
-import { TESTIMONIALS, TRUST_STATS } from '@/lib/testimonials';
+import { TRUST_STATS } from '@/lib/testimonials';
 import { SITE } from '@/lib/config';
 import { heroContent, resellerContent } from '@/lib/homeContent';
 
@@ -56,7 +54,7 @@ export async function POST(request: NextRequest) {
         return {
           name: t.name,
           slug: t.id,
-          description: t.description || `Official ${t.name} with instant delivery and dedicated support.`,
+          description: t.description || `${t.name}. Message on WhatsApp for the current price and delivery time.`,
           category: cat,
           price: t.ourPrice,
           market_price: t.marketPrice,
@@ -70,9 +68,9 @@ export async function POST(request: NextRequest) {
           account_type: t.accountType || null,
           sort_order: index,
           features: [
-            'Instant WhatsApp Fulfillment',
-            '100% Guaranteed Validity',
-            'Dedicated Customer Support',
+            'WhatsApp delivery',
+            'Login steps sent after payment',
+            'Ask us if access stops working',
             t.accountType === 'shared' ? 'Shared profile with private pin' : 'Private access',
           ],
           plans: [
@@ -152,35 +150,7 @@ export async function POST(request: NextRequest) {
       report.services = `Skipped: ${serviceCount} services already exist`;
     }
 
-    // 4. Seed Reviews & Testimonials
-    const reviewCount = await ReviewModel.countDocuments();
-    if (reviewCount === 0 || force) {
-      if (force) await ReviewModel.deleteMany({});
-      const reviewDocs = [
-        ...staticReviews.map((r, i) => ({
-          name: r.name,
-          role: 'Verified Customer',
-          quote: r.quote,
-          image_url: r.imageUrl,
-          rating: 5,
-          sort_order: r.sortOrder ?? i,
-          is_active: r.active,
-        })),
-        ...TESTIMONIALS.map((t, i) => ({
-          name: t.name,
-          role: t.role,
-          quote: t.quote,
-          image_url: null,
-          rating: t.rating || 5,
-          sort_order: 10 + i,
-          is_active: true,
-        })),
-      ];
-      await ReviewModel.insertMany(reviewDocs);
-      report.reviews = `Seeded ${reviewDocs.length} reviews`;
-    } else {
-      report.reviews = `Skipped: ${reviewCount} reviews already exist`;
-    }
+    report.reviews = 'Skipped: public reviews are not seeded';
 
     // 5. Seed Site Settings / Config
     const configExists = await SiteConfigModel.findOne();
@@ -211,13 +181,13 @@ export async function POST(request: NextRequest) {
     if (noticeCount === 0 || force) {
       if (force) await NoticeModel.deleteMany({});
       await NoticeModel.create({
-        title: 'Instant Delivery via WhatsApp',
-        message: 'Get Turnitin Plagiarism & AI Reports within 10–20 minutes! Order directly via WhatsApp.',
-        badge: '🔥 SPECIAL OFFER',
+        title: 'Open now',
+        message: 'Reports, AI tools, OTT, and custom websites. Message us on WhatsApp.',
+        badge: 'Open now',
         type: 'banner',
         variant: 'primary',
-        link: '/products?category=reports',
-        link_text: 'View Reports',
+        link: '/products',
+        link_text: 'See products',
         is_active: true,
         is_dismissible: true,
         sort_order: 0,

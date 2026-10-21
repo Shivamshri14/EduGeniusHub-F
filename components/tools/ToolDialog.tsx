@@ -111,7 +111,7 @@ export default function ToolDialog({ tool, open, onOpenChange }: ToolDialogProps
                   className="flex items-center gap-2"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  Official Site
+                  Provider website
                 </a>
               </Button>
             )}

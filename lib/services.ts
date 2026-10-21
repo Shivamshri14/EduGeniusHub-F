@@ -23,14 +23,14 @@ export const services: Service[] = [
     id: "academic-writing",
     title: "Academic Writing Services",
     description:
-      "Professional assistance for all your academic writing needs with guaranteed quality and timely delivery.",
+      "Help with a thesis, dissertation, chapters, or a presentation. Ask on WhatsApp for a price.",
     items: [
       "Thesis Writing - Complete thesis from scratch or chapter-wise assistance",
       "Dissertation Help - Research, writing, and formatting support",
       "Chapter-wise Writing - Individual chapters or complete projects",
       "PPT Creation - Professional presentations for your projects",
-      "Plagiarism Removal - Make your content 100% original",
-      "AI Detection Removal - Humanize AI-generated content",
+      "Plagiarism cleanup - rewrite overlapping text",
+      "AI-writing cleanup - rewrite text that reads as machine-written",
     ],
     ctaText: "Inquire About Academic Services",
     ctaType: "whatsapp",
@@ -39,16 +39,16 @@ export const services: Service[] = [
   },
   {
     id: "development",
-    title: "Development Services",
+    title: "Websites and apps",
     description:
-      "Custom website and app development solutions tailored to your specific business needs.",
+      "We also build websites and apps at affordable prices. Message on WhatsApp with what you need.",
     items: [
-      "Website Development - Modern, responsive websites for your business",
-      "E-commerce Solutions - Online stores with payment integration",
-      "Mobile Apps - iOS and Android app development",
-      "Custom Portals - Student/employee management systems",
-      "API Integration - Connect your systems seamlessly",
-      "Maintenance & Support - Ongoing technical support",
+      "Websites",
+      "Online stores",
+      "Android and iOS apps",
+      "Portals for students or staff",
+      "Connecting an existing tool to your site",
+      "Fixes after launch",
     ],
     ctaText: "Inquire About Development",
     ctaType: "whatsapp",
@@ -60,7 +60,7 @@ export const services: Service[] = [
 export const customRequirement: CustomRequirement = {
   title: "Custom Requirements?",
   description:
-    "Have a specific project in mind? Whether it's a unique tool subscription, custom academic work, or a special development project - we've got you covered. Contact us to discuss your requirements!",
+    "If the thing you need is not listed, message on WhatsApp and describe it.",
   ctaText: "Discuss Your Project",
   ctaType: "whatsapp",
   active: true,
