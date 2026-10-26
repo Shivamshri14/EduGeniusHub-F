@@ -6,6 +6,7 @@ import SiteNavbar from '@/components/navigation/SiteNavbar';
 import ConditionalFooter from '@/components/navigation/ConditionalFooter';
 import MobileActionBar from '@/components/navigation/MobileActionBar';
 import LiveActivityNotification from '@/components/whatsapp/LiveActivityNotification';
+import ConditionalWhatsApp from '@/components/whatsapp/ConditionalWhatsApp';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from 'sonner';
 import { CANONICAL_ORIGIN } from '@/lib/publicCopy';
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     default: 'EduGenius Hub',
     template: '%s',
   },
-  description: 'Reports, tool access, subscriptions, academic help, and websites. Order on WhatsApp.',
+  description: 'EduGenius Hub provides website making, Google Business Profile setup, social media design, WhatsApp bot setup, plagiarism check, thesis formatting, PPT and resume making, tool access, and subscriptions. Order on WhatsApp.',
   alternates: { canonical: CANONICAL_ORIGIN },
   icons: {
     icon: '/logo.jpg',
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'EduGenius Hub',
-    description: 'Reports, tool access, subscriptions, academic help, and websites. Order on WhatsApp.',
+    description: 'EduGenius Hub provides website making, Google Business Profile setup, social media design, WhatsApp bot setup, plagiarism check, thesis formatting, PPT and resume making, tool access, and subscriptions. Order on WhatsApp.',
     url: CANONICAL_ORIGIN,
     siteName: 'EduGenius Hub',
     locale: 'en_IN',
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ConditionalFooter />
           <LiveActivityNotification />
           <MobileActionBar />
+          <ConditionalWhatsApp />
           <Toaster position="bottom-right" richColors />
         </ThemeProvider>
       </body>

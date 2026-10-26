@@ -3,8 +3,8 @@ import HomePage from './(routes)/home/HomePage';
 import { CANONICAL_ORIGIN } from '@/lib/publicCopy';
 
 export const metadata: Metadata = {
-  title: 'EduGenius Hub',
-  description: 'Reports, tool access, subscriptions, academic help, and websites. Message on WhatsApp to order.',
+  title: 'EduGenius Hub | Services, Reports, Tool Access & Websites',
+  description: 'EduGenius Hub offers website making, Google Business Profile setup, social media design, WhatsApp bot setup, plagiarism check, thesis formatting, PPT and resume making, academic help, and subscriptions. Order on WhatsApp.',
   alternates: { canonical: CANONICAL_ORIGIN },
 };
 

@@ -6,6 +6,7 @@ import { ArrowRight, Check, ChevronDown, Clapperboard, Code2, FileText, KeyRound
 import { cn } from '@/lib/utils';
 import ProductCard from '@/components/ProductCard';
 import ProductCardSkeleton from '@/components/ProductCardSkeleton';
+import ServicesSection from '@/components/home/ServicesSection';
 import { FAQS } from '@/lib/faqs';
 import { SITE } from '@/lib/config';
 import type { Product } from '@/lib/types';
@@ -135,6 +136,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <ServicesSection />
 
       <section className="px-4 py-10">
         <div className="mx-auto max-w-6xl">

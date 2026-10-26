@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Clapperboard, FileText, Home, Mail, Menu, Package, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
+import { Briefcase, Clapperboard, FileText, Home, Mail, Menu, Package, Search, ShoppingBag, Sparkles, X } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -11,6 +11,7 @@ import NoticeBanner from '@/components/notices/NoticeBanner';
 
 const navLinks = [
   { label: 'Home', href: '/', Icon: Home },
+  { label: 'Services', href: '/#services', Icon: Briefcase },
   { label: 'Products', href: '/products', Icon: ShoppingBag },
   { label: 'Reports', href: '/products?category=reports', Icon: FileText },
   { label: 'AI Tools', href: '/products?category=ai_tools', Icon: Sparkles },
@@ -64,6 +65,13 @@ export default function SiteNavbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => {
+                    if (link.href === '/#services' && (pathname === '/' || pathname === '/home')) {
+                      e.preventDefault();
+                      const el = document.getElementById('services');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                   className={cn(
                     'inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-all',
                     active
@@ -124,7 +132,14 @@ export default function SiteNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
+                onClick={(e) => {
+                  setOpen(false);
+                  if (link.href === '/#services' && (pathname === '/' || pathname === '/home')) {
+                    e.preventDefault();
+                    const el = document.getElementById('services');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
                 className={cn(
                   'flex items-center gap-2 rounded-xl px-4 py-3.5 text-sm font-semibold transition-colors',
                   active ? 'bg-orange-500 text-white' : 'text-slate-700 hover:bg-orange-50 dark:text-slate-200 dark:hover:bg-white/10'
